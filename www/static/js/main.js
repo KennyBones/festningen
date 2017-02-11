@@ -66,6 +66,9 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 	};
 
 	$html.addClass('lastet');
+
+
+
 /*=======================================================
 				  @Click/hover events
 =======================================================*/

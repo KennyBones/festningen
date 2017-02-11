@@ -3,6 +3,65 @@
 
 {% block content %}
 	{# {% cache until midnight %}{% minify %} #}
-	<h1 style="text-align: center; padding-top: 45vh;">Velkommen til {{siteName}}</h1>
+
 	{# {% endminify %}{% endcache %} #}
+
+	{% set img = entry.toppbilde.first | default(false) %}
+	{% set bilde = craft.imager.transformImage(img, [
+		{ width: 320, height: 200 },
+		{ width: 840, height: 400 },
+		{ width: 1680, height: 530 },
+		], { ratio:"16/9" }) %}
+
+
+	<section class="row pageTop">
+		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+
+		<div class="designblock">
+			<span class="silhouette">
+				{{craft.inlin.er('/static/svg/symbols/icon-silhouette.svg') | raw }}
+			</span>
+
+			<h1>{{entry.tittel}}</h1>
+			<p>{{entry.rikTekst}}</p>
+		</div>
+
+	</section>
+
+	{% set apningstiderOgBooking = entry.apningstiderOgBooking %}
+
+	<section class="row designblock apningstider">
+
+		<article class="designblock first">
+			<h2>{{apningstiderOgBooking[0].tittel}}</h2>
+			{{craft.inlin.er('/static/svg/symbols/icon-clock.svg') | raw }}
+			{{apningstiderOgBooking[0].rikTekst}}
+			<span class="knapp">{{apningstiderOgBooking[0].knapp}}</span>
+		</article>
+
+		<article class="designblock second">
+			<h2>{{apningstiderOgBooking[1].tittel}}</h2>
+			{{craft.inlin.er('/static/svg/symbols/icon-booking.svg') | raw }}
+			{{apningstiderOgBooking[1].rikTekst}}
+			<span class="knapp">{{apningstiderOgBooking[1].knapp}}</span>
+		</article>
+
+	</section>
+
+	<section class="row designblock simple">
+		<article class="designblock first">
+			<h2>Restauranten</h2>
+			<p>Lorem ipsum dolor sit amet</p>
+		</article>
+
+		<article class="designblock second">
+			<img src="/static/img/designblockbilde.jpg">
+		</article>
+	</section>
+
+	<script src="{{craft.inlin.er(apningstiderOgBooking[0].ikon[0].url, true) | raw }}"></script>
+
+
+
+
 {% endblock %}

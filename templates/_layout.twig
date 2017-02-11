@@ -23,8 +23,26 @@
 	<body class="{{ bodyClass is defined ? bodyClass }}">
 	{% include '_admin/_maintenanceBanner' %}
 		<!--[if lt IE 7]>
-			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+			<p class="browsehappy">You are using a <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+
+		<header id="topHeader">
+
+			<nav>
+				<ul>
+					<li><a class="selected" href="Home">Restauranten</a></li>
+					<li><a href="Discounts">Selskap</a></li>
+					<li><a href="Contact">Kurs og konferanse</a></li>
+					<li><a href="About">Kristiansten festning</a></li>
+				</ul>
+			</nav>
+
+			<div class="searchbox"></div>
+			<span class="search-btn">
+				{{craft.inlin.er('/static/svg/symbols/icon-search.svg') | raw }}
+			</span>
+		</header>
+
 		{% block content %}
 			<p>Du mangler innhold</p>
 		{% endblock %}
