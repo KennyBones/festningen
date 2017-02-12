@@ -14,10 +14,10 @@
 		], { ratio:"16/9" }) %}
 
 
-	<section class="row pageTop">
+	<section class="row pageTop designblock">
 		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
 
-		<div class="designblock">
+		<div class="designblock tekst">
 			<span class="silhouette">
 				{{craft.inlin.er('/static/svg/symbols/icon-silhouette.svg') | raw }}
 			</span>
@@ -34,30 +34,81 @@
 
 		<article class="designblock first">
 			<h2>{{apningstiderOgBooking[0].tittel}}</h2>
-			{{craft.inlin.er('/static/svg/symbols/icon-clock.svg') | raw }}
+			{{craft.inlin.er(apningstiderOgBooking[0].ikon[0].url, true) | raw }}
 			{{apningstiderOgBooking[0].rikTekst}}
 			<span class="knapp">{{apningstiderOgBooking[0].knapp}}</span>
 		</article>
 
 		<article class="designblock second">
 			<h2>{{apningstiderOgBooking[1].tittel}}</h2>
-			{{craft.inlin.er('/static/svg/symbols/icon-booking.svg') | raw }}
+			{{craft.inlin.er(apningstiderOgBooking[1].ikon[0].url, true) | raw }}
 			{{apningstiderOgBooking[1].rikTekst}}
 			<span class="knapp">{{apningstiderOgBooking[1].knapp}}</span>
 		</article>
 
 	</section>
 
-	<section class="row designblock simple">
-		<article class="designblock first">
-			<h2>Restauranten</h2>
-			<p>Lorem ipsum dolor sit amet</p>
-		</article>
+	{% for blokk in entry.restaurant %}
+		{% if blokk.type == 'enkel'%}
+			<section class="row designblock enkel">
+				<article class="designblock tekst">
+					<h2>{{blokk.overskrift}}</h2>
+					{{blokk.tekst}}
+				</article>
 
-		<article class="designblock second">
-			<img src="/static/img/designblockbilde.jpg">
-		</article>
-	</section>
+				<article class="designblock bilde">
+					<img src="/static/img/designblockbilde.jpg">
+				</article>
+			</section>
+
+		{% else %}
+
+			<section class="row designblock enkel">
+				<article class="designblock tekst">
+					<h2>{{blokk.overskrift}}</h2>
+					{{blokk.tekst}}
+				</article>
+
+				<article class="designblock menyer">
+					<h3>Våre menyer</h3>
+				</article>
+			</section>
+
+		{% endif %}
+
+	{% endfor %}
+
+	{% for blokk in entry.designblokk %}
+
+				<section class="row designblock {{blokk.type}}">
+
+					{% if blokk.posisjon == 'left' %}
+						<article class="designblock bilde">
+							<img src="/static/img/designblockbilde.jpg">
+						</article>
+
+						<article class="designblock tekst">
+							<h2>{{blokk.overskrift}}</h2>
+							{{blokk.tekst}}
+						</article>
+
+					{% else %}
+						<article class="designblock tekst">
+							<h2>{{blokk.overskrift}}</h2>
+							{{blokk.tekst}}
+						</article>
+
+						<article class="designblock bilde">
+							<img src="/static/img/designblockbilde.jpg">
+						</article>
+
+					{% endif %}
+
+				</section>
+
+
+	{% endfor %}
+
 
 	<script src="{{craft.inlin.er(apningstiderOgBooking[0].ikon[0].url, true) | raw }}"></script>
 
