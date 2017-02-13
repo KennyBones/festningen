@@ -81,21 +81,29 @@
 	{% endfor %}
 
 
-	{% nav block in entry.blokker.level(1) %}
+		{% nav block in entry.blokker.level(1) %}
 
-	    {% switch block.type.handle %}
-				<p>{{block.type}}</p>
+		    {% switch block.type.handle %}
 
-	        {% case 'designblokk' %}
+		        {% case 'designblokk' %}
+		            <h2>{{ block.type }}</h2>
+
+		        {% case 'blocks' %}
+		            {% for item in block.children %}
+		                {% include "_includes/elements/" ~ item.type %}
+		             {% endfor %}
+
+		    {% endswitch %}
+
+		    {% ifchildren %}
+		        {% children %}
+		    {% endifchildren %}
+
+		{% endnav %}
 
 
-							{% for item in block.children %}
 
 
-							{% endfor %}
-
-	    {% endswitch %}
-	{% endnav %}
 
 
 
@@ -135,7 +143,6 @@
 					{% endif %}
 
 				</section> #}
-
 
 
 
