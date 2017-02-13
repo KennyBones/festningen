@@ -63,14 +63,16 @@
 
 		{% else %}
 
-			<section class="row designblock enkel">
-				<article class="designblock tekst">
+			<section class="row designblock enkel menyer">
+				<article class="tekst">
 					<h2>{{blokk.overskrift}}</h2>
 					{{blokk.tekst}}
 				</article>
 
-				<article class="designblock menyer">
+				<article class="fargeblokk">
+					{{craft.inlin.er(blokk.menyer[0].ikon[0].url, true) | raw }}
 					<h3>Våre menyer</h3>
+					{{blokk.menyer[0].tekst}}
 				</article>
 			</section>
 
@@ -78,39 +80,61 @@
 
 	{% endfor %}
 
-	{% for blokk in entry.designblokk %}
 
-				<section class="row designblock {{blokk.type}}">
+	{% nav block in entry.blokker.level(1) %}
 
-					{% if blokk.posisjon == 'left' %}
+	    {% switch block.type.handle %}
+				<p>{{block.type}}</p>
+
+	        {% case 'designblokk' %}
+
+
+							{% for item in block.children %}
+
+
+							{% endfor %}
+
+	    {% endswitch %}
+	{% endnav %}
+
+
+
+		{# {% for designblokk in blokk %}
+
+				<li>
+						{% for blokk in designblokk %}
+
+						{% endfor %}
+
+				</li>
+
+		{% endfor %} #}
+
+				{# <section class="row designblock {{blokk.type}}">
+
+					{% if blokk.bildeposisjon == 'left' %}
 						<article class="designblock bilde">
 							<img src="/static/img/designblockbilde.jpg">
 						</article>
 
-						<article class="designblock tekst">
+						<article class="tekst">
 							<h2>{{blokk.overskrift}}</h2>
 							{{blokk.tekst}}
 						</article>
 
 					{% else %}
-						<article class="designblock tekst">
+						<article class="tekst">
 							<h2>{{blokk.overskrift}}</h2>
 							{{blokk.tekst}}
 						</article>
 
-						<article class="designblock bilde">
+						<article class="bilde">
 							<img src="/static/img/designblockbilde.jpg">
 						</article>
 
 					{% endif %}
 
-				</section>
-
-
-	{% endfor %}
-
-
-	<script src="{{craft.inlin.er(apningstiderOgBooking[0].ikon[0].url, true) | raw }}"></script>
+				</section> #}
 
 
 
