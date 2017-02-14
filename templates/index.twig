@@ -81,25 +81,30 @@
 	{% endfor %}
 
 
-		{% nav block in entry.blokker.level(1) %}
 
-		    {% switch block.type.handle %}
+		{% nav block in entry.blokktype %}
+				<li>
 
-		        {% case 'designblokk' %}
-		            <h2>{{ block.type }}</h2>
 
-		        {% case 'blocks' %}
-		            {% for item in block.children %}
-		                {% include "_includes/elements/" ~ item.type %}
-		             {% endfor %}
+						{% if block.type == "designblokk" %}
 
-		    {% endswitch %}
+							{% for designblokk in block.blokktype %}
+								<h2>{{designblokk.tittel}}</h2>
+								<h2>{{designblokk.tekst}}</h2>
 
-		    {% ifchildren %}
-		        {% children %}
-		    {% endifchildren %}
+							{% endfor %}
 
+						{% endif %}
+
+
+
+				</li>
 		{% endnav %}
+
+
+
+
+
 
 
 
