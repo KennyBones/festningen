@@ -108,6 +108,22 @@ $padding: 70px;
   background-color: #FFFFFF;
   vertical-align: top;
 
+  // padding
+  &.margin-top {
+    margin-top: $mellomrom;
+  }
+
+  &.margin-bottom {
+    margin-bottom: $mellomrom;
+  }
+
+  &.margin-begge {
+    margin-top: $mellomrom;
+    margin-bottom: $mellomrom;
+  }
+
+  a { font-weight: bold; }
+
   .tekst {
     padding: $padding;
   }
@@ -117,41 +133,10 @@ $padding: 70px;
     width: 50%;
     background-color: #000000;
     color: white;
-    padding: 100px;
+    padding: $padding;
     font-size: 16px;
-  }
 
-  &.enkel {
-    padding: 0;
-    font-size: 0;
-    margin-bottom: $mellomrom;
-    display: flex;
-
-    .tekst, .bilde {
-      display: inline-block;
-      font-size: $basesize;
-      width: 50%;
-    }
-
-    .bilde {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    img {
-      transition: transform 1s ease;
-      transform: scale(1);
-      min-height: 100%;
-      min-width: 100%;
-      position: absolute;
-    }
-
-    &:hover img {
-      transform: scale(1.1);
-    }
-
-
-
+    a { color: #FFFFFF; }
   }
 
   .knapp {
@@ -178,121 +163,249 @@ $padding: 70px;
 
   }
 
+  // Forskjellige typer designblokker
+  &.enkel {
+    padding: 0;
+    font-size: 0;
+    display: flex;
+
+    .tekst, .bilde {
+      display: inline-block;
+      font-size: $basesize;
+      width: 50%;
+    }
+
+    .bilde {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    img {
+      transition: transform 1s ease;
+      transform: scale(1);
+      min-height: 100%;
+      min-width: 100%;
+      position: absolute;
+    }
+
+    &:hover img {
+      transform: scale(1.1);
+    }
+
+  }
+
+  &.bilde-full {
+    display: block;
+    width: 100%;
+
+    .tekst {
+      display: block;
+      width: 100%;
+    }
+
+    .bilde {
+      width: 100%;
+      position: relative;
+
+      img { min-width: 100%; position: static; }
+
+      .bildetekst {
+        background-color: #FFFFFF;
+        position: absolute;
+        padding: $padding;
+        width: 50%;
+
+        &.drop-right {
+          bottom: $padding * 2;
+          right: -$mellomrom;
+        }
+
+        &.drop-left {
+          bottom: $padding * 2;
+          left: -$mellomrom;
+        }
+
+        &.right {
+          top: $padding * 2;
+          right: -$mellomrom;
+        }
+
+        &.left {
+          top: $padding * 2;
+          left: -$mellomrom;
+        }
+
+
+      }
+    }
+  }
 }
 
 // FORSIDE
-.pageTop {
-  background-color: #FFFFFF;
-  text-align: center;
-  margin-top: $mellomrom-lite;
+.index {
 
-  img { max-width: 100%; }
+  .pageTop {
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-top: $mellomrom-lite;
 
-  .designblock {
-    max-width: 45%;
-  }
+    img { max-width: 100%; }
 
-  .silhouette {
-    display: block;
-    margin-bottom: $mellomrom;
-
-    svg {
-      height: 50px;
-      width: 50px;
+    .designblock {
+      max-width: 45%;
     }
 
-  }
+    .silhouette {
+      display: block;
+      margin-bottom: $mellomrom;
 
-  h1 { margin-bottom: 1em; }
-
-}
-
-.apningstider {
-  font-size: 0;
-  margin-top: $mellomrom;
-  margin-bottom: $mellomrom;
-  text-align: center;
-  padding: 0;
-  display: flex;
-
-  .designblock {
-    display: inline-block;
-    width: 50%;
-    padding: $padding;
-    padding-left: $padding * 2;
-    padding-right: $padding * 2;
-    font-size: $basesize;
-
-    &.first {
-      background: $color_pr1;
-      color: #FFFFFF;
-
-      svg path { fill: #FFFFFF; }
-
-      .knapp {
-        a { color: #FFFFFF; }
-        a:before { background-color: #FFFFFF; }
+      svg {
+        height: 50px;
+        width: 50px;
       }
 
     }
-    &.second { background: $color_pr6; }
 
-    .knapp {
-      position: absolute;
-      bottom: $mellomrom;
-      left: 0;
-      right: 0;
-    }
+    h1 { margin-bottom: 1em; }
+
   }
 
-  h2 { text-align: center; text-transform: uppercase; }
-
-  svg {
-    margin: $mellomrom-lite;
+  .apningstider {
+    font-size: 0;
+    margin-top: $mellomrom;
     margin-bottom: $mellomrom;
-  }
+    text-align: center;
+    padding: 0;
+    display: flex;
 
-  table {
-    display: block;
-
-    tbody {
+    .designblock {
       display: inline-block;
-      font-weight: bold;
+      width: 50%;
+      padding: $padding;
+      padding-left: $padding * 2;
+      padding-right: $padding * 2;
+      font-size: $basesize;
+
+      &.first {
+        background: $color_pr1;
+        color: #FFFFFF;
+
+        svg path { fill: #FFFFFF; }
+
+        .knapp {
+          a { color: #FFFFFF; }
+          a:before { background-color: #FFFFFF; }
+        }
+
+      }
+      &.second { background: $color_pr6; }
+
+      .knapp {
+        position: absolute;
+        bottom: $mellomrom;
+        left: 0;
+        right: 0;
+      }
     }
 
-    tr {
-      display:table;
-      table-layout: fixed;
-      width:100%;
+    h2 { text-align: center; text-transform: uppercase; }
+
+    svg {
+      margin: $mellomrom-lite;
+      margin-bottom: $mellomrom;
+    }
+
+    table {
+      display: block;
+
+      tbody {
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      tr {
+        display:table;
+        table-layout: fixed;
+        width:100%;
+      }
+    }
+  }
+
+
+  .menyer {
+
+    .tekst {
+      width: 65%;
+    }
+
+    .fargeblokk {
+      width: 35%;
+      text-align: center;
+
+      svg {
+        fill: #FFFFFF;
+        height: 50px;
+        width: 50px;
+        margin-bottom: 20px
+      }
+
+      h3 { margin-bottom: 30px; }
+
+      table {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        font-weight: bold;
+
+        td {text-align: right; }
+        td:first-of-type { text-align: left; }
+      }
     }
   }
 }
 
-.menyer {
+.booking {
+  font-size: 0;
+  display: flex;
+  overflow: hidden;
 
-  .fargeblokk {
+  #booking-map, #kontaktskjema  {
+    display: inline-block;
+    width: 50%;
+    font-size: $basesize;
+  }
+
+  #booking-map img {
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  #kontaktskjema {
+    background-color: $color_pr4;
+    padding: $padding;
+    color: #FFFFFF;
     text-align: center;
 
     svg {
       fill: #FFFFFF;
-      height: 50px;
-      width: 50px;
-      margin-bottom: 20px
-    }
-
-    h3 { margin-bottom: 30px; }
-
-    table {
-      width: 60%;
+      display: block;
+      margin: $mellomrom-lite;
+      margin-bottom: $mellomrom;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 20px;
-      font-weight: bold;
-
-      td {text-align: right; }
-      td:first-of-type { text-align: left; }      
     }
+  }
+}
 
-    a { color: #FFFFFF; font-weight: bold; }
+#kontaktskjema {
+
+  .fields {
+    text-align: left;
+  }
+  input[type='text'] {
+    width: 100%;
+    border: none;
+    line-height: 2em;
   }
 }

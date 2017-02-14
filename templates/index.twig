@@ -48,107 +48,121 @@
 
 	</section>
 
-	{% for blokk in entry.restaurant %}
-		{% if blokk.type == 'enkel'%}
-			<section class="row designblock enkel">
-				<article class="designblock tekst">
-					<h2>{{blokk.overskrift}}</h2>
-					{{blokk.tekst}}
+	{% for blokk in entry.restaurantNeo %}
+
+		{% if blokk.type == 'vareMenyer' %}
+			{# Menyer og tekstblokk #}
+
+			<section class="row designblock enkel menyer">
+				<article class="tekst">
+					{{blokk.vareMenyer[0].tekst}}
 				</article>
 
-				<article class="designblock bilde">
-					<img src="/static/img/designblockbilde.jpg">
+				<article class="fargeblokk">
+					{{craft.inlin.er(blokk.vareMenyer[1].ikon[0].url, true) | raw }}
+					{{blokk.vareMenyer[1].tekst}}
 				</article>
 			</section>
 
 		{% else %}
 
-			<section class="row designblock enkel menyer">
-				<article class="tekst">
-					<h2>{{blokk.overskrift}}</h2>
-					{{blokk.tekst}}
-				</article>
+			{# Tekstblokk øverst, ingen bilde #}
+			{% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
+				<section class="row designblock margin-{{blokk.mellomrom}}">
+					<article class="designblock tekst">
+						{{blokk.rikTekst}}
+					</article>
+				</section>
 
-				<article class="fargeblokk">
-					{{craft.inlin.er(blokk.menyer[0].ikon[0].url, true) | raw }}
-					<h3>Våre menyer</h3>
-					{{blokk.menyer[0].tekst}}
-				</article>
-			</section>
+			{# Kun bilde #}
+			{% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
+				<section class="row designblock bilde-full margin-{{blokk.mellomrom}}">
+					<article class="designblock bilde">
+						<img src="/static/img/designblockbilde.jpg">
 
-		{% endif %}
-
-	{% endfor %}
-
-
-
-		{% nav block in entry.blokktype %}
-				<li>
-
-
-						{% if block.type == "designblokk" %}
-
-							{% for designblokk in block.blokktype %}
-								<h2>{{designblokk.tittel}}</h2>
-								<h2>{{designblokk.tekst}}</h2>
-
-							{% endfor %}
-
+						{# Hvis det er bildetekst #}
+						{% if blokk.bildetekstChkbox == 1 %}
+							<aside class="bildetekst {{blokk.bildetekstposisjon}}">
+								{{blokk.bildetekst}}
+							</aside>
 						{% endif %}
 
+					</article>
+				</section>
 
+			{# Tekst og bilde #}
+			{% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 1 %}
 
-				</li>
-		{% endnav %}
+					{# Bildeposisjon full #}
+					{% if blokk.bildeposisjon == 'full' %}
 
+						<section class="row designblock margin-{{blokk.mellomrom}} bilde-full">
 
+							{# Tekst over stort bilde #}
+							{% if blokk.tekstChkbox == 1 %}
 
+								<article class="designblock tekst">
+									{{blokk.rikTekst}}
+								</article>
 
+								<article class="designblock bilde">
+									<img src="/static/img/designblockbilde.jpg">
 
+									{# Hvis det er bildetekst #}
+									{% if blokk.bildetekstChkbox == 1 %}
 
+										<aside class="bildetekst {{blokk.bildetekstposisjon}}">
+											{{blokk.bildetekst}}
+										</aside>
 
+									{% endif %}
+								</article>
+							{% endif %}
 
-
-
-
-
-		{# {% for designblokk in blokk %}
-
-				<li>
-						{% for blokk in designblokk %}
-
-						{% endfor %}
-
-				</li>
-
-		{% endfor %} #}
-
-				{# <section class="row designblock {{blokk.type}}">
-
-					{% if blokk.bildeposisjon == 'left' %}
-						<article class="designblock bilde">
-							<img src="/static/img/designblockbilde.jpg">
-						</article>
-
-						<article class="tekst">
-							<h2>{{blokk.overskrift}}</h2>
-							{{blokk.tekst}}
-						</article>
+						</section>
 
 					{% else %}
-						<article class="tekst">
-							<h2>{{blokk.overskrift}}</h2>
-							{{blokk.tekst}}
-						</article>
 
-						<article class="bilde">
-							<img src="/static/img/designblockbilde.jpg">
-						</article>
+						{# Bildeposisjon høyre eller venstre #}
+						<section class="row designblock enkel margin-{{blokk.mellomrom}}">
+						{% if blokk.bildeposisjon == 'left' %}
 
+								<article class="designblock bilde">
+									<img src="/static/img/designblockbilde.jpg">
+								</article>
+
+								<article class="designblock tekst">
+									{{blokk.rikTekst}}
+								</article>
+
+						{% else %}
+
+								<article class="designblock tekst">
+									{{blokk.rikTekst}}
+								</article>
+
+								<article class="designblock bilde">
+									<img src="/static/img/designblockbilde.jpg">
+								</article>
+
+							{% endif %}
+							</section>
 					{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
 
-				</section> #}
-
-
+	{# BOOKING #}
+	<section class="row booking designblock">
+		<div id="booking-map">
+			<img src="/static/img/map.png">
+		</div>
+		<aside id="kontaktskjema" class="designblock">
+			<h2>{{entry.booking.tittel}}</h2>
+			{{craft.inlin.er(entry.booking.ikon[0].url, true) | raw }}
+			{{entry.booking.tekst}}
+			{{ craft.sproutForms.displayForm('contact') }}
+		</aside>
+	</section>
 
 {% endblock %}
