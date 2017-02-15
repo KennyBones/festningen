@@ -1,0 +1,33 @@
+{% extends "_layout" %}
+{% set bodyClass = "index" %}
+
+{% block content %}
+	{# {% cache until midnight %}{% minify %} #}
+
+	{# {% endminify %}{% endcache %} #}
+
+	{% set img = entry.toppbilde.first | default(false) %}
+	{% set bilde = craft.imager.transformImage(img, [
+		{ width: 320, height: 200 },
+		{ width: 840, height: 400 },
+		{ width: 1680, height: 530 },
+		], { ratio:"16/9" }) %}
+
+
+	<section class="row pageTop designblock">
+		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+
+		<div class="designblock tekst">
+			<span class="silhouette">
+				{{craft.inlin.er('/static/svg/symbols/icon-silhouette.svg') | raw }}
+			</span>
+
+			<h1>{{entry.tittel}}</h1>
+			<p>{{entry.rikTekst}}</p>
+		</div>
+
+	</section>
+
+	
+
+{% endblock %}

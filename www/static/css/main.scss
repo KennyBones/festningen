@@ -400,12 +400,65 @@ $padding: 70px;
 
 #kontaktskjema {
 
+  form {
+    margin-top: $padding;
+  }
+
+  .heading {
+    margin-bottom: 5px;
+  }
+
   .fields {
     text-align: left;
   }
+
+  .field {
+    margin-bottom: $mellomrom-lite;
+  }
+
+  input, textarea {padding-left: 10px;}
+
   input[type='text'] {
     width: 100%;
     border: none;
     line-height: 2em;
   }
+
+  input[type='checkbox'] {
+    height: 2em;
+    width: 2em;
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-right: 10px;
+    background-color: #FFFFFF;
+  }
+
+  input[type='checkbox']:checked {
+    background-image: url('/static/svg/symbols/icon-checkmark.svg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  input[type="submit"] {
+    appearance: none;
+    background-color: #bababa;
+    border: none;
+    padding: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .typeReservasjon {
+    position: relative;
+
+    label { line-height: 2em; margin-right: 20px;}
+  }
+
+  textarea { width: 100%; }
+
+  .submit { text-align: right; }
+
 }
