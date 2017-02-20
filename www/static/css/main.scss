@@ -241,6 +241,17 @@ $padding: 70px;
   }
 }
 
+.sticky-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sticky-block--right {
+  width: 80%;
+  margin-left: 20%;
+}
+
 // FORSIDE
 .index {
 
@@ -461,4 +472,8 @@ $padding: 70px;
 
   .submit { text-align: right; }
 
+}
+
+.restaurant-menu {
+  .table--heading { text-transform: uppercase; }
 }

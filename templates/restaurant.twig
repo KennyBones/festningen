@@ -28,6 +28,71 @@
 
 	</section>
 
-	
+
+	{% set meny = entry.meny %}
+	<section class="row designblock restaurantmenu">
+
+		<aside class="sticky-block">
+			<ul>
+				<li>Lunsjmeny</li>
+				<li>Klassisk meny</li>
+				<li>Ukens 3-retter</li>
+				{# {% for enkeltmeny in meny %}
+					<li>{{enkeltmeny.tittel}}</li>
+				{% endfor %} #}
+			</ul>
+		</aside>
+
+		<article class="sticky-block--right">
+
+			{% for enkeltmeny in meny %}
+
+			<article class="restaurant-menu">
+				<h2>{{enkeltmeny.tittel}}</h2>
+
+				{% for oppskrift in enkeltmeny.oppskrifter %}
+					<table>
+						<tr>
+							<th class="table--heading">{{oppskrift.title}}</th>
+							<th class="table--heading">{{oppskrift.oppskrift.pris}}</th>
+						</tr>
+						<tr>
+							<td>{{oppskrift.oppskrift.tekst}}</td>
+						</tr>
+						<tr>
+							<td>
+								{% for category in oppskrift.oppskrift.allergener %}
+										{% set hasDescendants = category.getDescendants().total() != 0 %}
+										{% if not hasDescendants %}
+											{{craft.inlin.er(category.ikon[0].url, true) | raw }}
+											{{category.title}}
+										{% endif %}
+
+								{% endfor %}
+							</td>
+						</tr>
+					</table>
+					<hr>
+				{% endfor %}
+
+
+			</article>
+
+			{% endfor %}
+			{# {% for enkeltmeny in meny %}
+				<article class="restaurant-menu--single">
+					{% for oppskrift in enkeltmeny.oppskrifter %}
+						<p>{{oppskrift.title}}</p>
+					{% endfor %}
+				</article>
+
+			{% endfor %} #}
+		</article>
+
+
+
+	</section>
+
+
 
 {% endblock %}
