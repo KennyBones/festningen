@@ -475,5 +475,20 @@ $padding: 70px;
 }
 
 .restaurant-menu {
-  .table--heading { text-transform: uppercase; }
+
+  table {
+    width: 100%;
+  }
+  
+  .table--heading {
+    text-transform: uppercase;
+
+    &.title { text-align: left; }
+    &.price { text-align: right; }
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
 }
