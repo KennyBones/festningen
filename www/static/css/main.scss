@@ -241,45 +241,85 @@ $padding: 70px;
   }
 }
 
+
 .sticky-block {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  padding-top: 200px;
+  position: relative;
+
+  &.fixed {
+    position: fixed;
+  }
+
+  ul {
+    list-style: none;
+    text-transform: uppercase;
+    text-align: right;
+    letter-spacing: .2em;
+    font-family: $font_century;
+    padding: 0;
+
+    p {
+      font-size: 12px;
+      font-family: $font_default;
+    }
+    a { font-size: $h3; }
+
+    li.selected {
+      a, p {
+        color: $color_pr5;
+        position: relative;
+        right: 20px;
+      }
+
+      hr { border-top: 3px solid #ebebeb; }
+    }
+
+    hr {
+      border: 0;
+      margin: 18px 0;
+      margin-top: 10px;
+    }
+
+
+  }
 }
 
 .sticky-block--right {
-  width: 80%;
-  margin-left: 20%;
+  display: inline-block;
+  width: 79%;
+}
+
+.pageTop {
+  background-color: #FFFFFF;
+  text-align: center;
+  margin-top: $mellomrom-lite;
+
+  img { max-width: 100%; }
+
+  .designblock {
+    max-width: 60%;
+  }
+
+  .silhouette {
+    display: block;
+    margin-bottom: $mellomrom;
+
+    svg {
+      height: 50px;
+      width: 50px;
+    }
+
+  }
+
+  h1 { margin-bottom: 1em; }
+
 }
 
 // FORSIDE
 .index {
-
-  .pageTop {
-    background-color: #FFFFFF;
-    text-align: center;
-    margin-top: $mellomrom-lite;
-
-    img { max-width: 100%; }
-
-    .designblock {
-      max-width: 45%;
-    }
-
-    .silhouette {
-      display: block;
-      margin-bottom: $mellomrom;
-
-      svg {
-        height: 50px;
-        width: 50px;
-      }
-
-    }
-
-    h1 { margin-bottom: 1em; }
-
-  }
 
   .apningstider {
     font-size: 0;
@@ -474,21 +514,83 @@ $padding: 70px;
 
 }
 
+// RESTAURANT
+
+.pageTop {
+  padding-bottom: $mellomrom-lite;
+}
+
+.restaurant {
+
+  .sticky-block {
+      width: 26%;
+  }
+
+  .sticky-block--right {
+    padding-top: $padding;
+    padding-left: 10%;
+    padding-right: 5%;
+    width: 73%;
+  }
+
+}
+
+
 .restaurant-menu {
+  text-align: center;
+  margin-bottom: 140px;
+
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  h2 {
+    margin-top: $mellomrom-lite;
+    margin-bottom: 120px;
+  }
 
   table {
     width: 100%;
+    text-align: left;
+    letter-spacing: .2em;
+
+    svg {
+      width: 30px;
+      height: 30px;
+      margin: 7px;
+    }
+
+    td { width: 85%; }
+
   }
-  
+
   .table--heading {
     text-transform: uppercase;
+    font-size: $h4;
+    font-family: $font_century;
 
     &.title { text-align: left; }
     &.price { text-align: right; }
   }
 
-  svg {
-    width: 30px;
-    height: 30px;
+  .table--body {
+    font-size: $h5;
+    padding-bottom: 7px;
   }
+
+  .table-allergen {
+    font-size: $h6;
+    display: inline-block;
+    text-align: center;
+
+    svg { display: inline-block; }
+
+    .table-allergen--text {
+      display: block;
+      margin-left: 7px;
+      margin-right: 7px;
+    }
+  }
+
 }

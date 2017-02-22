@@ -1,5 +1,5 @@
 {% extends "_layout" %}
-{% set bodyClass = "index" %}
+{% set bodyClass = "restaurant" %}
 
 {% block content %}
 	{# {% cache until midnight %}{% minify %} #}
@@ -34,12 +34,13 @@
 
 		<aside class="sticky-block">
 			<ul>
-				<li>Lunsjmeny</li>
-				<li>Klassisk meny</li>
-				<li>Ukens 3-retter</li>
-				{# {% for enkeltmeny in meny %}
-					<li>{{enkeltmeny.tittel}}</li>
-				{% endfor %} #}
+				{% for enkeltmeny in meny %}
+					<li {% if loop.index0 == 0 %} class="selected" {% endif %}>
+						<a>{{enkeltmeny.tittel}}</a>
+						<p>{{enkeltmeny.tidspunkt}}</p>
+						<hr></hr>
+					</li>
+				{% endfor %}
 			</ul>
 		</aside>
 
@@ -48,6 +49,7 @@
 			{% for enkeltmeny in meny %}
 
 			<article class="restaurant-menu">
+				{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
 				<h2>{{enkeltmeny.tittel}}</h2>
 
 				{% for oppskrift in enkeltmeny.oppskrifter %}
@@ -57,23 +59,36 @@
 							<th class="table--heading price">{{oppskrift.oppskrift.pris}}</th>
 						</tr>
 						<tr>
-							<td>{{oppskrift.oppskrift.tekst}}</td>
+							<td class="table--body">{{oppskrift.oppskrift.tekst}}</td>
 						</tr>
 						<tr>
 							<td>
 								{% for category in oppskrift.oppskrift.allergener %}
-										{% set hasDescendants = category.getDescendants().total() != 0 %}
-										{% if not hasDescendants %}
+									{% set hasDescendants = category.getDescendants().total() != 0 %}
+									{% if not hasDescendants %}
+										<div class="table-allergen">
 											{{craft.inlin.er(category.ikon[0].url, true) | raw }}
-											{{category.title}}
-										{% endif %}
-
+											<span class="table-allergen--text">{{category.title}}</span>
+										</div>
+									{% endif %}
 								{% endfor %}
 							</td>
 						</tr>
 					</table>
 					<hr>
 				{% endfor %}
+
+				<aside class="sticky-block">
+					<ul>
+						{% for enkeltmeny in meny %}
+							<li {% if loop.index0 == 0 %} class="selected" {% endif %}>
+								<a>{{enkeltmeny.tittel}}</a>
+								<p>{{enkeltmeny.tidspunkt}}</p>
+								<hr></hr>
+							</li>
+						{% endfor %}
+					</ul>
+				</aside>				
 
 
 			</article>

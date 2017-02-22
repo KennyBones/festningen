@@ -14,6 +14,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
         $window       = $m(window),
         $html         = $m(document.documentElement),
         $document	  = $m(document),
+        sticky_block = $m('.sticky-block'),
         desktop,
 		tablet,
 		phone,
@@ -54,6 +55,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 		}
 		gammel_label = label;
 		ticking = false;
+
 	}
 
     detect_size();
@@ -66,7 +68,33 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 	};
 
 	$html.addClass('lastet');
+  console.log(sticky_block);
 
+  $(sticky_block).each(function(index) {
+    console.log('blokk nummer:' + index);
+  })
+
+  function setSticky() {
+      requestAnimationFrame(setSticky);
+
+
+
+
+      // var sticky_height = sticky_block[0].getBoundingClientRect();
+      //
+      // if (sticky_height.top < 0 && !document.querySelector(sticky_block[0].classList.contains("fixed"))) {
+      //   sticky_block[0].className = " sticky-block fixed";
+      //   console.log('is sticky');
+      // } else {
+      //   sticky_block[0].className = " sticky-block";
+      //   console.log('is normal');
+      // }
+
+
+
+      // Drawing code goes here
+  }
+  //setSticky();
 
 
 /*=======================================================
