@@ -30,84 +30,78 @@
 
 
 	{% set meny = entry.meny %}
-	<section class="row designblock restaurantmenu">
+	{% set menuCount = 0 %}
+	{% for enkeltmeny in meny %}
 
-		<aside class="sticky-block">
-			<ul>
-				{% for enkeltmeny in meny %}
-					<li {% if loop.index0 == 0 %} class="selected" {% endif %}>
-						<a>{{enkeltmeny.tittel}}</a>
-						<p>{{enkeltmeny.tidspunkt}}</p>
-						<hr></hr>
-					</li>
-				{% endfor %}
-			</ul>
-		</aside>
+		{% set menuCount = menuCount + 1  %}
+		<section class="row designblock restaurantmenu">
 
-		<article class="sticky-block--right">
+			<aside class="sticky-block">
+				<ul>
+					{% for enkeltmeny in meny %}
+						<li {% if menuCount == loop.index %} class="selected" {% endif %}>
+							<a>{{enkeltmeny.tittel}}</a>
+							<p>{{enkeltmeny.tidspunkt}}</p>
+							<hr></hr>
+						</li>
 
-			{% for enkeltmeny in meny %}
-
-			<article class="restaurant-menu">
-				{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
-				<h2>{{enkeltmeny.tittel}}</h2>
-
-				{% for oppskrift in enkeltmeny.oppskrifter %}
-					<table>
-						<tr>
-							<th class="table--heading title">{{oppskrift.title}}</th>
-							<th class="table--heading price">{{oppskrift.oppskrift.pris}}</th>
-						</tr>
-						<tr>
-							<td class="table--body">{{oppskrift.oppskrift.tekst}}</td>
-						</tr>
-						<tr>
-							<td>
-								{% for category in oppskrift.oppskrift.allergener %}
-									{% set hasDescendants = category.getDescendants().total() != 0 %}
-									{% if not hasDescendants %}
-										<div class="table-allergen">
-											{{craft.inlin.er(category.ikon[0].url, true) | raw }}
-											<span class="table-allergen--text">{{category.title}}</span>
-										</div>
-									{% endif %}
-								{% endfor %}
-							</td>
-						</tr>
-					</table>
-					<hr>
-				{% endfor %}
-
-				<aside class="sticky-block">
-					<ul>
-						{% for enkeltmeny in meny %}
-							<li {% if loop.index0 == 0 %} class="selected" {% endif %}>
-								<a>{{enkeltmeny.tittel}}</a>
-								<p>{{enkeltmeny.tidspunkt}}</p>
-								<hr></hr>
-							</li>
-						{% endfor %}
-					</ul>
-				</aside>				
-
-
-			</article>
-
-			{% endfor %}
-			{# {% for enkeltmeny in meny %}
-				<article class="restaurant-menu--single">
-					{% for oppskrift in enkeltmeny.oppskrifter %}
-						<p>{{oppskrift.title}}</p>
 					{% endfor %}
-				</article>
 
-			{% endfor %} #}
-		</article>
+				</ul>
+			</aside>
+
+			<article class="sticky-block--right">
+
+				<article class="restaurant-menu">
+					{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
+					<h2>{{enkeltmeny.tittel}}</h2>
+
+					{% for oppskrift in enkeltmeny.oppskrifter %}
+						<table>
+							<tr>
+								<th class="table--heading title">{{oppskrift.title}}</th>
+								<th class="table--heading price">{{oppskrift.oppskrift.pris}}</th>
+							</tr>
+							<tr>
+								<td class="table--body">{{oppskrift.oppskrift.tekst}}</td>
+							</tr>
+							<tr>
+								<td>
+									{% for category in oppskrift.oppskrift.allergener %}
+										{% set hasDescendants = category.getDescendants().total() != 0 %}
+										{% if not hasDescendants %}
+											<div class="table-allergen">
+												{{craft.inlin.er(category.ikon[0].url, true) | raw }}
+												<span class="table-allergen--text">{{category.title}}</span>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</td>
+							</tr>
+						</table>
+						<hr>
+					{% endfor %}
+
+
+				</article>			
+
+
+				{# {% for enkeltmeny in meny %}
+					<article class="restaurant-menu--single">
+						{% for oppskrift in enkeltmeny.oppskrifter %}
+							<p>{{oppskrift.title}}</p>
+						{% endfor %}
+					</article>
+
+				{% endfor %}
+			</article>#}
 
 
 
-	</section>
 
 
+		</section>
+
+	{% endfor %}
 
 {% endblock %}

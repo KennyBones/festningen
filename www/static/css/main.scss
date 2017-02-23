@@ -247,10 +247,16 @@ $padding: 70px;
   width: 20%;
   vertical-align: top;
   padding-top: 200px;
-  position: relative;
+
+  position: absolute;
+  top: 0;
+  left: 0;
 
   &.fixed {
     position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
   }
 
   ul {
@@ -289,7 +295,9 @@ $padding: 70px;
 
 .sticky-block--right {
   display: inline-block;
-  width: 79%;
+  padding-left: 36%;
+  padding-right: 5%;
+  width: 100%;
 }
 
 .pageTop {
@@ -522,16 +530,7 @@ $padding: 70px;
 
 .restaurant {
 
-  .sticky-block {
-      width: 26%;
-  }
 
-  .sticky-block--right {
-    padding-top: $padding;
-    padding-left: 10%;
-    padding-right: 5%;
-    width: 73%;
-  }
 
 }
 
