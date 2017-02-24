@@ -252,12 +252,7 @@ $padding: 70px;
   top: 0;
   left: 0;
 
-  &.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
-  }
+
 
   ul {
     list-style: none;
@@ -267,36 +262,51 @@ $padding: 70px;
     font-family: $font_century;
     padding: 0;
 
+    a, p {
+      right: 0;
+      position: relative;
+      transition: right .3s ease, color .3s ease;
+      cursor: pointer;
+    }
+
+    li { position: relative; }
+
     p {
       font-size: 12px;
       font-family: $font_default;
     }
     a { font-size: $h3; }
 
-    li.selected {
-      a, p {
-        color: $color_pr5;
-        position: relative;
-        right: 20px;
-      }
-
-      hr { border-top: 3px solid #ebebeb; }
-    }
-
     hr {
       border: 0;
       margin: 18px 0;
       margin-top: 10px;
+      transition: width .3s ease;
+      width: 0;
+      border-top: 3px solid #ebebeb;
     }
 
+  }
+
+
+  &.is_stuck li.selected {
+
+    a, p {
+      color: $color_pr5;
+      right: 20px;
+    }
+
+    hr { width: 100%; }
 
   }
+
 }
 
 .sticky-block--right {
   display: inline-block;
   padding-left: 36%;
   padding-right: 5%;
+  padding-top: $padding *2;
   width: 100%;
 }
 

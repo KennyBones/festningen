@@ -58,6 +58,9 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 
 	}
 
+
+
+
     detect_size();
 	if (typeof runforceFeed === 'function') { runforceFeed(); }
 	window.onresize = function () {
@@ -68,21 +71,17 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 	};
 
 
-  function setSticky() {
-
-
-
-
-
-
-
-  }
-
 
 	$html.addClass('lastet');
 
 
-  console.log(inView.is(sticky_block[0]));
+  var stickyOptions = {
+    'spacer' : false
+  }
+  sticky_block.each(function() {
+    $(this).stick_in_parent(stickyOptions);
+  })
+
 
 
 
@@ -90,5 +89,24 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 /*=======================================================
 				  @Click/hover events
 =======================================================*/
+
+
+
+$document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
+  // Toggle menu
+  e.preventDefault();
+
+  var target = $(this.hash);
+  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+  if (target.length) {
+    $('html, body').animate({
+      scrollTop: target.offset().top + 2
+    }, 1000);
+    return false;
+  }
+
+
+  });
+
 
 }());
