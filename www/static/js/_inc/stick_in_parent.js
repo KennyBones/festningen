@@ -12,11 +12,12 @@
   win = $(window);
 
   $.fn.stick_in_parent = function(opts) {
-    var doc, elm, enable_bottoming, fn, i, inner_scrolling, len, manual_spacer, offset_top, offset_left, parent_selector, recalc_every, sticky_class;
+    var doc, elm, enable_bottoming, fn, i, inner_scrolling, len, manual_spacer, offset_top, offset_left, parent_selector, parent_subs, recalc_every, sticky_class;
     if (opts == null) {
       opts = {};
     }
-    sticky_class = opts.sticky_class, inner_scrolling = opts.inner_scrolling, recalc_every = opts.recalc_every, parent_selector = opts.parent, offset_top = opts.offset_top, manual_spacer = opts.spacer, enable_bottoming = opts.bottoming;
+    sticky_class = opts.sticky_class, inner_scrolling = opts.inner_scrolling, recalc_every = opts.recalc_every, parent_selector = opts.parent, parent_subs = opts.parent_subs, offset_top = opts.offset_top, manual_spacer = opts.spacer, enable_bottoming = opts.bottoming;
+
     if (offset_top == null) {
       offset_top = 0;
     }
@@ -37,16 +38,22 @@
       enable_bottoming = true;
     }
     fn = function(elm, padding_bottom, parent_top, parent_height, top, height, el_float, detached) {
-      var bottomed, detach, fixed, last_pos, last_scroll_height, offset, parent, recalc, recalc_and_tick, recalc_counter, spacer, tick;
+      var bottomed, detach, fixed, last_pos, last_scroll_height, offset, pos_left, parent, recalc, recalc_and_tick, recalc_counter, spacer, tick;
       if (elm.data("sticky_kit")) {
         return;
       }
       elm.data("sticky_kit", true);
       last_scroll_height = doc.height();
       parent = elm.parent();
+
       if (parent_selector != null) {
         parent = parent.closest(parent_selector);
       }
+
+      if (parent_subs != null) {
+        parent_subs = elm.parent().find(parent_subs);
+      }
+
       if (!parent.length) {
         throw "failed to find stick parent";
       }
@@ -67,6 +74,8 @@
         padding_bottom = parseInt(parent.css("padding-bottom"), 10);
         parent_top = parent.offset().top + border_top + padding_top;
         parent_height = parent.height();
+        pos_left = parent.offset().left;
+
         if (fixed) {
           fixed = false;
           bottomed = false;
@@ -74,12 +83,13 @@
             elm.insertAfter(spacer);
             spacer.detach();
           }
+
           elm.css({
             position: "",
             top: "",
             width: "",
             bottom: "",
-            left: ""
+            left: pos_left,
           }).removeClass(sticky_class);
           restore = true;
         }
@@ -130,14 +140,34 @@
             will_bottom = scroll + height + offset > parent_height + parent_top;
             if (bottomed && !will_bottom) {
               bottomed = false;
+              elm.addClass(sticky_class);
               elm.css({
                 position: "fixed",
                 bottom: "",
                 top: offset,
-                left: offset_left,
+                left: pos_left,
               }).trigger("sticky_kit:unbottom");
             }
           }
+
+          else {
+
+            console.log(scroll);
+            var $selectedli;
+
+            parent_subs.each(function(index) {
+              var divPosition = $(this).offset().top;
+
+              if (divPosition - 1 < scroll + 200) {
+                id = '#menu-anchor-eq' + index;
+                $selectedli = $(id);
+                $('.selected').removeClass('selected');
+                $selectedli.parent().addClass('selected');
+              }
+            })
+
+          }
+
           if (scroll < top) {
             fixed = false;
             offset = offset_top;
@@ -153,7 +183,6 @@
               top: "",
               left: ""
             };
-
 
             elm.css(css).removeClass(sticky_class).trigger("sticky_kit:unstick");
           }
@@ -178,7 +207,7 @@
             css = {
               position: "fixed",
               top: offset,
-              left: offset_left
+              left: pos_left
             };
             css.width = elm.css("box-sizing") === "border-box" ? elm.outerWidth() + "px" : elm.width() + "px";
             elm.css(css).addClass(sticky_class);
@@ -197,6 +226,7 @@
             will_bottom = scroll + height + offset > parent_height + parent_top;
           }
           if (!bottomed && will_bottom) {
+            elm.removeClass(sticky_class);
             bottomed = true;
             if (parent.css("position") === "static") {
               parent.css({

@@ -247,12 +247,17 @@ $padding: 70px;
   width: 20%;
   vertical-align: top;
   padding-top: 200px;
-
+  padding-bottom: 200px;
   position: absolute;
   top: 0;
   left: 0;
+  transform:translate3d(0%, 0, 0);
 
-
+  .sticky-block--wrapper {
+    background-color: #FFFFFF;
+    padding-top: $mellomrom;
+    padding-bottom: $mellomrom;
+  }
 
   ul {
     list-style: none;
@@ -261,6 +266,7 @@ $padding: 70px;
     letter-spacing: .2em;
     font-family: $font_century;
     padding: 0;
+    padding-right: $mellomrom-lite;
 
     a, p {
       right: 0;
@@ -272,10 +278,10 @@ $padding: 70px;
     li { position: relative; }
 
     p {
-      font-size: 12px;
+      font-size: $h7;
       font-family: $font_default;
     }
-    a { font-size: $h3; }
+    a { font-size: $h4; }
 
     hr {
       border: 0;
@@ -288,25 +294,24 @@ $padding: 70px;
 
   }
 
+  &.is_stuck {
 
-  &.is_stuck li.selected {
+    li.selected {
+      a, p {
+        color: $color_pr5;
+        right: 20px;
+      }
 
-    a, p {
-      color: $color_pr5;
-      right: 20px;
+      hr { width: 110%; }
     }
-
-    hr { width: 100%; }
-
   }
-
 }
 
 .sticky-block--right {
   display: inline-block;
-  padding-left: 36%;
-  padding-right: 5%;
-  padding-top: $padding *2;
+  padding-left: 30%;
+  padding-right: 10%;
+  padding-top: $padding;
   width: 100%;
 }
 

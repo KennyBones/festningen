@@ -14,7 +14,8 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
         $window       = $m(window),
         $html         = $m(document.documentElement),
         $document	  = $m(document),
-        sticky_block = $m('.sticky-block'),
+        $selskap_sticky_block = $m('.selskap .sticky-block'),
+        $restaurant_sticky_block = $('.restaurant .sticky-block'),
         desktop,
 		tablet,
 		phone,
@@ -74,12 +75,21 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 
 	$html.addClass('lastet');
 
-
-  var stickyOptions = {
-    'spacer' : false
+  // Sett sticky-block på restaurantblokker
+  var restaurant_stickyOptions = {
+    'spacer' : false,
+    'parent_subs' : '.restaurant-menu',
+    'bottoming' : false
   }
-  sticky_block.each(function() {
-    $(this).stick_in_parent(stickyOptions);
+  $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
+
+  // Sett sticky-block på selskapsblokker
+  var selskap_stickyOptions = {
+    'spacer' : false,
+    'offset_top' : 100
+  }
+  $selskap_sticky_block.each(function() {
+    $(this).stick_in_parent(selskap_stickyOptions);
   })
 
 
@@ -100,7 +110,7 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
   target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
   if (target.length) {
     $('html, body').animate({
-      scrollTop: target.offset().top + 2
+      scrollTop: target.offset().top - 50
     }, 1000);
     return false;
   }
