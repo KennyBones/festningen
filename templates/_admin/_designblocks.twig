@@ -21,7 +21,7 @@
       {# Tekstblokk øverst, ingen bilde #}
       {% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
         <section class="row designblock margin-{{blokk.mellomrom}}">
-          <article class="designblock tekst">
+          <article class="designblock tekst col-{{blokk.antallKolonner}}">
             {{blokk.rikTekst}}
           </article>
         </section>
@@ -53,7 +53,7 @@
               {# Tekst over stort bilde #}
               {% if blokk.tekstChkbox == 1 %}
 
-                <article class="designblock tekst">
+                <article class="designblock tekst col-{{blokk.antallKolonner}}">
                   {{blokk.rikTekst}}
                 </article>
 

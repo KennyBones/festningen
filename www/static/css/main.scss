@@ -126,6 +126,10 @@ $padding: 70px;
 
   .tekst {
     padding: $padding;
+
+    &.col-1 { column-count: 1; }
+    &.col-2 { column-count: 2; }
+
   }
 
   .fargeblokk {
