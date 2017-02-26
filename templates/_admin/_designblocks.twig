@@ -1,0 +1,106 @@
+{% macro designblocks(blokk) %}
+
+    {# contents of the macro here #}
+
+    {% if blokk.type == 'vareMenyer' %}
+      {# Menyer og tekstblokk #}
+
+      <section class="row designblock enkel menyer">
+        <article class="tekst">
+          {{blokk.vareMenyer[0].tekst}}
+        </article>
+
+        <article class="fargeblokk">
+          {{craft.inlin.er(blokk.vareMenyer[1].ikon[0].url, true) | raw }}
+          {{blokk.vareMenyer[1].tekst}}
+        </article>
+      </section>
+
+    {% else %}
+
+      {# Tekstblokk øverst, ingen bilde #}
+      {% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
+        <section class="row designblock margin-{{blokk.mellomrom}}">
+          <article class="designblock tekst">
+            {{blokk.rikTekst}}
+          </article>
+        </section>
+
+      {# Kun bilde #}
+      {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
+        <section class="row designblock bilde-full margin-{{blokk.mellomrom}}">
+          <article class="designblock bilde">
+            <img src="/static/img/designblockbilde.jpg">
+
+            {# Hvis det er bildetekst #}
+            {% if blokk.bildetekstChkbox == 1 %}
+              <aside class="bildetekst {{blokk.bildetekstposisjon}}">
+                {{blokk.bildetekst}}
+              </aside>
+            {% endif %}
+
+          </article>
+        </section>
+
+      {# Tekst og bilde #}
+      {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 1 %}
+
+          {# Bildeposisjon full #}
+          {% if blokk.bildeposisjon == 'full' %}
+
+            <section class="row designblock margin-{{blokk.mellomrom}} bilde-full">
+
+              {# Tekst over stort bilde #}
+              {% if blokk.tekstChkbox == 1 %}
+
+                <article class="designblock tekst">
+                  {{blokk.rikTekst}}
+                </article>
+
+                <article class="designblock bilde">
+                  <img src="/static/img/designblockbilde.jpg">
+
+                  {# Hvis det er bildetekst #}
+                  {% if blokk.bildetekstChkbox == 1 %}
+
+                    <aside class="bildetekst {{blokk.bildetekstposisjon}}">
+                      {{blokk.bildetekst}}
+                    </aside>
+
+                  {% endif %}
+                </article>
+              {% endif %}
+
+            </section>
+
+          {% else %}
+
+            {# Bildeposisjon høyre eller venstre #}
+            <section class="row designblock enkel margin-{{blokk.mellomrom}}">
+            {% if blokk.bildeposisjon == 'left' %}
+
+                <article class="designblock bilde">
+                  <img src="/static/img/designblockbilde.jpg">
+                </article>
+
+                <article class="designblock tekst">
+                  {{blokk.rikTekst}}
+                </article>
+
+            {% else %}
+
+                <article class="designblock tekst">
+                  {{blokk.rikTekst}}
+                </article>
+
+                <article class="designblock bilde">
+                  <img src="/static/img/designblockbilde.jpg">
+                </article>
+
+              {% endif %}
+              </section>
+          {% endif %}
+      {% endif %}
+    {% endif %}
+
+{% endmacro %}

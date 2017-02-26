@@ -21,7 +21,7 @@
     if (offset_top == null) {
       offset_top = 0;
     }
-    if (offset_left == null) {
+    if (offset_left == null && $(this)[0] != null) {
       offset_left = $(this)[0].getBoundingClientRect().left;
     }
     if (parent_selector == null) {
@@ -150,8 +150,7 @@
             }
           }
 
-          else {
-
+          if (parent_subs != null) {
             console.log(scroll);
             var $selectedli;
 
@@ -164,8 +163,7 @@
                 $('.selected').removeClass('selected');
                 $selectedli.parent().addClass('selected');
               }
-            })
-
+            })            
           }
 
           if (scroll < top) {

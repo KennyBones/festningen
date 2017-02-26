@@ -341,6 +341,26 @@ $padding: 70px;
 
 }
 
+.black-block {
+  background-color: #000000;
+  font-size: 0;
+
+  article {
+    text-align: center;
+
+    &:nth-of-type(1) {
+      border-right: 1px solid #FFFFFF;
+    }
+    &:nth-of-type(2) {
+      border-left: 1px solid #FFFFFF;
+    }
+  }
+
+  .knapp {
+    a:before { background-color: #FFFFFF; }
+  }
+}
+
 // FORSIDE
 .index {
 
@@ -372,6 +392,7 @@ $padding: 70px;
         }
 
       }
+
       &.second { background: $color_pr6; }
 
       .knapp {

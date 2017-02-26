@@ -78,10 +78,13 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
   // Sett sticky-block på restaurantblokker
   var restaurant_stickyOptions = {
     'spacer' : false,
-    'parent_subs' : '.restaurant-menu',
-    'bottoming' : false
+    'parent_subs' : '.restaurant-menu'
   }
-  $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
+
+  if ($restaurant_sticky_block != null) {
+    $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
+  }
+
 
   // Sett sticky-block på selskapsblokker
   var selskap_stickyOptions = {

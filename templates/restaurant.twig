@@ -84,20 +84,31 @@
 					{% endfor %}
 				</article>
 
-				{# {% for enkeltmeny in meny %}
-					<article class="restaurant-menu--single">
-						{% for oppskrift in enkeltmeny.oppskrifter %}
-							<p>{{oppskrift.title}}</p>
-						{% endfor %}
-					</article>
-
-				{% endfor %}
-			</article>#}
-
-
 			{% endfor %}
 		</section>
 
+
+		<section class="row designblock black-block">
+			<article class="fargeblokk">
+				<h3>Bestill bord</h3>
+				<p>Lorem ipsum dolor sit amet</p>
+				<span class="knapp">
+					<a href="#">Bestill her</a>
+				</span>
+			</article>
+			<article class="fargeblokk">
+				<h3>Selskapslokaler</h3>
+				<p>Lorem ipsum dolor sit amet</p>
+				<span class="knapp">
+					<a href="#">Les mer</a>
+				</span>
+			</article>
+		</section>
+
+		{% for blokk in entry.designblokkNeo %}
+			{% import '_admin/_designblocks' as designBlokkmacro %}
+			{{ designBlokkmacro.designblocks(blokk) }}
+		{% endfor %}
 
 
 {% endblock %}
