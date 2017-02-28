@@ -3,7 +3,7 @@
 -- Host: localhost	Database: festningen_craft
 -- ------------------------------------------------------
 -- Server version 	5.6.28
--- Date: Tue, 28 Feb 2017 17:19:57 +0000
+-- Date: Tue, 28 Feb 2017 17:22:08 +0000
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -2902,7 +2902,7 @@ CREATE TABLE `craft_tasks` (
   KEY `craft_tasks_lft_idx` (`lft`),
   KEY `craft_tasks_rgt_idx` (`rgt`),
   KEY `craft_tasks_level_idx` (`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2912,6 +2912,7 @@ CREATE TABLE `craft_tasks` (
 LOCK TABLES `craft_tasks` WRITE;
 /*!40000 ALTER TABLE `craft_tasks` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `craft_tasks` VALUES (54,54,1,2,0,5,11,'running','Imager_Jpegoptim',NULL,'{\"paths\":[\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC8599_a8f04744fcfc795e98ee1796b7ed5c1b.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC8599_9dccb027a5a83f233b69a0f3fbce0c43.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC8599_1c51ef028b274bdd09071e46067c6bce.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC0651_5e454757015b8b7044d6786dd2033eaa.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC0651_b9622059389aa9256966428451541410.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC0651_3e63d601b12304124ed2270e6ce1fa8b.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/dynamic\\/upload\\/bilder\\/restauranten\\/174\\/DSC0651_4a6c16e0f9eb6fb0827048422e3d9680.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC6970_64add329e1516bdef6688da17cfd8cd9.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC6970_a1888761bd32a3b8a9a59a252a4866bf.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/festningen_local\\/dynamic\\/upload\\/bilder\\/restauranten\\/DSC6970_bbb61885134fb58e1765f736ac0c871f.jpg\",\"E:\\/Git\\/festningen\\/www\\/dynamic\\/imager\\/dynamic\\/upload\\/bilder\\/restauranten\\/178\\/DSC6970_db5559eee9b6d0b9e35de7dff2978773.jpg\"]}','2017-02-28 17:21:42','2017-02-28 17:22:09','75b65917-0efe-4812-80e8-0ab67b39db4f');
 /*!40000 ALTER TABLE `craft_tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -3293,4 +3294,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 28 Feb 2017 17:19:58 +0000
+-- Dump completed on: Tue, 28 Feb 2017 17:22:10 +0000
