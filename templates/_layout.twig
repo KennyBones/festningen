@@ -48,11 +48,19 @@
 		{% endblock %}
 	<!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
+		<footer class="row">
+			<span>
+				{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
+			</span>
+				<div>{{footer.rikTekst}}</div>
+			</div>
+		</footer>
+
 		<script>
 			loadCSS("{{cdnUrl}}dist/{{ rev('css/main.css') |default('')}}");
 			requirejs(["main"]);
 		</script>
-
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{craft.simpleMap.apiKey}}" type="text/javascript"></script>
 		<noscript><link rel="stylesheet" href="{{cdnUrl}}dist/{{ rev('css/main.css') }}" /></noscript>
 	</body>
 </html>

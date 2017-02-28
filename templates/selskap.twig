@@ -1,5 +1,5 @@
 {% extends "_layout" %}
-{% set bodyClass = "restaurant" %}
+{% set bodyClass = "selskap" %}
 
 {% block content %}
 	{# {% cache until midnight %}{% minify %} #}
@@ -23,7 +23,6 @@
 			</span>
 
 			<h1>{{entry.tittel}}</h1>
-			<hr></hr>
 			<p>{{entry.rikTekst}}</p>
 		</div>
 
@@ -57,10 +56,7 @@
 				<article id="menu-eq{{loop.index0}}" class="restaurant-menu">
 					{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
 					<h2>{{enkeltmeny.tittel}}</h2>
-					<aside class="printThis">
-						{{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
-						<a href="">Skriv ut</a>
-					</aside>
+
 					{% for oppskrift in enkeltmeny.oppskrifter %}
 						<table>
 							<tr>

@@ -18,6 +18,18 @@
 
     {% else %}
 
+    {# {% set bilde = entry.listebilde | length ? entry.listebilde.first : entry.hovedbilde.first %} #}
+    {% set img = blokk.bilde.first | default(false) %}
+  	{% set bilde_stor = craft.imager.transformImage(img.url, [
+      { width: 320, height: 400 },
+  		{ width: 840, height: 600 },
+  		{ width: 1360, height: 730 },
+      ], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
+    {% set bilde_liten = craft.imager.transformImage(img, [
+      { width: 700, height: 380 },
+      ], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
       {# Tekstblokk øverst, ingen bilde #}
       {% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
         <section class="row designblock margin-{{blokk.mellomrom}}">
@@ -30,7 +42,7 @@
       {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
         <section class="row designblock bilde-full margin-{{blokk.mellomrom}}">
           <article class="designblock bilde">
-            <img src="/static/img/designblockbilde.jpg">
+            <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
 
             {# Hvis det er bildetekst #}
             {% if blokk.bildetekstChkbox == 1 %}
@@ -58,7 +70,7 @@
                 </article>
 
                 <article class="designblock bilde">
-                  <img src="/static/img/designblockbilde.jpg">
+                  <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
 
                   {# Hvis det er bildetekst #}
                   {% if blokk.bildetekstChkbox == 1 %}
@@ -80,7 +92,7 @@
             {% if blokk.bildeposisjon == 'left' %}
 
                 <article class="designblock bilde">
-                  <img src="/static/img/designblockbilde.jpg">
+                  <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_liten[0].url}}" alt="{{img.title | default("")}}">
                 </article>
 
                 <article class="designblock tekst">
@@ -94,7 +106,7 @@
                 </article>
 
                 <article class="designblock bilde">
-                  <img src="/static/img/designblockbilde.jpg">
+                  <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_liten[0].url}}" alt="{{img.title | default("")}}">
                 </article>
 
               {% endif %}
