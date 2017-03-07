@@ -109,17 +109,17 @@ $padding: 70px;
   vertical-align: top;
 
   // padding
-  &.margin-top {
+  &.margin-over {
     margin-top: $mellomrom;
   }
 
-  &.margin-bottom {
+  &.margin-under {
     margin-bottom: $mellomrom;
   }
 
   &.margin-begge {
-    margin-top: $mellomrom;
-    margin-bottom: $mellomrom;
+    border-top: $mellomrom solid $color_pr3;
+    border-bottom: $mellomrom solid $color_pr3;
   }
 
   a { font-weight: bold; }
@@ -127,8 +127,8 @@ $padding: 70px;
   .tekst {
     padding: $padding;
 
-    &.col-1 { column-count: 1; }
-    &.col-2 { column-count: 2; }
+    &.col-1 p{ column-count: 1; }
+    &.col-2 p{ column-count: 2; }
 
   }
 
@@ -211,7 +211,7 @@ $padding: 70px;
       width: 100%;
       position: relative;
 
-      img { min-width: 100%; position: static; }
+      img { max-width: 100%; position: static; }
 
       .bildetekst {
         background-color: #FFFFFF;
@@ -314,7 +314,6 @@ $padding: 70px;
 .sticky-block--right {
   display: inline-block;
   padding-left: 30%;
-  padding-right: 10%;
   padding-top: $padding;
   width: 100%;
 }
@@ -341,7 +340,15 @@ $padding: 70px;
 
   }
 
-  h1 { margin-bottom: 1em; }
+  h1 { margin-bottom: .5em; }
+  hr {
+    border-top: 4px solid black;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 3em;
+  }
 
 }
 
@@ -363,6 +370,37 @@ $padding: 70px;
   .knapp {
     a:before { background-color: #FFFFFF; }
   }
+}
+
+aside.printThis {
+  position: absolute;
+  top: 100px;
+  right: -80px;
+  background-color: $color_pr5;
+  padding:15px;
+
+  svg {
+    fill: #FFFFFF;
+    height: 20px;
+    width: 20px;
+    margin-right: 25px;
+  };
+
+  a {
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+
+    opacity: 1;
+
+  }
+
+  &:hover {
+    a {
+      opacity: 1;
+    }
+  }
+
 }
 
 // FORSIDE
@@ -574,10 +612,10 @@ $padding: 70px;
 
 }
 
-
 .restaurant-menu {
   text-align: center;
   margin-bottom: 140px;
+  position: relative;
 
   svg {
     width: 50px;
@@ -593,6 +631,7 @@ $padding: 70px;
     width: 100%;
     text-align: left;
     letter-spacing: .2em;
+    padding-right: 10%;
 
     svg {
       width: 30px;
@@ -631,5 +670,30 @@ $padding: 70px;
       margin-right: 7px;
     }
   }
+}
+
+footer {
+  margin: $mellomrom * 2;
+  text-align: left;
+
+  span {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 12px;
+
+    svg {
+      height: 80px;
+      width: 180px;
+      display: inline-block;
+      margin-right: $mellomrom * 2;
+    }
+
+  }
+
+  div {
+    display: inline-block;
+    font-size: $h6;
+  }
+
 
 }
