@@ -25,11 +25,75 @@
 			<h1>{{entry.tittel}}</h1>
 			<p>{{entry.rikTekst}}</p>
 		</div>
+	</section>
+
+	<section class="row designblock arrangement-top margin-over">
+		<img src="/static/img/designblockbilde.jpg">
+		<aside class="bildetekst">
+			Bildetekst
+		</aside>
+	<section>
+
+	<section class="row designblock arrangement">
+
+		<aside class="sticky-block">
+			<div class="sticky-block--wrapper">
+				<ul>
+						<li>
+							<a id="menu-anchor-eq1" href="#menu-eq1">Bryllup</a>
+							<p>HELE ÅRET</p>
+							<hr></hr>
+						</li>
+						<li>
+							<a id="menu-anchor-eq2" href="#menu-eq2">Barnedåp</a>
+							<p>HELE ÅRET</p>
+							<hr></hr>
+						</li>
+				</ul>
+			</div>
+		</aside>
+
+		<article class="designblock tekst margin-under">
+			<h3>Bryllyp</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+		</article>
+
+		<section class="row designblock black-block">
+			<article class="fargeblokk">
+				<h4>Bestill bord</h4>
+				<p>Lorem ipsum dolor sit amet</p>
+				<span class="knapp">
+					<a href="#">Bestill her</a>
+				</span>
+			</article>
+			<article class="fargeblokk">
+				<h4>Selskapslokaler</h4>
+				<p>Lorem ipsum dolor sit amet</p>
+				<span class="knapp">
+					<a href="#">Les mer</a>
+				</span>
+			</article>
+			<article class="fargeblokk">
+				<h4>Selskapslokaler</h4>
+				<p>Lorem ipsum dolor sit amet</p>
+				<span class="knapp">
+					<a href="#">Les mer</a>
+				</span>
+			</article>			
+		</section>
+
+		<article class="designblock bilde">
+			<img src="/static/img/designblockbilde.jpg">
+				<aside class="bildetekst">
+					Lorem ipsum bildetekst
+				</aside>
+		</article>
+
 
 	</section>
 
 
-	{% set meny = entry.meny %}
+	{# {% set meny = entry.meny %}
 	{% set menuCount = 0 %}
 
 	{% set menuCount = menuCount + 1  %}
@@ -108,7 +172,7 @@
 		{% for blokk in entry.designblokkNeo %}
 			{% import '_admin/_designblocks' as designBlokkmacro %}
 			{{ designBlokkmacro.designblocks(blokk) }}
-		{% endfor %}
+		{% endfor %} #}
 
 
 {% endblock %}
