@@ -27,70 +27,74 @@
 		</div>
 	</section>
 
-	<section class="row designblock arrangement-top margin-over">
-		<img src="/static/img/designblockbilde.jpg">
-		<aside class="bildetekst">
-			Bildetekst
-		</aside>
-	<section>
+	{% set stickyCount = 0 %}
+	{% for lokale in entry.lokaleNeo.level(1) %}
+		{% set stickyCount = stickyCount + 1  %}
+		<section class="row designblock sticky-parent">
 
-	<section class="row designblock arrangement">
+			<aside class="sticky-block">
+				<div class="sticky-block--wrapper">
+					<ul>
 
-		<aside class="sticky-block">
-			<div class="sticky-block--wrapper">
-				<ul>
-						<li>
-							<a id="menu-anchor-eq1" href="#menu-eq1">Bryllup</a>
-							<p>HELE ÅRET</p>
-							<hr></hr>
-						</li>
-						<li>
-							<a id="menu-anchor-eq2" href="#menu-eq2">Barnedåp</a>
-							<p>HELE ÅRET</p>
-							<hr></hr>
-						</li>
-				</ul>
-			</div>
-		</aside>
+						{% for enkeltblokk in entry.lokaleNeo.level(1) %}
+							{% for topp in enkeltblokk.children %}
+								{% if topp.type == 'topp' %}
+									<li {% if stickyCount == loop.index %} class="selected" {% endif %}>
+										<a id="menu-anchor-eq{{loop.index0}}" href="#menu-eq{{loop.index0}}">{{topp.tittel}}</a>
+										<hr></hr>
+									</li>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+					</ul>
+				</div>
+			</aside>
 
-		<article class="designblock tekst margin-under">
-			<h3>Bryllyp</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-		</article>
+			<article class="sticky-child">
+				{% for blokk in lokale.children %}
 
-		<section class="row designblock black-block">
-			<article class="fargeblokk">
-				<h4>Bestill bord</h4>
-				<p>Lorem ipsum dolor sit amet</p>
-				<span class="knapp">
-					<a href="#">Bestill her</a>
-				</span>
+					{% switch blokk.type.handle %}
+
+							{% case 'topp' %}
+
+							{% set img = blokk.toppbilde.first | default(false) %}
+							{% set bilde = craft.imager.transformImage(img, [
+								{ width: 320, height: 200 },
+								{ width: 840, height: 400 },
+								{ width: 1680, height: 530 },
+								], { ratio:"16/9" }) %}
+
+								<section class="row designblokk top-blokk">
+									<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+
+									{% if blokk.bildetekstChkbox %}
+										<aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
+			                {{blokk.bildetekst}}
+			              </aside>
+									{% endif %}
+
+								</section>
+
+	            {% case 'designblokk' %}
+								{% import '_admin/_designblocks' as designBlokkmacro %}
+								{{ designBlokkmacro.designblocks(blokk) }}
+
+	            {% case 'svartBoks' %}
+								<section class="row designblock black-block num-{{lokale.svartBoks | length}}">
+
+									{% for boks in blokk.svartBoks.boks %}
+										<article class="fargeblokk">
+											{{boks.boks}}
+										</article>
+									{% endfor %}
+
+								</section>
+
+	        {% endswitch %}
+				{% endfor %}
 			</article>
-			<article class="fargeblokk">
-				<h4>Selskapslokaler</h4>
-				<p>Lorem ipsum dolor sit amet</p>
-				<span class="knapp">
-					<a href="#">Les mer</a>
-				</span>
-			</article>
-			<article class="fargeblokk">
-				<h4>Selskapslokaler</h4>
-				<p>Lorem ipsum dolor sit amet</p>
-				<span class="knapp">
-					<a href="#">Les mer</a>
-				</span>
-			</article>			
 		</section>
-
-		<article class="designblock bilde">
-			<img src="/static/img/designblockbilde.jpg">
-				<aside class="bildetekst">
-					Lorem ipsum bildetekst
-				</aside>
-		</article>
-
-
-	</section>
+	{% endfor %}
 
 
 	{# {% set meny = entry.meny %}

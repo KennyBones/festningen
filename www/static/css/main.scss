@@ -159,7 +159,7 @@ $padding: 70px;
         background-color: #000000;
         height: 14px;
         width: 3px;
-        top: 3px;
+        top: 2px;
         left: -16px;
       }
 
@@ -668,6 +668,81 @@ aside.printThis {
       display: block;
       margin-left: 7px;
       margin-right: 7px;
+    }
+  }
+}
+
+.sticky-parent {
+  position: relative;
+
+  .top-blokk {
+
+    img {
+      max-width: 100%;
+    }
+
+    .bildetekst {
+      background-color: $color_pr4;
+      color: #FFFFFF;
+      position: absolute;
+      padding: $padding;
+      width: 430px;
+      text-align: center;
+
+      &.drop-right {
+        bottom: $padding;
+        right: $padding;
+      }
+
+      &.drop-left {
+        bottom: $padding;
+        left: $padding;
+      }
+
+      &.right {
+        top: $padding;
+        right: $padding;
+      }
+
+      &.left {
+        top: $padding;
+        left: $padding;
+      }
+
+      p {
+        font-size: $h5;
+      }
+
+      a {
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+        font-size: $h6;
+        position: relative;
+
+        &:before {
+          content: "";
+          position: absolute;
+          background-color: #FFFFFF;
+          height: 14px;
+          width: 3px;
+          top: 2px;
+          left: -16px;
+        }
+      }
+    }
+
+  }
+
+  .sticky-block {
+    top: 430px;
+    padding-top: 0;
+    z-index: 2;
+  }
+
+  .sticky-child {
+    .col-2, .col-3, .col-4 {
+      padding-left: 30%;
     }
   }
 }
