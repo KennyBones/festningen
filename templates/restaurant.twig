@@ -30,7 +30,7 @@
 	</section>
 
 
-	{% set meny = entry.meny %}
+	{% set meny = entry.restaurantMeny %}
 	{% set menuCount = 0 %}
 
 	{% set menuCount = menuCount + 1  %}
@@ -58,7 +58,9 @@
 					{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
 					<h2>{{enkeltmeny.tittel}}</h2>
 					<aside class="printThis">
-						{{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
+						<div class="printThis--wrapper">
+							{{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
+						</div>
 						<a href="">Skriv ut</a>
 					</aside>
 					{% for oppskrift in enkeltmeny.oppskrifter %}

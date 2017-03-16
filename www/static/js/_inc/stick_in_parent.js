@@ -74,7 +74,13 @@
         padding_bottom = parseInt(parent.css("padding-bottom"), 10);
         parent_top = parent.offset().top + border_top + padding_top;
         parent_height = parent.height();
+
+        // if (parent_subs != null) {
         pos_left = parent.offset().left;
+        // } else {
+        //   pos_left = 0;
+        // }
+
 
         if (fixed) {
           fixed = false;
@@ -163,7 +169,7 @@
                 $('.selected').removeClass('selected');
                 $selectedli.parent().addClass('selected');
               }
-            })            
+            })
           }
 
           if (scroll < top) {

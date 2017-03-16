@@ -21,7 +21,15 @@ body {
   background-repeat: no-repeat;
   background-position: 70px 60%;
   background-size: 660px;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  &.fixed {
+    position: fixed;
+  }
 
   nav {
       width: 100%;
@@ -78,7 +86,7 @@ body {
     &:hover {
       cursor: pointer;
 
-      background-color: $color_pr3;
+      background-color: $color_pr4;
 
       svg path{
         fill: #FFFFFF;
@@ -89,6 +97,7 @@ body {
       height: 30px;
       width: 30px;
       top: 20px;
+      left: 3px;
       position: relative;
     }
   }
@@ -285,7 +294,7 @@ $padding: 70px;
       font-size: $h7;
       font-family: $font_default;
     }
-    a { font-size: $h4; }
+    a { font-size: $h5; }
 
     hr {
       border: 0;
@@ -298,7 +307,7 @@ $padding: 70px;
 
   }
 
-  &.is_stuck {
+
 
     li.selected {
       a, p {
@@ -308,7 +317,7 @@ $padding: 70px;
 
       hr { width: 110%; }
     }
-  }
+
 }
 
 .sticky-block--right {
@@ -322,6 +331,7 @@ $padding: 70px;
   background-color: #FFFFFF;
   text-align: center;
   margin-top: $mellomrom-lite;
+  margin-top: 68px;
 
   img { max-width: 100%; }
 
@@ -375,30 +385,52 @@ $padding: 70px;
 aside.printThis {
   position: absolute;
   top: 100px;
-  right: -80px;
-  background-color: $color_pr5;
-  padding:15px;
+  right: -68px;
+  transition: width .3s ease;
+  text-align: left;
+  font-size: 0;
+
+  &:hover {
+    cursor: pointer;
+    a { opacity: 1; left: 0; }
+  }
+
+  .printThis--wrapper {
+    background-color: $color_pr5;
+    height: 50px;
+    width: 50px;
+    padding: 15px;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+  }
 
   svg {
     fill: #FFFFFF;
     height: 20px;
     width: 20px;
-    margin-right: 25px;
+    display: inline-block;
+    z-index: 2;
   };
 
   a {
     color: #fff;
     font-size: 12px;
     text-transform: uppercase;
-
     opacity: 1;
-
-  }
-
-  &:hover {
-    a {
-      opacity: 1;
-    }
+    transition: opacity .1s ease, left .2s ease;
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    background-color: $color_pr5;
+    height: 50px;
+    padding: 15px;
+    padding-left: 0;
+    margin: 0;
+    vertical-align: top;
+    left: -50px;
+    opacity: 0;
+    line-height: 2em;
   }
 
 }
@@ -608,7 +640,9 @@ aside.printThis {
 
 .restaurant {
 
-
+  .sticky-block {
+    a { font-size: $h4; }
+  }
 
 }
 
@@ -630,7 +664,7 @@ aside.printThis {
   table {
     width: 100%;
     text-align: left;
-    letter-spacing: .2em;
+    letter-spacing: .1em;
     padding-right: 10%;
 
     svg {
@@ -642,6 +676,8 @@ aside.printThis {
     td { width: 85%; }
 
   }
+
+  hr { margin-right: 80px; }
 
   .table--heading {
     text-transform: uppercase;
@@ -672,10 +708,12 @@ aside.printThis {
   }
 }
 
-.sticky-parent {
+.lokaler-parent {
   position: relative;
+  font-size: 0;
+  border-top: 40px solid $color_pr3;
 
-  .top-blokk {
+  .lokaler-topp {
 
     img {
       max-width: 100%;
@@ -731,18 +769,72 @@ aside.printThis {
         }
       }
     }
+  }
+
+  .black-block article {
+
+      &:nth-of-type(1) {
+        border-right: 1px solid $color_pr3;
+      }
+      &:nth-of-type(2) {
+        border-left: 1px solid $color_pr3;
+      }
 
   }
 
-  .sticky-block {
-    top: 430px;
-    padding-top: 0;
+  .fakta-block {
     z-index: 2;
+    width: 25%;
+    display: inline-block;
+    font-size: $basesize;
+    padding: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    ul {
+      list-style: none;
+      text-transform: uppercase;
+      text-align: right;
+      letter-spacing: .1em;
+      font-family: $font_century;
+      padding: 0;
+      padding-right: $mellomrom-lite;
+
+      p {
+        font-size: $h7;
+        font-family: $font_default;
+        margin-bottom: 2em;
+      }
+      strong { font-size: $h5; }
+
+      hr {
+        border: 0;
+        margin: 18px 0;
+        margin-top: 10px;
+        transition: width .3s ease;
+        width: 0;
+        border-top: 3px solid #ebebeb;
+      }
+
+    }
   }
 
-  .sticky-child {
-    .col-2, .col-3, .col-4 {
-      padding-left: 30%;
+  .lokaler-brodtekst{
+    display: inline-block;
+    width: 75%;
+    vertical-align: top;
+    font-size: $basesize;
+    padding: 90px;
+    padding-right: 130px;
+    line-height: 1.6em;
+
+    h2 {
+      text-align: right;
+      margin-bottom: 2em;
+    }
+
+    .lokaler-rikTekst {
+      letter-spacing: 1px;
     }
   }
 }

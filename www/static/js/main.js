@@ -268,10 +268,10 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     'offset_top' : 100
   }
 
-  $selskap_sticky_block.each(function() {
-    console.log($(this));
-    //$(this).stick_in_parent(selskap_stickyOptions);
-  })
+  // $selskap_sticky_block.each(function() {
+  //   console.log($(this));
+  //   $(this).stick_in_parent(selskap_stickyOptions);
+  // })
 
 
 
