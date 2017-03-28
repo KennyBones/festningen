@@ -118,16 +118,8 @@ $padding: 70px;
   vertical-align: top;
 
   // padding
-  &.margin-over {
-    margin-top: $mellomrom;
-  }
 
-  &.margin-under {
-    margin-bottom: $mellomrom;
-  }
-
-  &.margin-begge {
-    border-top: $mellomrom solid $color_pr3;
+  &.margin-1 {
     border-bottom: $mellomrom solid $color_pr3;
   }
 
@@ -135,6 +127,7 @@ $padding: 70px;
 
   .tekst {
     padding: $padding;
+    font-size: $basesize;
 
     &.col-1 p{ column-count: 1; }
     &.col-2 p{ column-count: 2; }
@@ -227,6 +220,7 @@ $padding: 70px;
         position: absolute;
         padding: $padding;
         width: 50%;
+        font-size: $basesize;
 
         &.drop-right {
           bottom: $padding * 2;
@@ -366,15 +360,40 @@ $padding: 70px;
   background-color: #000000;
   font-size: 0;
 
-  article {
+  .fargeblokk {
     text-align: center;
+    padding-left: $padding * 2;
+    padding-right: $padding * 2;
+  }
+
+  &.num-2 .fargeblokk{
+    width: 50%;
 
     &:nth-of-type(1) {
       border-right: 1px solid #FFFFFF;
     }
+
     &:nth-of-type(2) {
       border-left: 1px solid #FFFFFF;
     }
+
+  }
+
+  &.num-3 .fargeblokk {
+    width: 33.33%;
+
+    &:nth-of-type(1) {
+      border-right: 1px solid #FFFFFF;
+    }
+
+    &:nth-of-type(2) {
+      border-right: 1px solid #FFFFFF;
+    }
+
+    &:nth-of-type(3) {
+      border-left: 1px solid #FFFFFF;
+    }
+
   }
 
   .knapp {
@@ -726,6 +745,7 @@ aside.printThis {
       padding: $padding;
       width: 430px;
       text-align: center;
+      font-size: $basesize;
 
       &.drop-right {
         bottom: $padding;
@@ -839,9 +859,39 @@ aside.printThis {
   }
 }
 
+// SELSKAP
+
+.arrangement-list {
+  justify-content: space-between;
+  display: flex;
+  padding: 0;
+  background-color: #e0e0e0;
+
+  li{
+    display: inline-block;
+    width: calc(22% - 39px);
+
+    a {
+      background: #b5b5b5;
+      padding: 19px 38px;
+      display: block;
+      text-align: center;
+      margin: 0;
+
+      &:hover {
+        background: $color_pr4;
+        color: white;
+      }
+    }
+  }
+}
+
+
+
 footer {
-  margin: $mellomrom * 2;
+  padding: $mellomrom * 2;
   text-align: left;
+  background-color: $color_pr3;
 
   span {
     display: inline-block;

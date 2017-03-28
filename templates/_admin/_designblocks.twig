@@ -16,6 +16,16 @@
         </article>
       </section>
 
+    {% elseif blokk.type == 'svartBoks' %}
+
+      <section class="row designblock black-block num-{{blokk.svartBoks.boks | length}}">
+
+        {% for boks in blokk.svartBoks.boks %}
+          <article class="fargeblokk">
+            {{boks.boks}}
+          </article>
+        {% endfor %}
+      </section>
     {% else %}
 
     {# {% set bilde = entry.listebilde | length ? entry.listebilde.first : entry.hovedbilde.first %} #}
@@ -106,6 +116,7 @@
             {% else %}
 
                 <article class="designblock tekst">
+                  {{blokk.tittel}}
                   {{blokk.rikTekst}}
                 </article>
 

@@ -36,220 +36,59 @@
 
 				{% switch blokk.type.handle %}
 
-						{% case 'topp' %}
-							<div class="lokaler-topp">
-								{% set img = blokk.toppbilde.first | default(false) %}
-								{% set bilde = craft.imager.transformImage(img, [
-									{ width: 320, height: 200 },
-									{ width: 840, height: 400 },
-									{ width: 1680, height: 530 },
-									], { ratio:"16/9" }) %}
+					{% case 'topp' %}
+					<div class="lokaler-topp">
+						{% set img = blokk.toppbilde.first | default(false) %}
+						{% set bilde = craft.imager.transformImage(img, [
+						{ width: 320, height: 200 },
+						{ width: 840, height: 400 },
+						{ width: 1680, height: 530 },
+						], { ratio:"16/9" }) %}
 
-									<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+						<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
 
-									{% if blokk.bildetekstChkbox %}
-										<aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
-											{{blokk.bildetekst}}
-										</aside>
-									{% endif %}
-							</div>
-
-							<aside class="fakta-block">
-								<ul>
-									{% for linje in blokk.faktaboks %}
-										<li>
-											<strong>{{linje.tittel}}</strong>
-											{{linje.tekst}}
-										</li>
-									{% endfor %}
-								</ul>
+						{% if blokk.bildetekstChkbox %}
+							<aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
+								{{blokk.bildetekst}}
 							</aside>
+						{% endif %}
+					</div>
 
-
-							<div class="lokaler-brodtekst">
-								<h2>{{blokk.tittel}}</h2>
-								<div class="lokaler-rikTekst">
-									{{blokk.rikTekst}}
-								</div>
-							</div>
-							</section>
-
-						{% case 'designblokk' %}
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-            {% case 'svartBoks' %}
-							<section class="row designblock black-block num-{{lokale.svartBoks | length}}">
-
-								{% for boks in blokk.svartBoks.boks %}
-									<article class="fargeblokk">
-										{{boks.boks}}
-									</article>
-								{% endfor %}
-
-							</section>
-
-
-					{% endswitch %}
-
-				{% endfor %}
-
-
-	{% endfor %}
-
-
-
-	{# {% for lokale in entry.lokaleNeo.level(1) %}
-		{% set stickyCount = stickyCount + 1  %}
-
-		<section class="row designblock lokaler-parent">
-
-			<aside class="fakta-block">
-					<ul>
-						{% set childCount = 0 %}
-						{% for enkeltblokk in entry.lokaleNeo.level(1) %}
-							{% for topp in enkeltblokk.children %}
-								{% if topp.type == 'topp' %}
-									<li>
-										<a id="menu-anchor-eq{{childCount}}">{{topp.tittel}}</a>
-										<p>300 gjester</p>
-										<hr></hr>
-									</li>
-								{% endif %}
+					<aside class="fakta-block">
+						<ul>
+							{% for linje in blokk.faktaboks %}
+								<li>
+									<strong>{{linje.tittel}}</strong>
+									{{linje.tekst}}
+								</li>
 							{% endfor %}
-						{% endfor %}
-					</ul>
-			</aside>
-
-			<article class="lokale-wrapper">
-				{% for blokk in lokale.children %}
-
-					{% switch blokk.type.handle %}
-
-							{% case 'topp' %}
-
-							{% set img = blokk.toppbilde.first | default(false) %}
-							{% set bilde = craft.imager.transformImage(img, [
-								{ width: 320, height: 200 },
-								{ width: 840, height: 400 },
-								{ width: 1680, height: 530 },
-								], { ratio:"16/9" }) %}
-
-								<section class="row top-blokk">
-									<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
-
-									{% if blokk.bildetekstChkbox %}
-										<aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
-			                {{blokk.bildetekst}}
-			              </aside>
-									{% endif %}
-
-								</section>
-
-							<section class="sticky-child">
-
-	            {% case 'designblokk' %}
-								{% import '_admin/_designblocks' as designBlokkmacro %}
-								{{ designBlokkmacro.designblocks(blokk) }}
-
-	            {% case 'svartBoks' %}
-								<section class="row designblock black-block num-{{lokale.svartBoks | length}}">
-
-									{% for boks in blokk.svartBoks.boks %}
-										<article class="fargeblokk">
-											{{boks.boks}}
-										</article>
-									{% endfor %}
-
-								</section>
-							</section>
-	        {% endswitch %}
-				{% endfor %}
-			</article>
-		</section>
-	{% endfor %}
+						</ul>
+					</aside>
 
 
-	{% set meny = entry.meny %}
-	{% set menuCount = 0 %}
+					<div class="lokaler-brodtekst">
+						<h2>{{blokk.tittel}}</h2>
+						<div class="lokaler-rikTekst">
+							{{blokk.rikTekst}}
+						</div>
+					</div>
 
-	{% set menuCount = menuCount + 1  %}
-	<section class="row designblock restaurantmenu">
 
-		<aside class="sticky-block">
-			<div class="sticky-block--wrapper">
-				<ul>
-					{% for enkeltmeny in meny %}
-						<li {% if menuCount == loop.index %} class="selected" {% endif %}>
-							<a id="menu-anchor-eq{{loop.index0}}" href="#menu-eq{{loop.index0}}">{{enkeltmeny.tittel}}</a>
-							<p>{{enkeltmeny.tidspunkt}}</p>
-							<hr></hr>
-						</li>
+					{% case 'designblokk' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
-					{% endfor %}
-				</ul>
-			</div>
-		</aside>
+					{% case 'svartBoks' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
-		<article class="sticky-block--right">
 
-			{% for enkeltmeny in meny %}
-				<article id="menu-eq{{loop.index0}}" class="restaurant-menu">
-					{{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
-					<h2>{{enkeltmeny.tittel}}</h2>
-
-					{% for oppskrift in enkeltmeny.oppskrifter %}
-						<table>
-							<tr>
-								<th class="table--heading title">{{oppskrift.title}}</th>
-								<th class="table--heading price">{{oppskrift.oppskrift.pris}}</th>
-							</tr>
-							<tr>
-								<td class="table--body">{{oppskrift.oppskrift.tekst}}</td>
-							</tr>
-							<tr>
-								<td>
-									{% for category in oppskrift.oppskrift.allergener %}
-										{% set hasDescendants = category.getDescendants().total() != 0 %}
-										{% if not hasDescendants %}
-											<div class="table-allergen">
-												{{craft.inlin.er(category.ikon[0].url, true) | raw }}
-												<span class="table-allergen--text">{{category.title}}</span>
-											</div>
-										{% endif %}
-									{% endfor %}
-								</td>
-							</tr>
-						</table>
-						<hr>
-					{% endfor %}
-				</article>
+				{% endswitch %}
 
 			{% endfor %}
+
 		</section>
 
-
-		<section class="row designblock black-block">
-			<article class="fargeblokk">
-				<h4>Bestill bord</h4>
-				<p>Lorem ipsum dolor sit amet</p>
-				<span class="knapp">
-					<a href="#">Bestill her</a>
-				</span>
-			</article>
-			<article class="fargeblokk">
-				<h4>Selskapslokaler</h4>
-				<p>Lorem ipsum dolor sit amet</p>
-				<span class="knapp">
-					<a href="#">Les mer</a>
-				</span>
-			</article>
-		</section>
-
-		{% for blokk in entry.designblokkNeo %}
-			{% import '_admin/_designblocks' as designBlokkmacro %}
-			{{ designBlokkmacro.designblocks(blokk) }}
-		{% endfor %} #}
-
+	{% endfor %}
 
 {% endblock %}
