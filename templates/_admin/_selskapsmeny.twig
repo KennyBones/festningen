@@ -1,0 +1,64 @@
+{% macro designblocks(blokk) %}
+
+{% set meny = blokk.selskapsMeny %}
+{% set menuCount = 0 %}
+
+{% set menuCount = menuCount + 1  %}
+<section class="row designblock restaurantmenu">
+
+  <aside class="sticky-block">
+    <div class="sticky-block--wrapper">
+      <ul>
+        {% for enkeltmeny in meny %}
+          <li {% if menuCount == loop.index %} class="selected" {% endif %}>
+            <a id="menu-anchor-eq{{loop.index0}}" href="#menu-eq{{loop.index0}}">{{enkeltmeny.tittel}}</a>
+            <hr></hr>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
+
+  <article class="sticky-block--right">
+
+    {% for enkeltmeny in meny %}
+      <article id="menu-eq{{loop.index0}}" class="restaurant-menu">
+        {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
+        <h2>{{enkeltmeny.tittel}}</h2>
+        <span>{{enkeltmeny.pris}}</span>
+        <aside class="printThis">
+          <div class="printThis--wrapper">
+            {{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
+          </div>
+          <a href="">Skriv ut</a>
+        </aside>
+        {% for oppskrift in enkeltmeny.oppskrifter %}
+          <table>
+            <tr>
+              <th class="table--heading title">{{oppskrift.title}}</th>
+            </tr>
+            <tr>
+              <td class="table--body">{{oppskrift.oppskrift.tekst}}</td>
+            </tr>
+            <tr>
+              <td>
+                {% for category in oppskrift.oppskrift.allergener %}
+                  {% set hasDescendants = category.getDescendants().total() != 0 %}
+                  {% if not hasDescendants %}
+                    <div class="table-allergen">
+                      {{craft.inlin.er(category.ikon[0].url, true) | raw }}
+                      <span class="table-allergen--text">{{category.title}}</span>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+          </table>
+          <hr>
+        {% endfor %}
+      </article>
+
+    {% endfor %}
+  </section>
+
+{% endmacro %}
