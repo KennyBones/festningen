@@ -3,7 +3,7 @@
 -- Host: localhost	Database: festningen_craft
 -- ------------------------------------------------------
 -- Server version 	5.6.31
--- Date: Sun, 07 May 2017 12:19:53 +0000
+-- Date: Tue, 09 May 2017 10:56:21 +0000
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -3506,4 +3506,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Sun, 07 May 2017 12:19:57 +0000
+-- Dump completed on: Tue, 09 May 2017 10:56:27 +0000

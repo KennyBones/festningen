@@ -731,12 +731,12 @@ aside.printThis {
   }
 }
 
-.lokaler-parent {
+.block-parent {
   position: relative;
   font-size: 0;
   border-top: 40px solid $color_pr3;
 
-  .lokaler-topp {
+  .block-topp {
 
     img {
       max-width: 100%;
@@ -843,7 +843,7 @@ aside.printThis {
     }
   }
 
-  .lokaler-brodtekst{
+  .block-brodtekst{
     display: inline-block;
     width: 75%;
     vertical-align: top;
@@ -857,7 +857,7 @@ aside.printThis {
       margin-bottom: 2em;
     }
 
-    .lokaler-rikTekst {
+    .block-rikTekst {
       letter-spacing: 1px;
     }
   }

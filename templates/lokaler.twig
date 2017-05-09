@@ -30,14 +30,14 @@
 
 	{% for lokale in entry.lokaleNeo.level(1) %}
 
-		<section class="row designblock lokaler-parent">
+		<section class="row designblock block-parent">
 
 			{% for blokk in lokale.children %}
 
 				{% switch blokk.type.handle %}
 
 					{% case 'topp' %}
-					<div class="lokaler-topp">
+					<div class="block-topp">
 						{% set img = blokk.toppbilde.first | default(false) %}
 						{% set bilde = craft.imager.transformImage(img, [
 						{ width: 320, height: 200 },
@@ -66,9 +66,9 @@
 					</aside>
 
 
-					<div class="lokaler-brodtekst">
+					<div class="block-brodtekst">
 						<h2>{{blokk.tittel}}</h2>
-						<div class="lokaler-rikTekst">
+						<div class="block-rikTekst">
 							{{blokk.rikTekst}}
 						</div>
 					</div>
