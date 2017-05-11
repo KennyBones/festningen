@@ -1,10 +1,14 @@
 {% macro designblocks(blokk) %}
 
-{% set meny = blokk.restaurantMeny %}
+{% set entry = blokk.meny.first() %}
+{% set meny = entry.restaurantMeny %}
 {% set menuCount = 0 %}
 
 {% set menuCount = menuCount + 1  %}
-<section class="row designblock restaurantmenu">
+
+
+
+<section class="row designblock">
 
   <aside class="sticky-block">
     <div class="sticky-block--wrapper">
@@ -12,7 +16,7 @@
         {% for enkeltmeny in meny %}
           <li {% if menuCount == loop.index %} class="selected" {% endif %}>
             <a id="menu-anchor-eq{{loop.index0}}" href="#menu-eq{{loop.index0}}">{{enkeltmeny.tittel}}</a>
-            <p>{{enkeltmeny.tidspunkt}}</p>
+            <p>{{enkeltmeny.renTekst}}</p>
             <hr></hr>
           </li>
 
@@ -27,6 +31,11 @@
       <article id="menu-eq{{loop.index0}}" class="restaurant-menu">
         {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
         <h2>{{enkeltmeny.tittel}}</h2>
+
+        {% if enkeltmeny.egenPris %}
+          <span class="pris">{{enkeltmeny.alt}}</span>
+        {% endif %}
+
         <aside class="printThis">
           <div class="printThis--wrapper">
             {{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}

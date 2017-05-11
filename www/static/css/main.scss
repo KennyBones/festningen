@@ -345,6 +345,7 @@ $padding: 70px;
   }
 
   h1 { margin-bottom: .5em; }
+
   hr {
     border-top: 4px solid black;
     width: 50%;
@@ -661,7 +662,7 @@ aside.printThis {
   padding-bottom: $mellomrom-lite;
 }
 
-.restaurant {
+.restaurant, .selskap {
 
   .sticky-block {
     a { font-size: $h4; }
@@ -680,7 +681,18 @@ aside.printThis {
   }
 
   h2 {
+    margin-bottom: 120px;
     margin-top: $mellomrom-lite;
+  }
+
+  .pris {
+    display: block;
+    font-weight: 600;
+    font-family: $font_century;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-size: $h3;
+    margin-top: -120px;
     margin-bottom: 120px;
   }
 
@@ -894,27 +906,27 @@ aside.printThis {
         }
       }
     }
-  }
 
-  a {
-    text-transform: uppercase;
-    font-size: 14px;
-    font-family: $font_century;
-    letter-spacing: .2em;
-    font-weight: bold;
-    position: relative;
+    a {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-family: $font_century;
+      letter-spacing: .2em;
+      font-weight: bold;
+      position: relative;
 
-      &:before {
-        content: '';
-        position: absolute;
-        background-color: #FFFFFF;
-        height: 14px;
-        width: 3px;
-        top: 2px;
-        left: -16px;
+        &:before {
+          content: '';
+          position: absolute;
+          background-color: #FFFFFF;
+          height: 14px;
+          width: 3px;
+          top: 2px;
+          left: -16px;
+        }
+
       }
-
-    }
+  }
 }
 
 

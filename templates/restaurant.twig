@@ -30,7 +30,10 @@
 	</section>
 
 	{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+
+	{% if entry.meny | length %}
 		{{ designBlokkmacro.designblocks(entry) }}
+	{% endif %}
 
 		<section class="row designblock black-block">
 			<article class="fargeblokk">

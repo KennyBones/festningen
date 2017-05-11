@@ -16,7 +16,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
         $document	  = $m(document),
         map,
         $selskap_sticky_block = $m('.selskap .sticky-block'),
-        $restaurant_sticky_block = $('.restaurant .sticky-block'),
+        $restaurant_sticky_block = $('.sticky-block'),
         desktop,
 		tablet,
 		phone,
@@ -260,21 +260,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
   if ($restaurant_sticky_block != null) {
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
-
-
-  // Sett sticky-block på selskapsblokker
-  var selskap_stickyOptions = {
-    'spacer' : false,
-    'offset_top' : 100
-  }
-
-  // $selskap_sticky_block.each(function() {
-  //   console.log($(this));
-  //   $(this).stick_in_parent(selskap_stickyOptions);
-  // })
-
-
-
 
 
 /*=======================================================

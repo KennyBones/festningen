@@ -32,6 +32,7 @@
 
 		<section class="row designblock block-parent">
 
+
 			{% for blokk in selskap.children %}
 
 				{% switch blokk.type.handle %}
@@ -54,24 +55,29 @@
 									{% endif %}
 							</div>
 
-							<aside class="fakta-block">
-								<ul>
-									{% for linje in blokk.faktaboks %}
-										<li>
-											<strong>{{linje.tittel}}</strong>
-											{{linje.tekst}}
-										</li>
-									{% endfor %}
-								</ul>
-							</aside>
+							{% if blokk.faktaboks | length %}
 
+								<aside class="fakta-block">
+									<ul>
+										{% for linje in blokk.faktaboks %}
+											<li>
+												<strong>{{linje.tittel}}</strong>
+												{{linje.tekst}}
+											</li>
+										{% endfor %}
+									</ul>
+								</aside>
 
-							<div class="block-brodtekst">
-								<h2>{{blokk.tittel}}</h2>
-								<div class="block-rikTekst">
-									{{blokk.rikTekst}}
+							{% endif %}
+
+							{% if blokk.tittel %}
+								<div class="block-brodtekst">
+									<h2>{{blokk.tittel}}</h2>
+									<div class="block-rikTekst">
+										{{blokk.rikTekst}}
+									</div>
 								</div>
-							</div>
+							{% endif %}
 
 						{% case 'designblokk' %}
 							{% import '_admin/_designblocks' as designBlokkmacro %}
@@ -81,26 +87,17 @@
 							{% import '_admin/_designblocks' as designBlokkmacro %}
 							{{ designBlokkmacro.designblocks(blokk) }}
 
-						{% case 'selskapsmeny' %}
-							{% import '_admin/_selskapsmeny' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-
 					{% endswitch %}
-
-
-
-
-
 
 				{% endfor %}
 
 			</section>
 
-
-
-
 	{% endfor %}
 
+	<section class="row designblock">
+		{% import '_admin/_selskapsmeny' as designBlokkmacro %}
+		{{ designBlokkmacro.designblocks(entry) }}
+	</section>
 
 {% endblock %}
