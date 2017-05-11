@@ -29,12 +29,12 @@
 
     {% for enkeltmeny in meny %}
       <article id="menu-eq{{loop.index0}}" class="restaurant-menu">
-        {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
-        <h2>{{enkeltmeny.tittel}}</h2>
+          {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
+          <h2>{{enkeltmeny.tittel}}</h2>
 
-        {% if enkeltmeny.egenPris %}
-          <span class="pris">{{enkeltmeny.alt}}</span>
-        {% endif %}
+          {% if enkeltmeny.egenPris %}
+            <span class="pris">{{enkeltmeny.alt}}</span>
+          {% endif %}
 
         <aside class="printThis">
           <div class="printThis--wrapper">

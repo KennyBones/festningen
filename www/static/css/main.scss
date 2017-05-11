@@ -363,8 +363,7 @@ $padding: 70px;
 
   .fargeblokk {
     text-align: center;
-    padding-left: $padding * 2;
-    padding-right: $padding * 2;
+    vertical-align: top;
   }
 
   &.num-1 .fargeblokk {
@@ -670,14 +669,17 @@ aside.printThis {
 
 }
 
+
 .restaurant-menu {
   text-align: center;
   margin-bottom: 140px;
   position: relative;
 
-  svg {
+  >svg {
     width: 50px;
     height: 50px;
+    position: relative;
+    left: -10px;
   }
 
   h2 {
@@ -926,6 +928,12 @@ aside.printThis {
         }
 
       }
+  }
+
+  .selskapsmeny-parent .tekst{
+    text-align: center;
+
+    h3 { font-size: $h1; }
   }
 }
 
