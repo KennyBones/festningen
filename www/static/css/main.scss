@@ -10,6 +10,7 @@ html {
 
 body {
    min-height: 100%;
+   overflow: hidden;
 }
 
 
@@ -360,10 +361,12 @@ $padding: 70px;
 .black-block {
   background-color: #000000;
   font-size: 0;
+  border-bottom: $padding / 2 solid $color_pr3;
 
   .fargeblokk {
     text-align: center;
     vertical-align: top;
+    position: relative;
   }
 
   &.num-1 .fargeblokk {
@@ -374,11 +377,39 @@ $padding: 70px;
     width: 50%;
 
     &:nth-of-type(1) {
-      border-right: 1px solid #FFFFFF;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
     }
 
     &:nth-of-type(2) {
-      border-left: 1px solid #FFFFFF;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
     }
 
   }
@@ -387,15 +418,50 @@ $padding: 70px;
     width: 33.33%;
 
     &:nth-of-type(1) {
-      border-right: 1px solid #FFFFFF;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
     }
 
     &:nth-of-type(2) {
-      border-right: 1px solid #FFFFFF;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
     }
 
     &:nth-of-type(3) {
-      border-left: 1px solid #FFFFFF;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
     }
 
   }
@@ -807,17 +873,6 @@ aside.printThis {
         }
       }
     }
-  }
-
-  .black-block article {
-
-      &:nth-of-type(1) {
-        border-right: 1px solid $color_pr3;
-      }
-      &:nth-of-type(2) {
-        border-left: 1px solid $color_pr3;
-      }
-
   }
 
   .fakta-block {
