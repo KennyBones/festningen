@@ -10,7 +10,7 @@ html {
 
 body {
    min-height: 100%;
-   overflow: hidden;
+   overflow-x: hidden;
 }
 
 
@@ -118,10 +118,13 @@ $padding: 70px;
   background-color: #FFFFFF;
   vertical-align: top;
 
-  // padding
-
-  &.margin-1 {
+  &.parent {
     border-bottom: $mellomrom solid $color_pr3;
+
+    &:last-of-type {
+      border: 0;
+    }
+
   }
 
   a { font-weight: bold; }
@@ -345,7 +348,7 @@ $padding: 70px;
 
   }
 
-  h1 { margin-bottom: .5em; }
+  h1 { margin-bottom: .3em; }
 
   hr {
     border-top: 4px solid black;
@@ -362,6 +365,7 @@ $padding: 70px;
   background-color: #000000;
   font-size: 0;
   border-bottom: $padding / 2 solid $color_pr3;
+  overflow: hidden;
 
   .fargeblokk {
     text-align: center;
@@ -814,7 +818,7 @@ aside.printThis {
 .block-parent {
   position: relative;
   font-size: 0;
-  border-top: 40px solid $color_pr3;
+  border-bottom: 40px solid $color_pr3;
 
   .block-topp {
 
