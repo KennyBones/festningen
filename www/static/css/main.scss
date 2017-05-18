@@ -111,7 +111,7 @@ $mellomrom: 40px;
 $mellomrom-lite: 17px;
 $padding: 70px;
 
-.designblock {
+.designblock, .restaurant-menu-parent {
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -935,6 +935,64 @@ aside.printThis {
     }
   }
 }
+
+// PRINT this
+
+@media print {
+  #devmode { display: none; }
+
+  @page {
+     size: 7in 9.25in;
+     margin: 27mm 16mm 27mm 16mm;
+  }
+
+  body { padding: 20px; }
+
+  .restaurant {
+    #topHeader { display: none; }
+    .pageTop { display: none; }
+    .designblock * {
+      display: none;
+    }
+
+    .row { margin-left: 0; }
+
+    .restaurant-menu-parent {
+      max-width: 100%;
+      column-count: 2;
+      column-gap: 120px;
+      padding-top: 0;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        border-right: 1px solid #e8e8e8;
+      }
+    }
+
+    .designblock.parent { border: none; }
+    .sticky-block { display: none; }
+    .sticky-block--right {
+      padding: 0;
+    }
+    .printThis { display: none; }
+    .black-block { display: none; }
+    .sticky-block--right { display: block; }
+    .restaurant-menu {
+      display: block;
+      table { padding-right: 0; }
+    }
+    footer { display: none; }
+  }
+
+}
+
+
 
 // SELSKAP
 
