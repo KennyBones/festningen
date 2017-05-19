@@ -133,7 +133,11 @@ $padding: 70px;
     padding: $padding;
     font-size: $basesize;
 
-    &.col-1 p{ column-count: 1; }
+    &.col-1 {
+        padding-right: $padding * 5;
+        p{ column-count: 1; }
+    }
+
     &.col-2 p{ column-count: 2; }
 
   }
