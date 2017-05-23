@@ -26,8 +26,26 @@
           </article>
         {% endfor %}
       </section>
-    {% else %}
 
+    {% elseif blokk.type == 'topp' %}
+    {# Topp #}
+    <div class="block-topp">
+      {% set img = blokk.toppbilde.first | default(false) %}
+      {% set bilde = craft.imager.transformImage(img, [
+        { width: 320, height: 200 },
+        { width: 840, height: 400 },
+        { width: 1680, height: 530 },
+        ], { ratio:"16/9" }) %}
+
+        <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+
+        {% if blokk.bildetekstChkbox %}
+          <aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
+            {{blokk.bildetekst}}
+          </aside>
+        {% endif %}
+    </div>
+    {% else %}
     {# {% set bilde = entry.listebilde | length ? entry.listebilde.first : entry.hovedbilde.first %} #}
 
       {# Tekstblokk øverst, ingen bilde #}
@@ -36,8 +54,8 @@
         {% set img = blokk.bilde | length ? blokk.bilde.first %}
       	{% set bilde_stor = craft.imager.transformImage(img.url, [
           { width: 320, height: 400 },
-      		{ width: 840, height: 600 },
-      		{ width: 1360, height: 730 },
+      		{ width: 840, height: 570 },
+      		{ width: 1360, height: 670 },
           ], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
 
         {% set bilde_liten = craft.imager.transformImage(img, [

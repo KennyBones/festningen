@@ -2,6 +2,7 @@
 {% set bodyClass = "selskap" %}
 
 {% block content %}
+
 	{# {% cache until midnight %}{% minify %} #}
 
 	{# {% endminify %}{% endcache %} #}
@@ -13,24 +14,9 @@
 		{ width: 1680, height: 530 },
 		], { ratio:"16/9" }) %}
 
+	{% for selskap in entry.blokkerNeo.level(1) %}
 
-	<section class="row pageTop designblock">
-		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
-
-		<div class="designblock tekst">
-			<span class="silhouette">
-				{{craft.inlin.er('/static/svg/symbols/icon-silhouette.svg') | raw }}
-			</span>
-
-			<h1>{{entry.tittel}}</h1>
-			<hr></hr>
-			<p>{{entry.rikTekst}}</p>
-		</div>
-	</section>
-
-	{% for selskap in entry.lokaleNeo.level(1) %}
-
-		<section class="row designblock block-parent">
+		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
 
 
 			{% for blokk in selskap.children %}
@@ -87,6 +73,13 @@
 							{% import '_admin/_designblocks' as designBlokkmacro %}
 							{{ designBlokkmacro.designblocks(blokk) }}
 
+						{% case 'menyer' %}
+							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+
+							{% if entry.menyEntry | length %}
+								{{ designBlokkmacro.designblocks(entry) }}
+							{% endif %}
+
 					{% endswitch %}
 
 				{% endfor %}
@@ -95,25 +88,9 @@
 
 	{% endfor %}
 
-	<section class="row designblock selskapsmeny-parent">
 
-		<section class="row designblock bilde-full">
-			{% set img = entry.bilde | length ? entry.bilde.first %}
-			{% set bilde_stor = craft.imager.transformImage(img.url, [
-				{ width: 320, height: 300 },
-				{ width: 840, height: 400 },
-				{ width: 1360, height: 530 },
-				], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
-			<article class="designblock bilde">
-				<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
-			</article>
-			<article class="designblock tekst">
-				{{entry.selskapsmenyTekst}}
-			</article>
-		</section>
 
-		{% import '_admin/_selskapsmeny' as designBlokkmacro %}
-		{{ designBlokkmacro.designblocks(entry) }}
+
 
 	</section>
 

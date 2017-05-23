@@ -824,6 +824,10 @@ aside.printThis {
   font-size: 0;
   border-bottom: 140px solid $color_pr3;
 
+  &.first {
+    margin-top: 68px;
+  }
+
   .block-topp {
 
     img {
@@ -931,7 +935,7 @@ aside.printThis {
 
     h2 {
       text-align: right;
-      margin-bottom: 2em;
+      margin-bottom: 2.5em;
     }
 
     .block-rikTekst {
