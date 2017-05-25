@@ -14,7 +14,7 @@
 		{ width: 1680, height: 530 },
 		], { ratio:"16/9" }) %}
 
-	{% for selskap in entry.blokkerNeo %}
+	{% for selskap in entry.blokkerNeo.level(1) %}
 
 		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
 
@@ -84,11 +84,5 @@
 			</section>
 
 	{% endfor %}
-
-
-
-
-
-	</section>
 
 {% endblock %}

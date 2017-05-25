@@ -18,15 +18,26 @@ body {
 
 #topHeader {
   background: $color_pr2;
-  background-image: url('/static/svg/symbols/logo-bg.svg');
-  background-repeat: no-repeat;
-  background-position: 70px 60%;
-  background-size: 660px;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1;
+
+  .logo {
+    position: absolute;
+    background: $color_pr2;
+    background-image: url('/static/svg/symbols/logo-bg.svg');
+    background-repeat: no-repeat;
+    background-position: 70px 60%;
+    background-size: 660px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 68px;
+    z-index: 0;
+  }
 
   &.fixed {
     position: fixed;
@@ -37,7 +48,6 @@ body {
       max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
-      position: relative;
 
       ul {
           list-style-type: none; /*to remove bullets*/
@@ -45,7 +55,6 @@ body {
           margin: 0 auto;
           padding: 0px;
           display:table;
-          overflow: hidden;
 
           li{
             display: inline-block;
@@ -67,6 +76,28 @@ body {
               }
             }
           }
+
+
+
+          .has-children {
+            position: relative;
+
+            &:hover {
+              .nav__level2 {
+                display: block;
+              }
+            }
+
+            .nav__level2 {
+              text-align: left;
+              display: none;
+              position: absolute;
+              top: 68px;
+              left: 0;
+              background: white;
+            }
+          }
+
       }
   }
 
@@ -120,11 +151,6 @@ $padding: 70px;
 
   &.parent {
     border-bottom: $mellomrom solid $color_pr3;
-
-    &:last-of-type {
-      border: 0;
-    }
-
   }
 
   a { font-weight: bold; }
@@ -822,10 +848,10 @@ aside.printThis {
 .block-parent {
   position: relative;
   font-size: 0;
-  border-bottom: 140px solid $color_pr3;
+  border-bottom: $padding solid $color_pr3;
 
   &.first {
-    margin-top: 68px;
+    margin-top: 0;
   }
 
   .block-topp {
@@ -941,6 +967,13 @@ aside.printThis {
     .block-rikTekst {
       letter-spacing: 1px;
     }
+  }
+}
+
+.lokaler, .selskap, .underside {
+  .designblock.block-parent.first {
+    margin-top: 68px;
+    border-bottom: 0;
   }
 }
 

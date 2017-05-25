@@ -29,9 +29,10 @@
 
 	</section>
 
-	{% for blokkNeo in entry.blokkerNeo %}
 
-		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
+	{% for blokkNeo in entry.blokkerNeo.level(1) %}
+
+		<section class="row designblock block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
 			{% for blokk in blokkNeo.children %}
 
