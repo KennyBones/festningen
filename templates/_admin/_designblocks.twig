@@ -7,12 +7,23 @@
 
       <section class="row designblock enkel menyer">
         <article class="tekst">
-          {{blokk.vareMenyer[0].tekst}}
+          {{blokk.vareMenyer.tekst}}
         </article>
 
         <article class="fargeblokk">
-          {{craft.inlin.er(blokk.vareMenyer[1].ikon[0].url, true) | raw }}
-          {{blokk.vareMenyer[1].tekst}}
+          {{craft.inlin.er(blokk.vareMenyer.ikon[0].url, true) | raw }}
+          <h3>Våre menyer</h3>
+          <table>
+            <tbody>
+              {% for entry in blokk.vareMenyer.menyer %}
+                <tr>
+                  <td>{{entry.title}}</td>
+                  <td>{{entry.renTekst}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>Les mer</p>
         </article>
       </section>
 

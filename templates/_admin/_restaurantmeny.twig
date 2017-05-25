@@ -1,9 +1,14 @@
 {% macro designblocks(blokk) %}
+{# // Hvis det kommer fra neo-blokk #}
 
-{% set meny = blokk.menyEntry %}
+
+{% set meny = blokk.menyer %}
+
 {% set menuCount = 0 %}
 
 {% set menuCount = menuCount + 1  %}
+
+
 
 <section class="row restaurant-menu-parent">
   <aside class="sticky-block">

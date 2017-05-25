@@ -14,10 +14,9 @@
 		{ width: 1680, height: 530 },
 		], { ratio:"16/9" }) %}
 
-	{% for selskap in entry.blokkerNeo.level(1) %}
+	{% for selskap in entry.blokkerNeo %}
 
 		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
-
 
 			{% for blokk in selskap.children %}
 
@@ -74,11 +73,9 @@
 							{{ designBlokkmacro.designblocks(blokk) }}
 
 						{% case 'menyer' %}
-							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 
-							{% if entry.menyEntry | length %}
-								{{ designBlokkmacro.designblocks(entry) }}
-							{% endif %}
+							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+							{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
 
 					{% endswitch %}
 
