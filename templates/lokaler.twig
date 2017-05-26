@@ -14,11 +14,9 @@
 		], { ratio:"16/9" }) %}
 
 
-	{% for lokale in entry.blokkerNeo.level(1) %}
+	{% for blokk in entry.blokkerNeo.level(1) %}
 
 		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
-
-			{% for blokk in lokale.children %}
 
 				{% switch blokk.type.handle %}
 
@@ -60,7 +58,7 @@
 					</div>
 
 
-					{% case 'designblokk' %}
+					{% case 'tekstOgBilde' %}
 						{% import '_admin/_designblocks' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk) }}
 
@@ -70,8 +68,6 @@
 
 
 				{% endswitch %}
-
-			{% endfor %}
 
 		</section>
 

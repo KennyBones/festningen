@@ -3,11 +3,9 @@
 
 {% block content %}
 
-	{% for blokkNeo in entry.blokkerNeo.level(1) %}
+	{% for blokk in entry.blokkerNeo.level(1) %}
 
 		<section class="row designblock block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
-
-			{% for blokk in blokkNeo.children %}
 
 				{% switch blokk.type.handle %}
 
@@ -68,7 +66,6 @@
 
 					{% endswitch %}
 
-				{% endfor %}
 
 			</section>
 

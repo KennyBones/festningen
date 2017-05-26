@@ -7,18 +7,10 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	{% set img = entry.toppbilde.first | default(false) %}
-	{% set bilde = craft.imager.transformImage(img, [
-		{ width: 320, height: 200 },
-		{ width: 840, height: 400 },
-		{ width: 1680, height: 530 },
-		], { ratio:"16/9" }) %}
-
-	{% for selskap in entry.blokkerNeo.level(1) %}
+	{% for blokk in entry.blokkerNeo.level(1) %}
 
 		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
 
-			{% for blokk in selskap.children %}
 
 				{% switch blokk.type.handle %}
 
@@ -64,7 +56,7 @@
 								</div>
 							{% endif %}
 
-						{% case 'designblokk' %}
+						{% case 'tekstOgBilde' %}
 							{% import '_admin/_designblocks' as designBlokkmacro %}
 							{{ designBlokkmacro.designblocks(blokk) }}
 
@@ -73,13 +65,11 @@
 							{{ designBlokkmacro.designblocks(blokk) }}
 
 						{% case 'menyer' %}
-
 							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 							{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
 
 					{% endswitch %}
 
-				{% endfor %}
 
 			</section>
 
