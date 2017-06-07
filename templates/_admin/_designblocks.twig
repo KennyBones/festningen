@@ -2,32 +2,7 @@
 
     {# contents of the macro here #}
 
-    {% if blokk.type == 'vareMenyer' %}
-      {# Menyer og tekstblokk #}
-
-      <section class="row designblock enkel menyer">
-        <article class="tekst">
-          {{blokk.vareMenyer.tekst}}
-        </article>
-
-        <article class="fargeblokk">
-          {{craft.inlin.er(blokk.vareMenyer.ikon[0].url, true) | raw }}
-          <h3>Våre menyer</h3>
-          <table>
-            <tbody>
-              {% for entry in blokk.vareMenyer.menyer %}
-                <tr>
-                  <td>{{entry.title}}</td>
-                  <td>{{entry.renTekst}}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <p>Les mer</p>
-        </article>
-      </section>
-
-    {% elseif blokk.type == 'svartBoks' %}
+    {% if  blokk.type == 'svartBoks' %}
 
       <section class="row designblock black-block num-{{blokk.svartBoks.boks | length}}">
 

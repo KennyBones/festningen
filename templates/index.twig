@@ -49,10 +49,27 @@
 
 	</section>
 
-	{% for blokk in entry.vareMenyer %}
-		{% import '_admin/_designblocks' as designBlokkmacro %}
-		{{ designBlokkmacro.designblocks(blokk) }}
-	{% endfor %}
+	<section class="row designblock enkel menyer">
+		<article class="tekst">
+			{{entry.vareMenyer.tekst}}
+		</article>
+
+		<article class="fargeblokk">
+			{{craft.inlin.er(entry.vareMenyer.ikon[0].url, true) | raw }}
+			<h3>Våre menyer</h3>
+			<table>
+				<tbody>
+					{% for meny in entry.vareMenyer.menyer %}
+						<tr>
+							<td>{{meny.title}}</td>
+							<td>{{meny.renTekst}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<p>Les mer</p>
+		</article>
+	</section>
 
 	{% for blokk in entry.blokkerNeo.level(1) %}
 		{% import '_admin/_designblocks' as designBlokkmacro %}
