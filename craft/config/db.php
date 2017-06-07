@@ -20,12 +20,12 @@ $customDbConfig = array(
 		'database' 	=> 'festningen_craft'
 	),
 	'DEV' => array(
-		'server' 	=> '10.0.0.14',
+		'server' 	=> 'db174422.mysql.sysedata.no',
 		'port' 		=> '8889',
 		//'port' => '3306',
-		'user' 		=> 'root',
-		'password' 	=> 'root',
-		'database' 	=> '_standard_craft'
+		'user' 		=> 'db174422',
+		'password' 	=> '7cd33b3e',
+		'database' 	=> 'db174422'
 	),
 	'STAGE' => array(
 		'server' 	=> '',
@@ -34,10 +34,10 @@ $customDbConfig = array(
 		'database' 	=> ''
 	),
 	'PROD' => array(
-		'server' 	=> '',
-		'user' 		=> '',
-		'password' 	=> '',
-		'database' 	=> '',
+		'server' 	=> 'db174422.mysql.sysedata.no',
+		'user' 		=> 'db174422',
+		'password' 	=> '7cd33b3e',
+		'database' 	=> 'db174422',
 		//'initSQLs' 	=> array("SET SESSION sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';")
 	)
 );
