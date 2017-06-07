@@ -986,10 +986,10 @@ FileETag None
 <IfModule mod_rewrite.c>
 
   # get 404 image on pictures
-  #RewriteCond %{REQUEST_FILENAME} !-f
-  #RewriteCond %{REQUEST_FILENAME} !-d
-  #RewriteCond %{REQUEST_FILENAME} !(admin) [NC]
-  #RewriteRule \.(gif|jpe?g|png|bmp) /dist/php/image/404.php [NC,L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !(admin) [NC]
+  RewriteRule \.(gif|jpe?g|png|bmp) /dist/php/image/404.php [NC,L]
 
   # Send would-be 404 requests to Craft
   RewriteCond %{REQUEST_FILENAME} !-f
