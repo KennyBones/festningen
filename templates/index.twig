@@ -49,6 +49,11 @@
 
 	</section>
 
+	{% for blokk in entry.vareMenyer %}
+		{% import '_admin/_designblocks' as designBlokkmacro %}
+		{{ designBlokkmacro.designblocks(blokk) }}
+	{% endfor %}
+
 	{% for blokk in entry.blokkerNeo.level(1) %}
 		{% import '_admin/_designblocks' as designBlokkmacro %}
 		{{ designBlokkmacro.designblocks(blokk) }}
