@@ -49,7 +49,7 @@
 
 	</section>
 
-	{% for blokk in entry.restaurantNeo %}
+	{% for blokk in entry.blokkerNeo.level(1) %}
 		{% import '_admin/_designblocks' as designBlokkmacro %}
 		{{ designBlokkmacro.designblocks(blokk) }}
 	{% endfor %}
