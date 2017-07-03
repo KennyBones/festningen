@@ -34,108 +34,105 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
-    height: 68px;
+    width: 100%;
+    height: 72px;
     z-index: 0;
-    transition: background 1s ease-in-out;
-
-    &:hover {
-      background-size: 690px;
-    }
+    margin: 0;
   }
 
   &.fixed {
     position: fixed;
   }
 
-  nav {
-      width: 100%;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
+#desktop_nav-ul {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	line-height: 2.5em;
+  text-align: center;
 
-      ul {
-          list-style-type: none; /*to remove bullets*/
-          text-align: center;
-          margin: 0 auto;
-          padding: 0px;
-          display:table;
+	li {
+		display: inline-block;
 
-          li{
-            display: inline-block;
-            width: auto;
-            margin-left: auto;
-            margin-right: auto;
+		a {
+      letter-spacing: .1em;
+      position: relative;
+      display: block;
+      padding: 16px;
+      padding-right: 40px;
+      padding-left: 40px;
+      margin: 0;
+      font-weight: bold;
+		}
 
-            a {
-              letter-spacing: .1em;
-              position: relative;
-              display: block;
-              padding: 23px;
-              padding-right: 40px;
-              padding-left: 40px;
-              margin: 0;
-              font-weight: bold;
+		&.has-children {
+			>a {
 
-              &.selected {
-                text-decoration: underline;
-              }
-            }
-          }
+				&:before {
+					content: "...";
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: 5px;
+					font-size: 30px;
+				}
+			}
+		}
+
+    // Nav level 2
+		ul {
+			opacity: 0;
+			position: absolute;
+			left: 0;
+			top: -72px;
+			margin: 0;
+      padding: 0;
+			width: 100%;
+			line-height: 2.5em;
+      transition: opacity .3s ease;
+      background: #FFFFFF;
+      z-index: -1;
+      border-top: 1px solid $color_pr6;
+
+			li {
+        margin: 0;
+        padding: 4px;
+
+				a {
+					font-size: 13px;
+					color: black;
+          padding: 0;
+          padding-left: 15px;
+          padding-right: 15px;
+				}
+			}
+		}
+
+		&.activated {
+
+			ul {
+				opacity: 1;
+        top: 72px;
+        transition: opacity .3s .1s ease, top .3s .1s ease;
+			}
+
+			>a {
+				font-weight: 600;
+			}
+		}
+	}
+
+	a {
+		font-size: 15px;
+		position: relative;
+
+		&:hover {
+			color: $color_pr4;
+		}
+	}
+}
 
 
-
-          .has-children {
-            position: relative;
-
-            &:hover {
-              .nav__level2 {
-                max-height: 500px;
-                transition: max-height 0.25s ease-in .1s , opacity .25s ease;
-                opacity: 1;
-
-                li {
-                  opacity: 1;
-                  left: 0;
-                }
-              }
-            }
-
-            .nav__level2 {
-              display: block;
-              max-height: 0;
-              transition: max-height 0.15s ease-out, opacity .15s ease;
-              overflow: hidden;
-              text-align: left;
-              position: absolute;
-              top: 68px;
-              left: 0;
-              background: white;
-              opacity: 0;
-
-              a {
-                font-weight: normal;
-              }
-
-              li {
-                position: relative;
-                left: -5px;
-                opacity: 0;
-                transition: left .3s ease, opacity .3s ease;
-              }
-
-              @for $i from 1 to 4 {
-                 li:nth-of-type(#{$i}) {
-                   transition-delay: $i * 0.1s;
-                 }
-              }
-
-
-            }
-          }
-
-      }
-  }
 
   .searchbox {
     display: none;

@@ -284,5 +284,15 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
 
   });
 
+  $document.on('click', 'li.has-children >a', function (e) {
+    // Toggle menu
+    e.preventDefault();
+
+    console.log('teest');
+
+    $m(this).parent('.has-children').toggleClass('activated');
+
+    });
+
 
 }());
