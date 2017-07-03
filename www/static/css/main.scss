@@ -79,6 +79,10 @@ body {
 			}
 		}
 
+    &.active a {
+      color: $color_pr5;
+    }
+
     // Nav level 2
 		ul {
 			opacity: 0;
