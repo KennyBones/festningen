@@ -240,7 +240,7 @@ $padding: 70px;
   a { font-weight: bold; }
 
   .tekst {
-    padding: 15px;
+    padding: 30px;
     font-size: $basesize;
 
     @media #{$tablet} {
@@ -295,12 +295,20 @@ $padding: 70px;
   &.enkel {
     padding: 0;
     font-size: 0;
-    display: flex;
+    display: block;
+
+    @media #{$tablet} {
+      display: flex;
+    }
 
     .tekst, .bilde {
       display: inline-block;
       font-size: $basesize;
-      width: 50%;
+      width: 100%;
+
+      @media #{$tablet} {
+        width: 50%;
+      }
     }
 
     .bilde {
@@ -313,7 +321,10 @@ $padding: 70px;
       transform: scale(1);
       min-height: 100%;
       min-width: 100%;
-      position: absolute;
+
+      @media #{$tablet} {
+        position: absolute;
+      }
     }
 
     &:hover img {
@@ -663,15 +674,27 @@ aside.printThis {
     margin-bottom: $mellomrom;
     text-align: center;
     padding: 0;
-    display: flex;
+    display: block;
+
+    @media #{$tablet} {
+      display: flex;
+    }
 
     .designblock {
-      display: inline-block;
-      width: 50%;
-      padding: $padding;
-      padding-left: $padding * 2;
-      padding-right: $padding * 2;
+      display: block;
+      width: 100%;
+      padding: 15px;
+      padding-top: 30px;
+      padding-bottom: 90px;
       font-size: $basesize;
+
+      @media #{$tablet} {
+        width: 50%;
+        display: inline-block;
+        padding: $padding;
+        padding-left: $padding * 2;
+        padding-right: $padding * 2;
+      }
 
       &.first {
         background: $color_pr1;
@@ -723,12 +746,25 @@ aside.printThis {
   .menyer {
 
     .tekst {
-      width: 65%;
+      width: 100%;
+      padding: 35px;
+      text-align: center;
+
+      @media #{$tablet} {
+        width: 65%;
+        text-align: left;
+      }
+
     }
 
     .fargeblokk {
-      width: 35%;
+      width: 100%;
       text-align: center;
+      padding: 15px;
+
+      @media #{$tablet} {
+        width: 35%;
+      }
 
       svg {
         fill: #FFFFFF;
@@ -755,13 +791,30 @@ aside.printThis {
 
 .booking {
   font-size: 0;
-  display: flex;
+  display: block;
   overflow: hidden;
 
+  @media #{$tablet} {
+    display: flex;
+  }
+
+  #booking-map {
+    height: 300px;
+
+    @media #{$tablet} {
+      height: auto;
+    }
+  }
+
   #booking-map, #kontaktskjema  {
-    display: inline-block;
-    width: 50%;
+    display: block;
+    width: 100%;
     font-size: $basesize;
+
+    @media #{$tablet} {
+      width: 50%;
+      display: inline-block;
+    }
   }
 
   #booking-map img {
@@ -771,9 +824,13 @@ aside.printThis {
 
   #kontaktskjema {
     background-color: $color_pr4;
-    padding: $padding;
+    padding: 30px;
     color: #FFFFFF;
     text-align: center;
+
+    @media #{$tablet} {
+      padding: $padding;
+    }
 
     svg {
       fill: #FFFFFF;
@@ -1195,9 +1252,13 @@ aside.printThis {
 
 
 footer {
-  padding: $mellomrom * 2;
+  padding: 30px;
   text-align: left;
   background-color: $color_pr3;
+
+  @media #{$tablet} {
+    padding: $mellomrom * 2;
+  }
 
   span {
     display: inline-block;
