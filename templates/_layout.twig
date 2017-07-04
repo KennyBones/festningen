@@ -68,6 +68,12 @@
 							{{ _self.addNodeToNavigation(node, loop.index) }}
 					{% endfor %}
 				</ul>
+
+				<a href="/" id="menu-btn">
+					{{craft.inlin.er('/static/svg/symbols/icon-menu-open.svg') | raw }}
+					{{craft.inlin.er('/static/svg/symbols/icon-menu-close.svg') | raw }}
+				</a>
+
 			</nav>
 
 			{# <div class="searchbox"></div>
