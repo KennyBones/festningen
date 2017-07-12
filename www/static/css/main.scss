@@ -54,7 +54,7 @@ body {
 #menu-btn {
   display: block;
   position: absolute;
-  top: 0;
+  top: 4px;
   right: 0;
   margin: 0;
   padding: 5px;
@@ -65,8 +65,8 @@ body {
 	}
 
   svg {
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: 40px;
   }
 
   .svg--menu-close {
