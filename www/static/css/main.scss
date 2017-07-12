@@ -44,12 +44,28 @@ body {
       background-size: 660px;
       height: 72px;
   	}
-
   }
 
   &.fixed {
     position: fixed;
   }
+
+  &.menu-open {
+      position: fixed;
+      height: 100%;
+
+      #desktop_nav-ul{
+        display: block;
+        top: 0;
+        width: 100%;
+        background: white;
+        padding-top: 68px;
+
+        li { display: block; }
+      }
+
+  }
+
 
 #menu-btn {
   display: block;
@@ -94,9 +110,8 @@ body {
   display: none;
 
   @media #{$tablet} {
-		display: block;
-	}
-
+    display: block;
+  }
 
 	li {
 		display: inline-block;
@@ -110,6 +125,22 @@ body {
       padding-left: 40px;
       margin: 0;
       font-weight: bold;
+  		font-size: 14px;
+  		position: relative;
+
+      @media #{$tablet} {
+        padding-right: 30px;
+        padding-left: 30px;
+    	}
+
+      @media #{$desktop} {
+    		font-size: 15px;
+    	}
+
+
+  		&:hover {
+  			color: $color_pr4;
+  		}
 		}
 
 		&.has-children {
@@ -173,14 +204,6 @@ body {
 		}
 	}
 
-	a {
-		font-size: 15px;
-		position: relative;
-
-		&:hover {
-			color: $color_pr4;
-		}
-	}
 }
 
 

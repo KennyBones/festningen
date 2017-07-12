@@ -284,6 +284,16 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
 
   });
 
+  $document.on('click', '#menu-btn', function (e) {
+    // Toggle menu
+    e.preventDefault();
+
+    console.log('Open menu');
+
+    $m('#topHeader').toggleClass('menu-open');
+
+    });
+
   $document.on('click', 'li.has-children >a', function (e) {
     // Toggle menu
     e.preventDefault();
