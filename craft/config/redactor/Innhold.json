@@ -1,7 +1,7 @@
 {
 	buttons: ['formatting','bold','italic','unorderedlist','link','image'],
 	structure: true,
-	plugins: ['fullscreen'],
+	plugins: ['table','fullscreen'],
     formatting: ['p', 'h3'],
 	toolbarFixedBox: true
 }
