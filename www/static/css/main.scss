@@ -256,6 +256,11 @@ $padding: 70px;
   background-color: #FFFFFF;
   vertical-align: top;
 
+  .tekst, .block-brodtekst, .bildetekst {
+    line-height: 1.7em;
+    letter-spacing: 1px;
+  }
+
   &.parent {
     border-bottom: $mellomrom solid $color_pr3;
   }
@@ -1097,10 +1102,12 @@ aside.printThis {
       background-color: $color_pr4;
       color: #FFFFFF;
       position: absolute;
-      padding: $padding;
+      padding: $padding / 1.5;
       width: 430px;
       text-align: center;
       font-size: $basesize;
+      line-height: 1.2em;
+      letter-spacing: 1px;
 
       &.drop-right {
         bottom: $padding;
@@ -1197,9 +1204,6 @@ aside.printThis {
       margin-bottom: 2.5em;
     }
 
-    .block-rikTekst {
-      letter-spacing: 1px;
-    }
   }
 }
 
