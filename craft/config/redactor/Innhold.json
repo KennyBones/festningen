@@ -2,6 +2,6 @@
 	buttons: ['formatting','bold','italic','unorderedlist','link','image'],
 	structure: true,
 	plugins: ['table','fullscreen'],
-    formatting: ['p', 'h3'],
+    formatting: ['p', 'h1', 'h2','h3','h4'],
 	toolbarFixedBox: true
 }
