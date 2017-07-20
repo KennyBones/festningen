@@ -998,15 +998,6 @@ aside.printThis {
   padding-bottom: $mellomrom-lite;
 }
 
-.restaurant, .selskap {
-
-  .sticky-block {
-    a { font-size: $h4; }
-  }
-
-}
-
-
 .restaurant-menu {
   text-align: center;
   margin-bottom: 140px;
@@ -1207,7 +1198,7 @@ aside.printThis {
   }
 }
 
-.lokaler, .selskap, .underside {
+.lokaler, .underside, .lokaler {
   .designblock.block-parent.first {
     margin-top: 68px;
     border-bottom: 0;

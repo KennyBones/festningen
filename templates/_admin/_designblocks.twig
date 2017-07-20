@@ -50,7 +50,7 @@
       {% endif %}
 
       {% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
-        <section class="row designblock parent">
+        <section class="row designblock">
           <article class="designblock tekst col-{{blokk.antallKolonner}}">
             {{blokk.rikTekst}}
           </article>
@@ -58,7 +58,7 @@
 
       {# Kun bilde #}
       {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
-        <section class="row designblock bilde-full parent">
+        <section class="row designblock bilde-full">
           <article class="designblock bilde">
             <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
 
@@ -78,7 +78,7 @@
           {# Bildeposisjon full #}
           {% if blokk.bildeposisjon == 'full' %}
 
-            <section class="row designblock parent bilde-full">
+            <section class="row designblock bilde-full">
 
               {# Tekst over stort bilde #}
               {% if blokk.tekstChkbox == 1 %}
@@ -106,7 +106,7 @@
           {% else %}
 
             {# Bildeposisjon høyre eller venstre #}
-            <section class="row designblock enkel parent">
+            <section class="row designblock enkel">
             {% if blokk.bildeposisjon == 'left' %}
 
                 <article class="designblock bilde">
