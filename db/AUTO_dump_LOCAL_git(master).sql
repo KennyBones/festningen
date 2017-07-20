@@ -3,7 +3,7 @@
 -- Host: localhost	Database: festningen_craft
 -- ------------------------------------------------------
 -- Server version 	5.6.31
--- Date: Thu, 20 Jul 2017 15:37:04 +0000
+-- Date: Thu, 20 Jul 2017 15:50:59 +0000
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -3097,7 +3097,6 @@ CREATE TABLE `craft_tasks` (
 LOCK TABLES `craft_tasks` WRITE;
 /*!40000 ALTER TABLE `craft_tasks` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `craft_tasks` VALUES (52,52,1,2,0,NULL,NULL,'pending','Neo_GetSearchKeywords',NULL,'{\"fieldId\":\"136\",\"ownerId\":\"486\",\"locale\":\"nb_no\"}','2017-07-20 15:36:47','2017-07-20 15:36:47','cd51d41d-c8e5-4ab9-91df-b0d55549eb86');
 /*!40000 ALTER TABLE `craft_tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -3479,4 +3478,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Thu, 20 Jul 2017 15:37:10 +0000
+-- Dump completed on: Thu, 20 Jul 2017 15:51:02 +0000
