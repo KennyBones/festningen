@@ -4,8 +4,7 @@
 
     {% if  blokk.type == 'svartBoks' %}
 
-      <section class="row designblock black-block num-{{blokk.svartBoks.boks | length}}">
-
+      <section class="row designblock black-block num-{{blokk.svartBoks.boks | length}} {% if  blokk.getNext().type == 'menyer' %} menytopp{% endif %}">
         {% for boks in blokk.svartBoks.boks %}
           <article class="fargeblokk">
             {{boks.boks}}

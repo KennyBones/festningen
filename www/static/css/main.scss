@@ -187,6 +187,10 @@ body {
           padding-left: 15px;
           padding-right: 15px;
 				}
+
+        &.active a {
+          color: $color_pr4;
+        }
 			}
 		}
 
@@ -276,16 +280,18 @@ $padding: 70px;
     }
 
     &.col-1 {
-        padding-right: $padding * 5;
+        //padding-right: $padding * 5;
         p{ column-count: 1; }
     }
 
     &.col-2 p{ column-count: 2; }
 
     table {
+      width: 100%;
+      margin-top: $padding / 2;
+
       tr { vertical-align: top; }
       td {
-        width: 50%;
         padding: 10px;
       }
     }
@@ -457,7 +463,7 @@ $padding: 70px;
       font-size: $h7;
       font-family: $font_default;
     }
-    a { font-size: $h5; }
+    a { font-size: $basesize; }
 
     hr {
       border: 0;
@@ -539,6 +545,11 @@ $padding: 70px;
   font-size: 0;
   border-bottom: $padding / 2 solid $color_pr3;
   overflow: hidden;
+
+  &.menytopp {
+    border-bottom: 0;
+    margin-bottom: -$padding;
+  }
 
   ul {
     list-style: none;
@@ -1042,7 +1053,11 @@ aside.printThis {
 
   }
 
-  hr { margin-right: 80px; }
+  hr {
+    margin-right: 80px;
+    margin-top: 16px;
+    margin-bottom: 16px;    
+  }
 
   .table--heading {
     text-transform: uppercase;
