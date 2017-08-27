@@ -24,7 +24,6 @@
 			</span>
 
 			<h1>{{entry.tittel}}</h1>
-			<hr></hr>
 			<p>{{entry.rikTekst}}</p>
 		</div>
 
@@ -73,8 +72,31 @@
 	</section>
 
 	{% for blokk in entry.blokkerNeo.level(1) %}
-		{% import '_admin/_designblocks' as designBlokkmacro %}
-		{{ designBlokkmacro.designblocks(blokk) }}
+		<section class="row designblock block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
+
+			{% switch blokk.type.handle %}
+
+					{% case 'topp' %}
+
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% case 'tekstOgBilde' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% case 'svartBoks' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% case 'menyer' %}
+
+						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
+
+				{% endswitch %}
+
+		</section>
 	{% endfor %}
 
 	{# BOOKING #}

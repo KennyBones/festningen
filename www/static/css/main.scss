@@ -527,7 +527,7 @@ $padding: 70px;
 
   }
 
-  h1 { margin-bottom: .3em; }
+  h1 { margin-bottom: .8em; }
 
   hr {
     border-top: 4px solid black;
@@ -848,6 +848,7 @@ aside.printThis {
       @media #{$tablet} {
         width: 65%;
         text-align: left;
+        padding-right: $padding * 2;
       }
 
     }
@@ -1056,7 +1057,7 @@ aside.printThis {
   hr {
     margin-right: 80px;
     margin-top: 16px;
-    margin-bottom: 16px;    
+    margin-bottom: 16px;
   }
 
   .table--heading {
