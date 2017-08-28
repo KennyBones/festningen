@@ -72,7 +72,7 @@
 	</section>
 
 	{% for blokk in entry.blokkerNeo.level(1) %}
-		<section class="row designblock block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
+		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
 			{% switch blokk.type.handle %}
 
