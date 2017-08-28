@@ -38,6 +38,8 @@ body {
     height: 55px;
     z-index: 0;
     margin: 0;
+    animation-duration: 1s;
+    animation-name: headerSlideUp;
 
     @media #{$tablet} {
       background-position: 70px 60%;
@@ -46,8 +48,33 @@ body {
   	}
   }
 
+  @keyframes headerSlideDown {
+
+    from {
+      top: -50%;
+    }
+
+    to {
+      top: 0;
+    }
+  }
+
+  @keyframes headerSlideUp {
+
+    from {
+      top: 0;
+      position: fixed;
+    }
+
+    to {
+      top: -50%;
+    }
+  }
+
   &.fixed {
     position: fixed;
+    animation-duration: 1s;
+    animation-name: headerSlideDown;
   }
 
   &.menu-open {

@@ -17,6 +17,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
         map,
         $selskap_sticky_block = $m('.selskap .sticky-block'),
         $restaurant_sticky_block = $('.sticky-block'),
+        $header = $('#topHeader'),
         desktop,
 		tablet,
 		phone,
@@ -59,9 +60,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 		ticking = false;
 
 	}
-
-
-
 
     detect_size();
 	if (typeof runforceFeed === 'function') { runforceFeed(); }
@@ -302,6 +300,22 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
 
     $m(this).parent('.has-children').toggleClass('activated');
 
+    });
+
+
+    var lastScroll = 0;
+    $(window).scroll(function(event){
+        var st = $(this).scrollTop();
+        // Make sure they scroll more than delta
+        if(Math.abs(lastScroll - st) <= 5)
+            return;
+
+        if (st < lastScroll) {
+           $header.addClass('fixed');
+        } else {
+          $header.removeClass('fixed');
+        }
+        lastScroll = st;
     });
 
 
