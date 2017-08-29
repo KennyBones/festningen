@@ -38,8 +38,6 @@ body {
     height: 55px;
     z-index: 0;
     margin: 0;
-    animation-duration: 1s;
-    animation-name: headerSlideUp;
 
     @media #{$tablet} {
       background-position: 70px 60%;
@@ -59,21 +57,9 @@ body {
     }
   }
 
-  @keyframes headerSlideUp {
-
-    from {
-      top: 0;
-      position: fixed;
-    }
-
-    to {
-      top: -50%;
-    }
-  }
-
   &.fixed {
     position: fixed;
-    animation-duration: 1s;
+    animation-duration: .6s;
     animation-name: headerSlideDown;
   }
 
@@ -531,7 +517,7 @@ $padding: 70px;
   margin-top: 55px;
 
   @media #{$tablet} {
-    margin-top: 68px;
+    margin-top: 72px;
   }
 
   img { max-width: 100%; }
@@ -1251,7 +1237,7 @@ aside.printThis {
 
 .lokaler, .underside, .lokaler {
   .designblock.block-parent.first {
-    margin-top: 68px;
+    margin-top: 72px;
     border-bottom: 0;
   }
 }
