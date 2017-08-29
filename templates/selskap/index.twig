@@ -8,71 +8,31 @@
 	{# {% endminify %}{% endcache %} #}
 
 	{% for blokk in entry.blokkerNeo.level(1) %}
+		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
-		<section class="row designblock block-parent {% if loop.index == 1 %} first {% endif %}">
+			{% switch blokk.type.handle %}
 
+					{% case 'topp' %}
 
-				{% switch blokk.type.handle %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
-						{% case 'topp' %}
-							<div class="block-topp">
-								{% set img = blokk.toppbilde.first | default(false) %}
-								{% set bilde = craft.imager.transformImage(img, [
-									{ width: 320, height: 200 },
-									{ width: 840, height: 400 },
-									{ width: 1680, height: 530 },
-									], { ratio:"16/9" }) %}
+					{% case 'tekstOgBilde' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
-									<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+					{% case 'svartBoks' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
-									{% if blokk.bildetekstChkbox %}
-										<aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
-											{{blokk.bildetekst}}
-										</aside>
-									{% endif %}
-							</div>
+					{% case 'menyer' %}
 
-							{% if blokk.faktaboks | length %}
+						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
 
-								<aside class="fakta-block">
-									<ul>
-										{% for linje in blokk.faktaboks %}
-											<li>
-												<strong>{{linje.tittel}}</strong>
-												{{linje.tekst}}
-											</li>
-										{% endfor %}
-									</ul>
-								</aside>
+				{% endswitch %}
 
-							{% endif %}
-
-							{% if blokk.tittel %}
-								<div class="block-brodtekst">
-									<h2>{{blokk.tittel}}</h2>
-									<div class="block-rikTekst">
-										{{blokk.rikTekst}}
-									</div>
-								</div>
-							{% endif %}
-
-						{% case 'tekstOgBilde' %}
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-            {% case 'svartBoks' %}
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-						{% case 'menyer' %}
-							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
-
-					{% endswitch %}
-
-
-			</section>
-
+		</section>
 	{% endfor %}
 
 {% endblock %}
