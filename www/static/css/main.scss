@@ -175,7 +175,7 @@ body {
     }
 
     // Nav level 2
-		ul {
+		ul.nav__level2 {
 			opacity: 0;
 			position: absolute;
 			left: 0;
@@ -204,6 +204,8 @@ body {
         &.active a {
           color: $color_pr4;
         }
+
+        &.active.generell a { color: black; }
 			}
 		}
 
