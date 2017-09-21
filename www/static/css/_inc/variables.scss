@@ -162,6 +162,10 @@ a:hover { text-decoration: underline; }
     }
 }
 
+.left { text-align: left; }
+.center {text-align: center; }
+.right {text-align: right; }
+
 
 $ease: cubic-bezier(.4, 0, .2, 1);
 $ease-out: cubic-bezier(0, 0, .2, 1);
