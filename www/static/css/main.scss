@@ -879,7 +879,7 @@ aside.printThis {
     .fargeblokk {
       width: 100%;
       text-align: center;
-      padding: 15px;
+      padding: $mellomrom;
 
       @media #{$tablet} {
         width: 35%;
