@@ -13,11 +13,14 @@
 			{% switch blokk.type.handle %}
 
 					{% case 'topp' %}
-
 						{% import '_admin/_designblocks' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk) }}
 
 					{% case 'tekstOgBilde' %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% case 'slideshow' %}
 						{% import '_admin/_designblocks' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk) }}
 
@@ -26,7 +29,6 @@
 						{{ designBlokkmacro.designblocks(blokk) }}
 
 					{% case 'menyer' %}
-
 						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
 

@@ -259,6 +259,11 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
 
+  var mySwiper = new Swiper('.swiper-container', {
+      speed: 400,
+      spaceBetween: 100
+  });  
+
 
 /*=======================================================
 				  @Click/hover events
