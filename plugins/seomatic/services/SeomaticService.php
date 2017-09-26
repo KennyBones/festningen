@@ -114,7 +114,13 @@ class SeomaticService extends BaseApplicationComponent
         if ($templatePath)
             {
                 try {
+                    if ($metaVars) {
+                        $this->sanitizeMetaVars($metaVars);
                         $htmlText = craft()->templates->render($templatePath, $metaVars);
+                    }
+                    else
+                        $htmlText = craft()->templates->render($templatePath);
+
                 } catch (\Exception $e) {
                     $htmlText = 'Error rendering template in render(): ' . $e->getMessage();
                     SeomaticPlugin::log($htmlText, LogLevel::Error);
@@ -614,22 +620,34 @@ class SeomaticService extends BaseApplicationComponent
 
                                         foreach ($variants as $variant)
                                         {
+                                            if ($variant->getIsAvailable()) {
+                                                $availability = "http://schema.org/InStock";
+                                            } else {
+                                                $availability = "http://schema.org/OutOfStock";
+                                            }
                                             $commerceVariant = array(
                                                 'seoProductDescription' => $variant->getDescription() . ' - ' . $element->title,
                                                 'seoProductPrice' => number_format($variant->getPrice(), 2, '.', ''),
                                                 'seoProductCurrency' => craft()->commerce_paymentCurrencies->getPrimaryPaymentCurrency(),
                                                 'seoProductSku' => $variant->getSku(),
+                                                'seoProductAvailability' => $availability,
                                             );
                                             $commerceVariants[] = $commerceVariant;
                                         }
                                     }
                                     else
                                     {
+                                        if ($element->getIsAvailable()) {
+                                            $availability = "http://schema.org/InStock";
+                                        } else {
+                                            $availability = "http://schema.org/OutOfStock";
+                                        }
                                         $commerceVariant = array(
                                             'seoProductDescription' => $element->getDescription() . ' - ' . $element->title,
                                             'seoProductPrice' => number_format($element->getPrice(), 2, '.', ''),
                                             'seoProductCurrency' => craft()->commerce_paymentCurrencies->getPrimaryPaymentCurrency(),
                                             'seoProductSku' => $element->getSku(),
+                                            'seoProductAvailability' => $availability,
                                         );
                                         $commerceVariants[] = $commerceVariant;
                                     }
@@ -816,6 +834,9 @@ class SeomaticService extends BaseApplicationComponent
                 $meta['seoFacebookImageId'] = $meta['seoImageId'];
 
             $meta['canonicalUrl'] =  $this->getFullyQualifiedUrl($entryMetaUrl);
+            if (!empty($entryMeta->canonicalUrlOverride)) {
+                $meta['canonicalUrl'] =  $this->getFullyQualifiedUrl($entryMeta->canonicalUrlOverride);
+            }
 
             $meta['twitterCardType'] = $entryMeta->twitterCardType;
             if (!$meta['twitterCardType'])
@@ -1012,7 +1033,8 @@ class SeomaticService extends BaseApplicationComponent
                 $openGraphArticle = array();
                 $openGraphArticle['author'] = $helper['facebookUrl'];
                 $openGraphArticle['publisher'] = $helper['facebookUrl'];
-                $openGraphArticle['tag'] = array_map('trim', explode(',', $meta['seoKeywords']));
+                if ($meta['seoKeywords'])
+                    $openGraphArticle['tag'] = array_map('trim', explode(',', $meta['seoKeywords']));
 
     /* -- If an element was injected into the current template, scrape it for attribuates */
 
@@ -1104,8 +1126,10 @@ class SeomaticService extends BaseApplicationComponent
 
 /* -- If this is a 404, set the canonicalUrl to nothing */
 
-        if (http_response_code() == 404) {
-            $meta['canonicalUrl'] = "";
+        if (function_exists('http_response_code')) {
+            if (http_response_code() == 404) {
+                $meta['canonicalUrl'] = "";
+            }
         }
 
 /* -- Merge with the global override config settings */
@@ -1205,7 +1229,7 @@ class SeomaticService extends BaseApplicationComponent
         $result = array();
         $element = null;
 
-        $element = craft()->elements->getElementByUri("__home__");
+        $element = craft()->elements->getElementByUri("__home__", craft()->language, true);
         if ($element)
         {
             $result[$element->title] = $this->getFullyQualifiedUrl($element->url);
@@ -1235,7 +1259,7 @@ class SeomaticService extends BaseApplicationComponent
         foreach ($segments as $segment)
         {
             $uri .= $segment;
-            $element = craft()->elements->getElementByUri($uri);
+            $element = craft()->elements->getElementByUri($uri, craft()->language, true);
             if ($element && $element->uri)
             {
                 $result[$element->title] = $this->getFullyQualifiedUrl($element->uri);
@@ -2362,6 +2386,7 @@ class SeomaticService extends BaseApplicationComponent
                 "priceCurrency" =>  $variant['seoProductCurrency'],
                 "offeredBy" =>  $identity,
                 "seller" =>  $identity,
+                "availability" =>  $variant['seoProductAvailability'],
             );
             $offer = array_filter($offer);
             $productJSONLD['offers'] = $offer;
@@ -2922,10 +2947,21 @@ function parseAsTemplate($templateStr, $element)
         if ($seomaticSiteMeta['siteSeoTitlePlacement'] == "after")
             $titleSuffix = " " . $seomaticSiteMeta['siteSeoTitleSeparator'] . " " . $seomaticSiteMeta['siteSeoName'];
 
+        if (isset($seomaticMeta['twitter']['title'])) {
+            $title = $seomaticMeta['twitter']['title'];
+        } else {
+            $title = $seomaticMeta['seoTitle'];
+        }
         if (isset($seomaticMeta['twitter']))
-            $seomaticMeta['twitter']['title'] = $titlePrefix . $seomaticMeta['seoTitle'] . $titleSuffix;
+            $seomaticMeta['twitter']['title'] = $titlePrefix . $title . $titleSuffix;
+
+        if (isset($seomaticMeta['og']['title'])) {
+            $title = $seomaticMeta['og']['title'];
+        } else {
+            $title = $seomaticMeta['seoTitle'];
+        }
         if (isset($seomaticMeta['og']))
-            $seomaticMeta['og']['title'] = $titlePrefix . $seomaticMeta['seoTitle'] . $titleSuffix;
+            $seomaticMeta['og']['title'] = $titlePrefix . $title . $titleSuffix;
 
 /* -- Truncate seoTitle, seoDescription, and seoKeywords to recommended values */
 
@@ -3235,7 +3271,7 @@ public function getFullyQualifiedUrl($url)
 
 /* -- remove excess whitespace */
 
-        $text = preg_replace('/\s{2,}/', ' ', $text);
+        $text = preg_replace('/\s{2,}/u', ' ', $text);
 
         $text = html_entity_decode($text);
         return $text;
