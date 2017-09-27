@@ -267,6 +267,14 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
   });
 
 
+  $(mySwiper).each(function() {
+    this.stopAutoplay();
+     if ($(this).find("[data-swiper-autoplay']")) {
+       this.startAutoplay();
+     }
+  })
+
+
 /*=======================================================
 				  @Click/hover events
 =======================================================*/
