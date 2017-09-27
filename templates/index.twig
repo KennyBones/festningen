@@ -76,23 +76,13 @@
 
 			{% switch blokk.type.handle %}
 
-					{% case 'topp' %}
-
-						{% import '_admin/_designblocks' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk) }}
-
-					{% case 'tekstOgBilde' %}
-						{% import '_admin/_designblocks' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk) }}
-
-					{% case 'svartBoks' %}
-						{% import '_admin/_designblocks' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk) }}
-
 					{% case 'menyer' %}
-
 						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
+
+					{% default %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
 				{% endswitch %}
 

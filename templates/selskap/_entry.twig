@@ -3,36 +3,23 @@
 
 {% block content %}
 
-	{% for blokk in entry.blokkerNeo.level(1) %}
+{% for blokk in entry.blokkerNeo.level(1) %}
+	<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
-		<section class="row designblock block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
+		{% switch blokk.type.handle %}
 
-				{% switch blokk.type.handle %}
+				{% case 'menyer' %}
+					{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+					{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
 
-						{% case 'topp' %}
+				{% default %}
+					{% import '_admin/_designblocks' as designBlokkmacro %}
+					{{ designBlokkmacro.designblocks(blokk) }}
 
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
+			{% endswitch %}
 
-						{% case 'tekstOgBilde' %}
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-						{% case 'svartBoks' %}
-							{% import '_admin/_designblocks' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk) }}
-
-						{% case 'menyer' %}
-
-							{% import '_admin/_restaurantmeny' as designBlokkmacro %}
-							{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
-
-					{% endswitch %}
-
-
-			</section>
-
-	{% endfor %}
+	</section>
+{% endfor %}
 
 
 {% endblock %}

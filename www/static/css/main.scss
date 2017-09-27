@@ -1314,10 +1314,6 @@ aside.printThis {
   }
 }
 
-.swiper-slide {
-  height: 530px;
-}
-
 
 footer {
   padding: 30px;
@@ -1347,5 +1343,42 @@ footer {
     font-size: $h6;
   }
 
+}
+
+
+
+
+
+// SWIPER
+.swiper-slide {
+  height: 530px;
+}
+
+.swiper-container {
+
+  .swiper-button-next, .swiper-button-prev {
+    width: 50px;
+    background-size: 50px 44px;
+    transform: scale(0.9);
+    transition: transform .3s ease;
+
+    &:hover {
+      transform: scale(1);
+    }
+  }
+
+  .swiper-button-next {
+    background-image: url('/static/svg/symbols/icon-arrow_right.svg');
+  }
+
+  .swiper-button-prev {
+    background-image: url('/static/svg/symbols/icon-arrow_left.svg');
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #FFFFFF;
+  }
+
+  .swiper-pagination-bullet:hover { cursor: pointer;  }
 
 }

@@ -18,26 +18,23 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
-            <div class="swiper-slide">
               {% for slide in blokk.bilder %}
                 {% set bilde = craft.imager.transformImage(slide.bilde[0], [
                   { width: 320, height: 200 },
                   { width: 840, height: 400 },
                   { width: 1680, height: 530 },
                   ], { ratio:"16/9" }) %}
-
+              <div class="swiper-slide">
                   <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+              </div>
               {% endfor %}
-            </div>
-      <!-- If we need pagination -->
-      <div class="swiper-pagination"></div>
-
-      <!-- If we need navigation buttons -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-
         </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
 
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
 
     {% elseif blokk.type == 'topp' %}
