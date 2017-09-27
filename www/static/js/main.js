@@ -72,11 +72,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 
 	$html.addClass('lastet');
 
-  var mySwiper = new Swiper('.swiper-container', {
-      speed: 400,
-      pagination: '.swiper-pagination'
-  });
-
   // Sleng på Google map
   function initMap() {
     //'use strict';
@@ -261,6 +256,14 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
   if ($restaurant_sticky_block != null) {
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
+
+  var mySwiper = new Swiper('.swiper-container', {
+      speed: 400,
+      pagination: '.swiper-pagination',
+      loop: false,
+      nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev'
+  });
 
 
 /*=======================================================

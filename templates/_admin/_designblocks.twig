@@ -20,10 +20,10 @@
             <!-- Slides -->
               {% for slide in blokk.bilder %}
                 {% set bilde = craft.imager.transformImage(slide.bilde[0], [
-                  { width: 320, height: 200 },
-                  { width: 840, height: 400 },
-                  { width: 1680, height: 530 },
-                  ], { ratio:"16/9" }) %}
+                  { width: 320, height: 400 },
+              		{ width: 840, height: 570 },
+              		{ width: 1360, height: 670 },
+                  ], { mode: 'crop', position: bilde.fokuspunkt | default('50% 50%') }) %}
               <div class="swiper-slide">
                   <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
               </div>
