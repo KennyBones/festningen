@@ -1183,6 +1183,40 @@ aside.printThis {
     }
   }
 
+  .swiper-slide {
+    .bildetekst {
+      background-color: #FFFFFF;
+      position: absolute;
+      padding: $padding / 1.5;
+      width: 430px;
+      text-align: center;
+      font-size: $basesize;
+      line-height: 1.2em;
+      letter-spacing: 1px;
+
+      &.drop-right {
+        bottom: $padding;
+        right: $padding;
+      }
+
+      &.drop-left {
+        bottom: $padding;
+        left: $padding;
+      }
+
+      &.right {
+        top: $padding;
+        right: $padding;
+      }
+
+      &.left {
+        top: $padding;
+        left: $padding;
+      }
+
+    }
+  }
+
   .fakta-block {
     z-index: 2;
     width: 25%;

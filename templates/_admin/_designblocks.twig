@@ -14,7 +14,7 @@
     {# Slideshow #}
     {% elseif blokk.type == 'slideshow' %}
 
-    <div class="swiper-container">
+    <div class="row swiper-container designblock">
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
@@ -24,8 +24,13 @@
               		{ width: 840, height: 570 },
               		{ width: 1360, height: 670 },
                   ], { mode: 'crop', position: bilde.fokuspunkt | default('50% 50%') }) %}
-              <div class="swiper-slide">
+              <div class="swiper-slide designblock bilde">
                   <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+              {% if slide.bildetekst %}
+                <aside class="bildetekst designblokk {{slide.bildetekstposisjon}}">
+                  {{slide.bildetekst}}
+                </aside>
+              {% endif %}
               </div>
               {% endfor %}
         </div>
