@@ -565,7 +565,6 @@ $padding: 70px;
 
   &.menytopp {
     border-bottom: 0;
-    margin-bottom: -$padding;
   }
 
   ul {
@@ -1389,6 +1388,7 @@ footer {
 }
 
 .swiper-container {
+  z-index: 0;
 
   .swiper-button-next, .swiper-button-prev {
     width: 50px;
@@ -1403,10 +1403,12 @@ footer {
 
   .swiper-button-next {
     background-image: url('/static/svg/symbols/icon-arrow_right.svg');
+    right: 30px;
   }
 
   .swiper-button-prev {
     background-image: url('/static/svg/symbols/icon-arrow_left.svg');
+    left: 30px;
   }
 
   .swiper-pagination-bullet-active {

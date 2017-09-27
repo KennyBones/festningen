@@ -262,7 +262,8 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
       pagination: '.swiper-pagination',
       loop: false,
       nextButton: '.swiper-button-next',
-			prevButton: '.swiper-button-prev'
+			prevButton: '.swiper-button-prev',
+      autoplay: 4000
   });
 
 
