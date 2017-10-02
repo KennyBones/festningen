@@ -24,7 +24,7 @@
               		{ width: 840, height: 570 },
               		{ width: 1360, height: 670 },
                   ], { mode: 'crop', position: bilde.fokuspunkt | default('50% 50%') }) %}
-              <div class="swiper-slide designblock bilde {{blokk.autoplay}}>" {% if blokk.autoplay %} data-swiper-autoplay='{{blokk.hastighet.value}}' {% endif %}>
+              <div class="swiper-slide designblock bilde" {% if blokk.autoplay %} data-swiper-autoplay='{{blokk.hastighet.value}}' {% endif %}>
                   <img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
               {% if slide.bildetekst %}
                 <aside class="bildetekst designblokk {{slide.bildetekstposisjon}}">
