@@ -17,7 +17,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
         map,
         $selskap_sticky_block = $m('.selskap .sticky-block'),
         $restaurant_sticky_block = $('.sticky-block'),
-        $swipers = $('.swiper-container'),
         $header = $('#topHeader'),
         desktop,
 		tablet,
@@ -258,27 +257,20 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
 
+  var mySwiper = new Swiper('.swiper-container', {
+      speed: 400,
+      pagination: '.swiper-pagination',
+      loop: false,
+      nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+      autoplay: 5000
+  });
 
-  // for alle swipers
-  $swipers.each(function() {
-
-    var hasAutoplay = $(this).find('.swiper-slide').attr('data-swiper-autoplay');
-
-    if (hasAutoplay != undefined) {
-      hasAutoplay = true;
-    } else {
-      hasAutoplay = false;
-    }
-
-    var mySwiper = new Swiper($(this), {
-        speed: 400,
-        pagination: '.swiper-pagination',
-        loop: false,
-        nextButton: '.swiper-button-next',
-  			prevButton: '.swiper-button-prev',
-        autoplay: hasAutoplay
-    });
-
+  $(mySwiper).each(function() {
+    this.stopAutoplay();
+     if ($(this).find("[data-swiper-autoplay']")) {
+       this.startAutoplay();
+     }
   })
 
 
