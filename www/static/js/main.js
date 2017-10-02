@@ -265,7 +265,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     var hasAutoplay = $(this).find('.swiper-slide').attr('data-swiper-autoplay');
 
     if (hasAutoplay != undefined) {
-      hasAutoplay = true;
+      hasAutoplay = 1000;
     } else {
       hasAutoplay = false;
     }
