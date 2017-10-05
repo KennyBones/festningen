@@ -471,15 +471,19 @@ $padding: 70px;
 
 
 .sticky-block {
-  display: inline-block;
-  width: 20%;
-  vertical-align: top;
-  padding-top: 200px;
-  padding-bottom: 200px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform:translate3d(0%, 0, 0);
+  display: none;
+
+  @media #{$desktop} {
+    display: inline-block;
+    width: 20%;
+    vertical-align: top;
+    padding-top: 200px;
+    padding-bottom: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform:translate3d(0%, 0, 0);
+  }
 
   .sticky-block--wrapper {
     background-color: #FFFFFF;
@@ -522,8 +526,6 @@ $padding: 70px;
 
   }
 
-
-
     li.selected {
       a, p {
         color: $color_pr5;
@@ -537,9 +539,16 @@ $padding: 70px;
 
 .sticky-block--right {
   display: inline-block;
-  padding-left: 30%;
+  padding-left: 0;
   padding-top: $padding;
   width: 100%;
+
+  .restaurant-menu { padding: 20px; }
+
+  @media #{$desktop} {
+    padding-left: 30%;
+  }
+
 }
 
 .pageTop {
