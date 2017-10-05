@@ -875,8 +875,18 @@ aside.printThis {
     h2 { text-align: center; text-transform: uppercase; }
 
     svg {
-      margin: $mellomrom-lite;
-      margin-bottom: $mellomrom;
+      margin: 17px;
+      margin-bottom: 30px;
+      height: 50px;
+      width: 70px;
+
+      @media #{$tablet} {
+        margin: $mellomrom-lite;
+        margin-bottom: $mellomrom;
+        height: 60px;
+        width: 90px;
+      }
+
     }
 
     table {
@@ -928,7 +938,10 @@ aside.printThis {
         margin-bottom: 20px
       }
 
-      h3 { margin-bottom: 30px; }
+      h3 {
+        margin-bottom: 30px;
+        font-size: $h3; 
+      }
 
       table {
         width: 80%;
