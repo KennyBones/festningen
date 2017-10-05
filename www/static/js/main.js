@@ -258,7 +258,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
 
-
   // SWIPERS
   $swipers.each(function() {
 

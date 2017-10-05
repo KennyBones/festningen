@@ -29,8 +29,8 @@ body {
     background: $color_pr2;
     background-image: url('/static/svg/symbols/logo-bg.svg');
     background-repeat: no-repeat;
-    background-position: -34px 45%;
-    background-size: 282px;
+    background-position: -29px 50%;
+    background-size: 322px;
     position: absolute;
     top: 0;
     left: 0;
@@ -44,6 +44,8 @@ body {
       background-size: 660px;
       height: 72px;
   	}
+
+
   }
 
   @keyframes headerSlideDown {
@@ -61,6 +63,7 @@ body {
     position: fixed;
     animation-duration: .6s;
     animation-name: headerSlideDown;
+    z-index: 3;
   }
 
   &.menu-open {
@@ -71,7 +74,6 @@ body {
         display: block;
         top: 0;
         width: 100%;
-        background: white;
         padding-top: 68px;
 
         li { display: block; }
@@ -83,11 +85,15 @@ body {
 #menu-btn {
   display: block;
   position: absolute;
-  top: 4px;
-  right: 0;
+  top: 0px;
+  right: 8px;
   margin: 0;
   padding: 5px;
   width: 55px;
+  height: 55px;
+  line-height: 42px;
+  font-weight: bold;
+  font-size: 16px;
 
   @media #{$tablet} {
 		display: none;
@@ -115,10 +121,10 @@ body {
 }
 
 #desktop_nav-ul {
-	position: relative;
-	margin: 0;
-	padding: 0;
-	line-height: 2.5em;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  line-height: 2.5em;
   text-align: center;
   display: none;
 
@@ -126,20 +132,24 @@ body {
     display: block;
   }
 
-	li {
-		display: inline-block;
+  li {
+    display: inline-block;;
+    position: relative;
 
-		a {
+    @media #{$desktop} {
+      position: static;
+    }
+
+    a {
       letter-spacing: .1em;
       position: relative;
       display: block;
       padding: 16px;
-      padding-right: 40px;
       padding-left: 40px;
+      padding-right: 40px;
       margin: 0;
       font-weight: bold;
-  		font-size: 14px;
-  		position: relative;
+      font-size: 14px;
 
       @media #{$tablet} {
         padding-right: 30px;
@@ -154,77 +164,96 @@ body {
   		&:hover {
   			color: $color_pr4;
   		}
-		}
 
-		&.has-children {
-			>a {
-
-				&:before {
-					content: "...";
-					position: absolute;
-					left: 0;
-					right: 0;
-					bottom: 5px;
-					font-size: 30px;
-				}
-			}
-		}
-
-    &.active a {
-      color: $color_pr5;
     }
 
-    // Nav level 2
-		ul.nav__level2 {
-			opacity: 0;
-			position: absolute;
-			left: 0;
-			top: -72px;
-			margin: 0;
+    &.has-children {
+      >a {
+
+        &:before {
+          content: "...";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 5px;
+          font-size: 30px;
+        }
+      }
+    }
+
+    ul.nav__level2 {
+      max-height: 0;
+      opacity: 0;
+      left: 0;
+      top: -72px;
+      margin: 0;
       padding: 0;
-			width: 100%;
-			line-height: 2.5em;
-      transition: opacity .3s ease;
-      background: #FFFFFF;
+      width: 100%;
+      line-height: 2.5em;
+      transition: opacity .3s ease, max-height .3s ease;
+      background: #000000;
       z-index: -1;
       border-top: 1px solid $color_pr6;
 
-			li {
+      @media #{$tablet} {
+        position: absolute;
+        background: #FFFFFF;
+
+        li a {
+          font-size: 13px;
+          color: #000000;
+        }
+
+    	}
+
+      li {
         margin: 0;
         padding: 4px;
+        display: none;
 
-				a {
-					font-size: 13px;
-					color: black;
+        a {
+          font-size: 11px;
+          color: #FFFFFF;
           padding: 0;
           padding-left: 15px;
           padding-right: 15px;
-				}
+        }
 
         &.active a {
           color: $color_pr4;
         }
 
         &.active.generell a { color: black; }
-			}
-		}
+      }
 
-		&.activated {
+    }
 
-			ul {
-				opacity: 1;
+    &.activated {
+
+			ul.nav__level2 {
+        max-height: 1000px;
         top: 72px;
-        transition: opacity .3s .1s ease, top .3s .1s ease;
+        opacity: 1;
+        visibility: visible;
+
+        li {
+          display: block;
+
+          @media #{$tablet} {
+            display: inline-block;    
+        	}
+        }
 			}
 
 			>a {
 				font-weight: 600;
 			}
 		}
-	}
+
+
+  }
 
 }
-
 
 
   .searchbox {
