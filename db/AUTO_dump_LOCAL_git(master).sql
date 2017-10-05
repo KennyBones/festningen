@@ -3,7 +3,7 @@
 -- Host: localhost	Database: festningen_craft
 -- ------------------------------------------------------
 -- Server version 	5.6.28
--- Date: Thu, 05 Oct 2017 13:53:41 +0000
+-- Date: Thu, 05 Oct 2017 14:22:37 +0000
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -3160,7 +3160,7 @@ CREATE TABLE `craft_tasks` (
   KEY `craft_tasks_lft_idx` (`lft`),
   KEY `craft_tasks_rgt_idx` (`rgt`),
   KEY `craft_tasks_level_idx` (`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3551,4 +3551,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Thu, 05 Oct 2017 13:53:42 +0000
+-- Dump completed on: Thu, 05 Oct 2017 14:22:39 +0000

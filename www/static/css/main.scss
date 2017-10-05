@@ -240,7 +240,7 @@ body {
           display: block;
 
           @media #{$tablet} {
-            display: inline-block;    
+            display: inline-block;
         	}
         }
 			}
@@ -319,7 +319,6 @@ $padding: 70px;
 
   .tekst {
     padding: 30px;
-    font-size: $basesize;
 
     @media #{$tablet} {
       padding: $padding;
@@ -391,11 +390,12 @@ $padding: 70px;
 
     .tekst, .bilde {
       display: inline-block;
-      font-size: $basesize;
+      font-size: $h5;
       width: 100%;
 
       @media #{$tablet} {
         width: 50%;
+        font-size: $basesize;
       }
     }
 
@@ -589,8 +589,11 @@ $padding: 70px;
 .black-block {
   background-color: #000000;
   font-size: 0;
-  border-bottom: $padding / 2 solid $color_pr3;
   overflow: hidden;
+
+  @media #{$tablet} {
+    border-bottom: $padding / 2 solid $color_pr3;
+  }
 
   &.menytopp {
     border-bottom: 0;
@@ -598,10 +601,11 @@ $padding: 70px;
 
   ul {
     list-style: none;
+    padding: 0;
 
     li {
       display: inline-block;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1;
       border-radius: 500px;
       padding: 13px 29px 14px;
@@ -615,6 +619,10 @@ $padding: 70px;
       font-weight: 700;
       margin: 10px;
       border: 2px solid;
+
+      @media #{$tablet} {
+        font-size: 14px;
+      }
 
       &:hover {
         background: #FFFFFF;
@@ -816,23 +824,22 @@ aside.printThis {
 
   .apningstider {
     font-size: 0;
-    margin-top: $mellomrom;
-    margin-bottom: $mellomrom;
     text-align: center;
     padding: 0;
     display: block;
 
     @media #{$tablet} {
       display: flex;
+      margin-top: $mellomrom;
+      margin-bottom: $mellomrom;
     }
 
     .designblock {
       display: block;
       width: 100%;
-      padding: 15px;
-      padding-top: 30px;
-      padding-bottom: 90px;
-      font-size: $basesize;
+      padding: 50px;
+      padding-bottom: 80px;
+      font-size: $h5;
 
       @media #{$tablet} {
         width: 50%;
@@ -893,12 +900,13 @@ aside.printThis {
 
     .tekst {
       width: 100%;
-      padding: $padding;
       text-align: center;
+      padding: 50px;
 
       @media #{$tablet} {
         width: 65%;
         text-align: left;
+        padding: $padding;
         padding-right: $padding * 2;
       }
 
@@ -933,6 +941,12 @@ aside.printThis {
         td:first-of-type { text-align: left; }
       }
     }
+  }
+
+  .black-block .fargeblokk{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 50px;
   }
 }
 
@@ -1143,7 +1157,19 @@ aside.printThis {
 .block-parent {
   position: relative;
   font-size: 0;
-  border-bottom: $padding solid $color_pr3;
+
+  .designblock {
+    font-size: $h5;
+
+    @media #{$tablet} {
+      font-size: $basesize;
+    }
+
+  }
+
+  @media #{$tablet} {
+    border-bottom: $padding solid $color_pr3;
+  }
 
   &.first {
     margin-top: 0;
