@@ -19,7 +19,7 @@
 			}
 		</script>
 		{% endif %}
-		{% set LP = craft.request.isLivePreview %}		
+		{% set LP = craft.request.isLivePreview ?? false %}	
 	</head>
 	<body class="{{ bodyClass is defined ? bodyClass }}">
 	{% include '_admin/_maintenanceBanner' %}
