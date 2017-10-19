@@ -1,5 +1,6 @@
 {% set midnight = now|date_modify("+1 day")|date("Y-m-d") ~ ' 00:00' %}
 {% set cdnUrl = craft.config.cdnUrl ?? siteUrl %}
+{% set LP = craft.request.isLivePreview ?? false %}	
 <!doctype html>
 {% if craft.config.env == 'PROD' %}{% include '_admin/_mustasj_logo' %}{% endif %}
 <html class="no-js" lang="{{craft.locale}}">
@@ -19,7 +20,6 @@
 			}
 		</script>
 		{% endif %}
-		{% set LP = craft.request.isLivePreview ?? false %}	
 	</head>
 	<body class="{{ bodyClass is defined ? bodyClass }}">
 	{% include '_admin/_maintenanceBanner' %}
