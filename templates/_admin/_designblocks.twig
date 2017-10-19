@@ -1,5 +1,5 @@
 {% macro designblocks(blokk) %}
-
+{% set LP = craft.request.isLivePreview ?? false %}
     {# contents of the macro here #}
 
     {% if  blokk.type == 'svartBoks' %}
