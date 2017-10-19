@@ -52,7 +52,7 @@
           { width: 1680, height: 530 },
           ], { ratio:"16/9" }) %}
 
-          <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+          <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
 
           {% if blokk.bildetekstChkbox %}
             <aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
@@ -113,7 +113,7 @@
       {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
         <section class="row designblock bilde-full">
           <article class="designblock bilde">
-            <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
+            <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
 
             {# Hvis det er bildetekst #}
             {% if blokk.bildetekstChkbox == 1 %}
@@ -141,7 +141,7 @@
                 </article>
 
                 <article class="designblock bilde">
-                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_stor[0].url}} 400w, {{bilde_stor[1].url}} 767w, {{bilde_stor[2].url}}" alt="{{img.title | default("")}}">
+                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
 
                   {# Hvis det er bildetekst #}
                   {% if blokk.bildetekstChkbox == 1 %}
@@ -163,7 +163,7 @@
             {% if blokk.bildeposisjon == 'left' %}
 
                 <article class="designblock bilde">
-                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_liten[0].url}}" alt="{{img.title | default("")}}">
+                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
                 </article>
 
                 <article class="designblock tekst">
@@ -178,7 +178,7 @@
                 </article>
 
                 <article class="designblock bilde">
-                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde_liten[0].url}}" alt="{{img.title | default("")}}">
+                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
                 </article>
 
               {% endif %}
