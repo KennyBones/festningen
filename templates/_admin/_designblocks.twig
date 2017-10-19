@@ -52,6 +52,7 @@
           { width: 1680, height: 530 },
           ], { ratio:"16/9" }) %}
 
+          {% set LP = craft.request.isLivePreview ?? false %}
           <h1>{{LP}}</h1>
 
           <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
