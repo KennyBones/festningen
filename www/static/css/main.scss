@@ -831,6 +831,18 @@ aside.printThis {
 // FORSIDE
 .index {
 
+  .pageTop .designblock.tekst {
+
+    @media #{$tablet} {
+      margin-top: -100px;
+    }
+
+    @media #{$desktop} {
+      margin-top: -100px;
+    }
+
+  }
+
   .apningstider {
     font-size: 0;
     text-align: center;
