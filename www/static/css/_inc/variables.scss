@@ -96,6 +96,10 @@ h1, .h1 {
     font-size: $h3;
 
     @media #{$tablet} {
+  		font-size: $h2;
+  	}
+
+    @media #{$desktop} {
   		font-size: $h1;
   	}
 
@@ -105,6 +109,10 @@ h2, .h2 {
     font-size: $h4;
 
 	@media #{$tablet} {
+		font-size: $h3;
+	}
+
+  @media #{$desktop} {
 		font-size: $h2;
 	}
 }

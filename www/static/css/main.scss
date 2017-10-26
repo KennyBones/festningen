@@ -866,8 +866,6 @@ aside.printThis {
         width: 50%;
         display: inline-block;
         padding: $padding;
-        padding-left: $padding * 2;
-        padding-right: $padding * 2;
       }
 
       &.first {
@@ -929,28 +927,62 @@ aside.printThis {
 
   .menyer {
 
+    &.designblock {
+      display: block;
+
+      @media #{$desktop} {
+        display: flex;
+      }
+
+      .tekst {
+        width: 100%;
+
+        @media #{$desktop} {
+          width: 65%;
+        }
+
+      }
+
+      .fargeblokk {
+        width: 100%;
+
+        table { width: 100%; }
+
+        @media #{$desktop} {
+          width: 35%;
+        }
+
+      }
+    }
+
     .tekst {
-      width: 100%;
       text-align: center;
       padding: 50px;
 
+      h2 {
+        font-size: $h3;
+      }
+
       @media #{$tablet} {
+        text-align: left;
+        padding: $padding;
+
+        h2 { font-size: $h2; }
+      }
+
+      @media #{$desktop} {
         width: 65%;
         text-align: left;
         padding: $padding;
         padding-right: $padding * 2;
       }
 
+
     }
 
     .fargeblokk {
-      width: 100%;
       text-align: center;
       padding: $mellomrom;
-
-      @media #{$tablet} {
-        width: 35%;
-      }
 
       svg {
         fill: #FFFFFF;
@@ -964,14 +996,21 @@ aside.printThis {
       }
 
       table {
-        width: 80%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 20px;
         font-weight: bold;
 
-        td {text-align: right; }
-        td:first-of-type { text-align: left; }
+        td {
+          text-align: left;
+          padding-right: 20px;
+         }
+
+        td:first-of-type {
+          text-align: right;
+          padding-right: 20px;
+         }
       }
     }
   }
