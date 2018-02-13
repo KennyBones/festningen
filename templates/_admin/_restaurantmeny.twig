@@ -45,7 +45,7 @@
         {% for rett in enkeltmeny.retter %}
           <table>
             <tr>
-              <th class="table--heading title overskrift-{{rett.rett.overskrift}}">{{rett.title}}</th>
+              <th class="table--heading title {% if rett.rett.overskrift %}table-overskrift{% endif %}">{{rett.title}}</th>
               <th class="table--heading price">{{rett.rett.pris}}</th>
             </tr>
             <tr>
