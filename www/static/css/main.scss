@@ -1209,6 +1209,7 @@ aside.printThis {
 
     &.title { text-align: left; }
     &.price { text-align: right; }
+    &.table-overskrift { font-size: $h3; padding-top: 40px; }
   }
 
   .table--body {
