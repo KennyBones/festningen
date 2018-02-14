@@ -309,7 +309,7 @@ $padding: 70px;
     letter-spacing: 1px;
   }
 
-  &.parent {
+  &.parent, .first {
     border-bottom: $mellomrom solid $color_pr3;
   }
 
@@ -1411,6 +1411,10 @@ aside.printThis {
   }
 }
 
+.hvaskjer .designblock.block-parent.first {
+  margin-top: 72px;
+}
+
 // PRINT this
 
 @media print {
@@ -1467,6 +1471,23 @@ aside.printThis {
 
 }
 
+.hvaskjer-buttons {
+  text-align: center;
+  margin-bottom: -60px;
+  margin-top: 60px;
+  font-size: $h5;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      padding: 15px;
+    }
+  }
+
+}
 
 
 // SELSKAP

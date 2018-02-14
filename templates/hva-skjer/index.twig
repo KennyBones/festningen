@@ -1,0 +1,116 @@
+{% extends "_layout" %}
+{% set bodyClass = "hvaskjer" %}
+
+{% block content %}
+
+	{# {% cache until midnight %}{% minify %} #}
+
+	{# {% endminify %}{% endcache %} #}
+
+	<section class="row designblock block-parent parent first">
+
+		<div class="block-topp">
+			{% set img = entry.toppbilde.first | default(false) %}
+			{% set bilde = craft.imager.transformImage(img, [
+				{ width: 320, height: 200 },
+				{ width: 840, height: 400 },
+				{ width: 1680, height: 530 },
+				], { ratio:"16/9" }) %}
+
+				<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+
+				{% if entry.bildetekstChkbox %}
+					<aside class="bildetekst designblokk {{entry.bildetekstposisjon}}">
+						{{entry.bildetekst}}
+					</aside>
+				{% endif %}
+		</div>
+
+	</section>
+
+	{% for blokk in craft.entries.section('hvaSkjer').limit(10) %}
+
+		{% set img = blokk.toppbilde | length ? blokk.toppbilde.first %}
+
+		{% set bilde = craft.imager.transformImage(img, [
+			{ width: 700, height: 380 },
+			], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
+		<section class="row designblock parent">
+			{# Bildeposisjon høyre eller venstre #}
+			<section class="row designblock enkel">
+
+			{% if loop.index is even %}
+
+					<article class="designblock bilde">
+						<a href="{{blokk.url}}">
+							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						</a>
+					</article>
+
+					<article class="designblock tekst">
+						<h3><a href="{{blokk.url}}">
+							{{blokk.title}}
+						</a></h3>
+						{{blokk.rikTekst}}
+
+						<aside class="hvaskjer-buttons">
+							<ul>
+				          <li><strong>Tidspunkt:</strong>
+				            <p>{{blokk.tidspunkt}}</p>
+									</li>
+									<li>
+				            <strong>Lokasjon:</strong>
+				            <p>{{blokk.lokasjon}}</p>
+									</li>
+									<li>
+				            <strong>Billetter:</strong>
+				            <p><a href="/{{blokk.renTekst}}" target="_blank">{{blokk.renTekst}}</a></p>
+				          </li>
+				      </ul>
+						</aside>
+
+					</article>
+
+			{% else %}
+
+					<article class="designblock tekst">
+						<h3><a href="{{blokk.url}}">
+							{{blokk.title}}
+						</a></h3>
+						{{blokk.rikTekst}}
+
+						<aside class="hvaskjer-buttons">
+							<ul>
+				          <li><strong>Tidspunkt:</strong>
+				            <p>{{blokk.tidspunkt}}</p>
+									</li>
+									<li>
+				            <strong>Lokasjon:</strong>
+				            <p>{{blokk.lokasjon}}</p>
+									</li>
+									<li>
+				            <strong>Billetter:</strong>
+				            <p><a href="/{{blokk.renTekst}}" target="_blank">{{blokk.renTekst}}</a></p>
+				          </li>
+				      </ul>
+						</aside>
+					</article>
+
+					<article class="designblock bilde">
+						<a href="{{blokk.renTekst}}" target="_blank">
+							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						</a>
+					</article>
+
+				{% endif %}
+				</section>
+		</section>
+
+
+
+
+	{% endfor %}
+
+
+{% endblock %}

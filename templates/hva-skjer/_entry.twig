@@ -1,0 +1,50 @@
+{% extends "_layout" %}
+{% set bodyClass = "hvaskjer" %}
+
+{% block content %}
+
+
+	<section class="row designblock block-parent first">
+
+    <div class="block-topp">
+      {% set img = entry.toppbilde.first | default(false) %}
+      {% set bilde = craft.imager.transformImage(img, [
+        { width: 320, height: 200 },
+        { width: 840, height: 400 },
+        { width: 1680, height: 530 },
+        ], { ratio:"16/9" }) %}
+
+        <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+
+        {% if entry.bildetekstChkbox %}
+          <aside class="bildetekst designblokk {{entry.bildetekstposisjon}}">
+            {{entry.bildetekst}}
+          </aside>
+        {% endif %}
+    </div>
+
+    <aside class="fakta-block">
+      <ul>
+          <li>
+            <strong>Tidspunkt:</strong>
+            <p>{{entry.tidspunkt}}</p>
+            <strong>Lokasjon:</strong>
+            <p>{{entry.lokasjon}}</p>
+            <strong>Billetter:</strong>
+            <p><a href="{{entry.renTekst}}s">{{entry.renTekst}}</a></p>
+          </li>
+      </ul>
+    </aside>
+
+    <div class="block-brodtekst">
+      <h2>{{entry.title}}</h2>
+      <div class="block-rikTekst">
+        {{entry.rikTekst}}
+      </div>
+    </div>
+
+	</section>
+
+
+
+{% endblock %}

@@ -162,7 +162,7 @@
             {% if blokk.bildeposisjon == 'left' %}
 
                 <article class="designblock bilde">
-                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde_liten[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
                 </article>
 
                 <article class="designblock tekst">
@@ -177,7 +177,7 @@
                 </article>
 
                 <article class="designblock bilde">
-                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+                  <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde_liten[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
                 </article>
 
               {% endif %}
