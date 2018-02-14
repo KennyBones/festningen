@@ -304,6 +304,8 @@ $padding: 70px;
   background-color: #FFFFFF;
   vertical-align: top;
 
+  &.black { background: #000000; color: #ffffff; a { color: #ffffff; }}
+
   .tekst, .block-brodtekst, .bildetekst {
     line-height: 1.7em;
     letter-spacing: 1px;
