@@ -28,7 +28,7 @@
 
 	</section>
 
-	{% for blokk in craft.entries.section('hvaSkjer').limit(10) %}
+	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('lft desc') if entry.postDate < now %}
 
 		{% set img = blokk.toppbilde | length ? blokk.toppbilde.first %}
 
