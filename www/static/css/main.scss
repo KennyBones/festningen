@@ -351,7 +351,7 @@ $padding: 70px;
     padding: $padding;
     font-size: 16px;
 
-    a { color: #FFFFFF; display: block; }
+    a { color: #FFFFFF; display: block; margin: 0; }
 
     img { max-width: 50px; max-height: 50px; }
   }
@@ -599,7 +599,7 @@ $padding: 70px;
 
 .black-block {
   background-color: #000000;
-  font-size: 0;
+  font-size: 0!important;
   overflow: hidden;
 
   @media #{$tablet} {
