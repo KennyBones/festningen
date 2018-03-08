@@ -136,7 +136,7 @@ body {
     display: inline-block;;
     position: relative;
 
-    @media #{$desktop} {
+    @media #{$tablet} {
       position: static;
     }
 
@@ -153,8 +153,8 @@ body {
 
       @media #{$tablet} {
         padding: 16px;
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
     	}
 
       @media #{$desktop} {
@@ -176,8 +176,12 @@ body {
           position: absolute;
           left: 0;
           right: 0;
-          bottom: 5px;
+          bottom: 0;
           font-size: 30px;
+
+          @media #{$tablet} {
+            bottom: 5px;
+          }
         }
       }
     }
@@ -221,7 +225,11 @@ body {
         }
 
         &.active a {
-          color: $color_pr4;
+
+
+          @media #{$tablet} {
+            color: $color_pr4;
+          }
         }
 
         &.active.generell a { color: black; }
@@ -236,6 +244,7 @@ body {
         top: 72px;
         opacity: 1;
         visibility: visible;
+        z-index: 1;
 
         li {
           display: block;
@@ -351,8 +360,13 @@ $padding: 70px;
     width: 50%;
     background-color: #000000;
     color: white;
-    padding: $padding;
     font-size: 16px;
+    padding: 30px;
+
+    @media #{$tablet} {
+      padding: $padding;
+    }
+
 
     a { color: #FFFFFF; display: block; margin: 0; }
 
@@ -449,10 +463,13 @@ $padding: 70px;
         font-size: $h5;
 
         @media #{$tablet} {
+          font-size: $basesize;
+        }
+
+        @media #{$desktop} {
           position: absolute;
           width: 50%;
           padding: $padding;
-          font-size: $basesize;
 
           &.drop-right {
             bottom: $padding * 2;
@@ -475,14 +492,6 @@ $padding: 70px;
           }
 
         }
-
-        @media #{$desktop} {
-
-        }
-
-
-
-
 
       }
     }
@@ -629,10 +638,7 @@ $padding: 70px;
   background-color: #000000;
   font-size: 0!important;
   overflow: hidden;
-
-  @media #{$tablet} {
-    border-bottom: $padding / 2 solid $color_pr3;
-  }
+  border-bottom: $padding / 2 solid $color_pr3;
 
   &.menytopp {
     border-bottom: 0;
@@ -645,10 +651,7 @@ $padding: 70px;
     li {
       display: inline-block;
       font-size: 10px;
-      line-height: 1;
-      border-radius: 500px;
       padding: 12px 21px 12px;
-      border-width: 2px;
       letter-spacing: 2px;
       min-width: 160px;
       text-transform: uppercase;
@@ -656,12 +659,15 @@ $padding: 70px;
       background: #000;
       color: #fff;
       font-weight: 700;
-      margin: 10px;
-      border: 2px solid;
 
       @media #{$tablet} {
         font-size: 14px;
         padding: 13px 29px 14px;
+        border-radius: 500px;
+        border: 2px solid;
+        border-width: 2px;
+        margin: 10px;
+        line-height: 1;
       }
 
       &:hover {
@@ -1302,7 +1308,7 @@ aside.printThis {
 }
 
 .forside {
-  
+
   &.first {
     margin-top: 55px;
 
@@ -1317,6 +1323,11 @@ aside.printThis {
 .block-parent {
   position: relative;
   font-size: 0;
+  border-bottom: $padding / 2 solid $color_pr3;
+
+  @media #{$tablet} {
+    border-bottom: $padding solid $color_pr3;
+  }
 
   .designblock {
     font-size: $h5;
@@ -1327,15 +1338,12 @@ aside.printThis {
 
   }
 
-  @media #{$tablet} {
-    border-bottom: $padding solid $color_pr3;
-  }
-
   .block-topp {
     position: relative;
 
     img {
       max-width: 100%;
+      width: 100%;
     }
 
     .bildetekst {
@@ -1348,6 +1356,11 @@ aside.printThis {
       font-size: $basesize;
       line-height: 1.2em;
       letter-spacing: 1px;
+      display: none;
+
+      @media #{$desktop} {
+        display: block;
+      }
 
       &.drop-right {
         bottom: $padding;
@@ -1440,27 +1453,60 @@ aside.printThis {
 
   .fakta-block {
     z-index: 2;
-    width: 25%;
+    width: 100%;
     display: inline-block;
     font-size: $basesize;
-    padding: 50px;
     padding-left: 30px;
     padding-right: 30px;
+    padding-bottom: 0;
+    display: none;
+
+    &.mobile {
+      display: block;
+
+      ul { text-align: center; padding: 0; margin: 0; }
+
+      @media #{$desktop} {
+        display: none;
+      }
+
+    }
+
+    li {
+      display: inline-block;
+    }
+
+    @media #{$tablet} {
+
+    }
+
+    @media #{$desktop} {
+      display: inline-block;
+      width: 25%;
+      padding: 50px;
+    }
+
 
     ul {
       list-style: none;
       text-transform: uppercase;
-      text-align: right;
+      text-align: left;
       letter-spacing: .1em;
       font-family: $font_century;
       padding: 0;
       padding-right: $mellomrom-lite;
+
+      @media #{$desktop} {
+        text-align: right;
+      }
+
 
       p {
         font-size: $h7;
         font-family: $font_default;
         margin-bottom: 2em;
       }
+
       strong { font-size: $h5; }
 
       hr {
@@ -1477,12 +1523,18 @@ aside.printThis {
 
   .block-brodtekst{
     display: inline-block;
-    width: 75%;
+    width: 100%;
     vertical-align: top;
-    font-size: $basesize;
-    padding: 90px;
-    padding-right: 130px;
+    font-size: $h5;
+    padding: 30px;
     line-height: 1.6em;
+
+    @media #{$desktop} {
+      width: 75%;
+      padding: 90px;
+      padding-right: 130px;
+      font-size: $basesize;
+    }
 
     h2 {
       display: inline-block;
@@ -1495,8 +1547,13 @@ aside.printThis {
 
 .lokaler, .underside, .lokaler, .selskap {
   .designblock.block-parent.first {
-    margin-top: 72px;
+    margin-top: 55px;
     border-bottom: 0;
+
+    @media #{$tablet} {
+      margin-top: 72px;
+    }
+
   }
 }
 
