@@ -402,9 +402,11 @@ $padding: 70px;
     padding: 0;
     font-size: 0;
     display: block;
+    margin-top: $padding / 2;
 
     @media #{$tablet} {
       display: flex;
+      margin-top: $padding;
     }
 
     .tekst, .bilde {
@@ -427,7 +429,7 @@ $padding: 70px;
       transition: transform 1s ease;
       transform: scale(1);
       min-height: 100%;
-      min-width: 100%;
+      width: 100%;
 
       @media #{$tablet} {
         position: absolute;
@@ -1545,7 +1547,7 @@ aside.printThis {
   }
 }
 
-.lokaler, .underside, .lokaler, .selskap {
+.lokaler, .underside, .lokaler, .selskap, .hvaskjer {
   .designblock.block-parent.first {
     margin-top: 55px;
     border-bottom: 0;
@@ -1558,7 +1560,11 @@ aside.printThis {
 }
 
 .hvaskjer .designblock.block-parent.first {
-  margin-top: 72px;
+  margin-bottom: $padding / 2;
+
+  @media #{$tablet} {
+    margin-bottom: 72px;
+  }
 }
 
 // PRINT this
@@ -1619,9 +1625,13 @@ aside.printThis {
 
 .hvaskjer-buttons {
   text-align: center;
-  margin-bottom: -60px;
+  margin-bottom: -30px;
   margin-top: 60px;
   font-size: $h5;
+
+  @media #{$tablet} {
+    margin-bottom: -60px;
+  }
 
   p { margin: 0; }
 
@@ -1652,6 +1662,19 @@ aside.printThis {
   }
 }
 
+.hvaskjer {
+  .pageTop .designblock.tekst {
+
+    @media #{$tablet} {
+      margin-top: -100px;
+    }
+
+    @media #{$desktop} {
+      margin-top: -100px;
+    }
+
+  }
+}
 
 footer {
   padding: 30px;

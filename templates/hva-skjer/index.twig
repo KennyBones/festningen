@@ -7,26 +7,23 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	<section class="row designblock block-parent parent first">
+	{% set img = entry.toppbilde.first | default(false) %}
+	{% set bilde = craft.imager.transformImage(img, [
+		{ width: 320, height: 200 },
+		{ width: 840, height: 400 },
+		{ width: 1680, height: 530 },
+		], { ratio:"16/9" }) %}
 
-		<div class="block-topp">
-			{% set img = entry.toppbilde.first | default(false) %}
-			{% set bilde = craft.imager.transformImage(img, [
-				{ width: 320, height: 200 },
-				{ width: 840, height: 400 },
-				{ width: 1680, height: 530 },
-				], { ratio:"16/9" }) %}
+		<section class="row pageTop designblock">
+			<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
 
-				<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+			<div class="designblock tekst">
+				<h1>{{entry.tittel}}</h1>
+				<p>{{entry.rikTekst}}</p>
+			</div>
 
-				{% if entry.bildetekstChkbox %}
-					<aside class="bildetekst designblokk {{entry.bildetekstposisjon}}">
-						{{entry.bildetekst}}
-					</aside>
-				{% endif %}
-		</div>
+		</section>
 
-	</section>
 
 	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('lft desc') if entry.postDate < now %}
 
