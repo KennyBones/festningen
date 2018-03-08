@@ -1301,6 +1301,19 @@ aside.printThis {
   }
 }
 
+.forside {
+  
+  &.first {
+    margin-top: 55px;
+
+    @media #{$tablet} {
+      margin-top: 72px;
+    }
+
+  }
+
+}
+
 .block-parent {
   position: relative;
   font-size: 0;
@@ -1316,16 +1329,6 @@ aside.printThis {
 
   @media #{$tablet} {
     border-bottom: $padding solid $color_pr3;
-  }
-
-  &.first {
-    margin-top: 55px;
-
-    @media #{$tablet} {
-      margin-top: 72px;
-    }
-
-
   }
 
   .block-topp {
