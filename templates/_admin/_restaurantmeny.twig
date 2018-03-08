@@ -28,7 +28,7 @@
   <article class="sticky-block--right">
 
     {% for enkeltmeny in meny %}
-      <article id="menu-eq{{loop.index0}}" class="restaurant-menu">
+      <article id="menu-eq{{loop.index0}}" class="restaurant-menu {{enkeltmeny.align}}">
           {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
           <h2>{{enkeltmeny.title}}</h2>
 
@@ -46,10 +46,14 @@
           <table>
             <tr>
               <th class="table--heading title {% if rett.rett.overskrift %}table-overskrift{% endif %}">{{rett.title}}</th>
-              <th class="table--heading price">{{rett.rett.pris}}</th>
+              {% if rett.rett.pris %}
+                <th class="table--heading price">{{rett.rett.pris}}</th>
+              {% endif %}
             </tr>
             <tr>
-              <td class="table--body">{{rett.rett.tekst}}</td>
+              {% if rett.rett.tekst %}
+                <td class="table--body">{{rett.rett.tekst}}</td>
+              {% endif %}
             </tr>
             <tr>
               <td>

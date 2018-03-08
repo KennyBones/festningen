@@ -6,17 +6,23 @@
 <noscript><style>body{ opacity: 1; }</style></noscript>
 <script>
 {{ craft.inlin.er('/dist/' ~ rev('js/initial.js')) | default('') | raw }}
+
 requirejs.config({
     paths: {
-        jquery: ["//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min", "/dist/js/vendor/jquery"],
+        jquery: ["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min","https://code.jquery.com/jquery-3.2.1.min", "vendor/jquery"],
 		admin: "/dist/admin/admin.min",
-		modenizer: "/dist/js/vendor/modernizr",
+		modenizer: "dist/js/vendor/modernizr",
+		swiper: ["https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min", "vendor/swiper.min"],
         main: "/dist/{{ rev('js/main.js') | replace({'.js': ''}) | default('') }}",
     },
     shim: {
-        'main': ["jquery", "modenizer"],
+        'main': ["jquery", "modenizer", "Swiper"],
 		'admin': ["jquery"]
     }
+});
+
+define("Swiper", ["swiper"], function(swiper) {
+	window.Swiper = swiper;
 });
 </script>
 

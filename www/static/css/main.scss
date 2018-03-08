@@ -144,7 +144,7 @@ body {
       letter-spacing: .1em;
       position: relative;
       display: block;
-      padding: 16px;
+      padding: 6px;
       padding-left: 40px;
       padding-right: 40px;
       margin: 0;
@@ -152,6 +152,7 @@ body {
       font-size: 14px;
 
       @media #{$tablet} {
+        padding: 16px;
         padding-right: 30px;
         padding-left: 30px;
     	}
@@ -312,7 +313,7 @@ $padding: 70px;
   }
 
   &.parent, .first {
-    border-bottom: $mellomrom solid $color_pr3;
+    //border-bottom: $mellomrom solid $color_pr3;
   }
 
   &.nospacing {border-bottom: 0;}
@@ -442,30 +443,45 @@ $padding: 70px;
 
       .bildetekst {
         background-color: #FFFFFF;
-        position: absolute;
-        padding: $padding;
-        width: 50%;
-        font-size: $basesize;
+        position: relative;
+        padding: 30px;
+        width: 100%;
+        font-size: $h5;
 
-        &.drop-right {
-          bottom: $padding * 2;
-          right: -$mellomrom;
+        @media #{$tablet} {
+          position: absolute;
+          width: 50%;
+          padding: $padding;
+          font-size: $basesize;
+
+          &.drop-right {
+            bottom: $padding * 2;
+            right: -$mellomrom;
+          }
+
+          &.drop-left {
+            bottom: $padding * 2;
+            left: -$mellomrom;
+          }
+
+          &.right {
+            top: $padding * 2;
+            right: -$mellomrom;
+          }
+
+          &.left {
+            top: $padding * 2;
+            left: -$mellomrom;
+          }
+
         }
 
-        &.drop-left {
-          bottom: $padding * 2;
-          left: -$mellomrom;
+        @media #{$desktop} {
+
         }
 
-        &.right {
-          top: $padding * 2;
-          right: -$mellomrom;
-        }
 
-        &.left {
-          top: $padding * 2;
-          left: -$mellomrom;
-        }
+
 
 
       }
@@ -547,7 +563,17 @@ $padding: 70px;
   padding-top: $padding;
   width: 100%;
 
-  .restaurant-menu { padding: 20px; }
+  &:first-of-type {
+    padding-top: 30px;
+  }
+
+  .restaurant-menu {
+    padding: 20px;
+
+    &.left table, &.left table .table--heading.title  { text-align: left; }
+    &.center table, &.center table .table--heading.title { text-align: center; }
+    &.right table, &.right table .table--heading.title { text-align: right; }
+  }
 
   @media #{$desktop} {
     padding-left: 30%;
@@ -618,10 +644,10 @@ $padding: 70px;
 
     li {
       display: inline-block;
-      font-size: 12px;
+      font-size: 10px;
       line-height: 1;
       border-radius: 500px;
-      padding: 13px 29px 14px;
+      padding: 12px 21px 12px;
       border-width: 2px;
       letter-spacing: 2px;
       min-width: 160px;
@@ -635,6 +661,7 @@ $padding: 70px;
 
       @media #{$tablet} {
         font-size: 14px;
+        padding: 13px 29px 14px;
       }
 
       &:hover {
@@ -786,6 +813,11 @@ aside.printThis {
   transition: width .3s ease;
   text-align: left;
   font-size: 0;
+  display: none;
+
+  @media #{$desktop} {
+    display: block;
+  }
 
   &:hover {
     cursor: pointer;
@@ -831,6 +863,7 @@ aside.printThis {
   }
 
 }
+
 
 // FORSIDE
 .index {
@@ -1156,8 +1189,15 @@ aside.printThis {
 
 .restaurant-menu {
   text-align: center;
-  margin-bottom: 140px;
   position: relative;
+
+  @media #{$tablet} {
+    margin-bottom: 60px;
+  }
+
+  @media #{$desktop} {
+    margin-bottom: 140px;
+  }
 
   >svg {
     width: 50px;
@@ -1167,8 +1207,12 @@ aside.printThis {
   }
 
   h2 {
-    margin-bottom: 120px;
-    margin-top: $mellomrom-lite;
+
+    @media #{$desktop} {
+      margin-bottom: 120px;
+      margin-top: $mellomrom-lite;
+    }
+
   }
 
   .pris {
@@ -1178,20 +1222,36 @@ aside.printThis {
     text-transform: uppercase;
     letter-spacing: .2em;
     font-size: $h3;
-    margin-top: -120px;
-    margin-bottom: 120px;
+    margin-bottom: 60px;
+    margin-top: -20px;
+
+    @media #{$desktop} {
+      margin-top: -120px;
+      margin-bottom: 120px;
+    }
   }
 
   table {
     width: 100%;
     text-align: left;
     letter-spacing: .1em;
-    padding-right: 10%;
+    text-align: left;
+
+    @media #{$desktop} {
+      padding-right: 10%;
+    }
+
 
     svg {
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       margin: 7px;
+
+      @media #{$desktop} {
+        width: 30px;
+        height: 30px;
+      }
+
     }
 
     td { width: 85%; }
@@ -1199,9 +1259,14 @@ aside.printThis {
   }
 
   hr {
-    margin-right: 80px;
+    margin-right: 0;
     margin-top: 16px;
     margin-bottom: 16px;
+
+    @media #{$desktop} {
+      margin-right: 80px;
+    }
+
   }
 
   .table--heading {
@@ -1209,7 +1274,9 @@ aside.printThis {
     font-size: $h4;
     font-family: $font_century;
 
-    &.title { text-align: left; }
+    &.title {
+      text-align: left;
+    }
     &.price { text-align: right; }
     &.table-overskrift { font-size: $h3; padding-top: 40px; }
   }
@@ -1252,7 +1319,13 @@ aside.printThis {
   }
 
   &.first {
-    margin-top: 0;
+    margin-top: 55px;
+
+    @media #{$tablet} {
+      margin-top: 72px;
+    }
+
+
   }
 
   .block-topp {
@@ -1321,12 +1394,23 @@ aside.printThis {
     .bildetekst {
       background-color: #FFFFFF;
       position: absolute;
-      padding: $padding / 1.5;
+      display: none;
       width: 430px;
       text-align: center;
-      font-size: $basesize;
       line-height: 1.2em;
       letter-spacing: 1px;
+      font-size: $h5;
+
+      @media #{$tablet} {
+        padding: $padding / 1.5;
+        display: block;
+      }
+
+      @media #{$desktop} {
+        font-size: $h5;
+        padding: $padding / 1.5;
+        h4 { font-size: $h4; }
+      }
 
       &.drop-right {
         bottom: $padding;
@@ -1511,11 +1595,12 @@ aside.printThis {
 
 footer {
   padding: 30px;
-  text-align: left;
+  text-align: center;
   background-color: $color_pr3;
 
   @media #{$tablet} {
     padding: $mellomrom * 2;
+    text-align: left;
   }
 
   span {
@@ -1524,10 +1609,17 @@ footer {
     margin-top: 12px;
 
     svg {
-      height: 80px;
-      width: 180px;
+      height: 60px;
+      width: 160px;
       display: inline-block;
-      margin-right: $mellomrom * 2;
+      margin-bottom: 20px;
+
+      @media #{$tablet} {
+        height: 80px;
+        width: 180px;
+        margin-right: $mellomrom * 2;
+      }
+
     }
 
   }
@@ -1544,18 +1636,23 @@ footer {
 
 
 // SWIPER
-.swiper-slide {
-  height: 670px;
-}
 
 .swiper-container {
   z-index: 0;
+
+  img { max-width: 100%; width: 100%;}
 
   .swiper-button-next, .swiper-button-prev {
     width: 50px;
     background-size: 50px 44px;
     transform: scale(0.9);
     transition: transform .3s ease;
+    display: none;
+
+    @media #{$tablet} {
+      display: block;
+    }
+
 
     &:hover {
       transform: scale(1);

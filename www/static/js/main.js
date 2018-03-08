@@ -72,6 +72,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 	};
 
 	$html.addClass('lastet');
+  createSwipers();
 
   // Sleng på Google map
   function initMap() {
@@ -258,27 +259,39 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     $restaurant_sticky_block.stick_in_parent(restaurant_stickyOptions);
   }
 
-  // SWIPERS
-  $swipers.each(function() {
+  function createSwipers() {
+    // SWIPERS
+    $swipers.each(function() {
 
-    var hasAutoplay = $(this).find('.swiper-slide').attr('data-swiper-autoplay');
+      var hasAutoplay = $(this).find('.swiper-slide').attr('data-swiper-autoplay');
 
-    if (hasAutoplay != undefined) {
-      hasAutoplay = 1000;
-    } else {
-      hasAutoplay = false;
-    }
+      if (hasAutoplay != undefined) {
+        hasAutoplay = 10000;
+      } else {
+        hasAutoplay = false;
+      }
 
-    var mySwiper = new Swiper($(this), {
-        speed: 400,
-        pagination: '.swiper-pagination',
-        loop: false,
-        nextButton: '.swiper-button-next',
-  			prevButton: '.swiper-button-prev',
-        autoplay: hasAutoplay
-    });
+      var mySwiper = new Swiper($(this), {
+          speed: 400,
+          loop: false,
 
-  })
+          pagination: {
+            el: '.swiper-pagination',
+          },
+
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+
+          autoplay: hasAutoplay,
+          autoHeight: true
+      });
+
+    })
+  }
+
+
 
 
 /*=======================================================
