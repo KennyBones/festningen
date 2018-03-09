@@ -18,11 +18,16 @@ body {
 
 #topHeader {
   background: $color_pr2;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1;
+
+  @media #{$tablet} {
+    position: fixed;
+  }
+
 
   .logo {
     position: absolute;
@@ -60,10 +65,12 @@ body {
   }
 
   &.fixed {
-    position: fixed;
-    animation-duration: .6s;
-    animation-name: headerSlideDown;
-    z-index: 3;
+    @media #{$tablet} {
+      position: fixed;
+      animation-duration: .6s;
+      animation-name: headerSlideDown;
+      z-index: 3;
+  	}
   }
 
   &.menu-open {
@@ -81,6 +88,22 @@ body {
 
   }
 
+.menu-logo {
+  display: block;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+
+  @media #{$tablet} {
+    display: none;
+  }
+
+  svg {
+    width: 130px;
+    height: 60px;
+  }
+}
 
 #menu-btn {
   display: block;
@@ -406,6 +429,10 @@ $padding: 70px;
 
     @media #{$tablet} {
       display: flex;
+    }
+
+    @media #{$desktop} {
+      display: flex;
       margin-top: $padding;
     }
 
@@ -466,12 +493,12 @@ $padding: 70px;
 
         @media #{$tablet} {
           font-size: $basesize;
+          padding: $padding;
         }
 
         @media #{$desktop} {
           position: absolute;
           width: 50%;
-          padding: $padding;
 
           &.drop-right {
             bottom: $padding * 2;
@@ -581,9 +608,25 @@ $padding: 70px;
   .restaurant-menu {
     padding: 20px;
 
+    @media #{$tablet} {
+      padding: $padding;
+    }
+
+    @media #{$desktop} {
+      padding: 20px;
+    }
+
+
     &.left table, &.left table .table--heading.title  { text-align: left; }
     &.center table, &.center table .table--heading.title { text-align: center; }
     &.right table, &.right table .table--heading.title { text-align: right; }
+
+    @media #{$desktop} {
+      &.left table, &.left table .table--heading.title  { text-align: left; }
+      &.center table, &.center table .table--heading.title { text-align: left; }
+      &.right table, &.right table .table--heading.title { text-align: left; }
+    }
+
   }
 
   @media #{$desktop} {
@@ -606,7 +649,7 @@ $padding: 70px;
   .designblock {
     max-width: 100%;
 
-    @media #{$tablet} {
+    @media #{$desktop} {
       max-width: 60%;
     }
 
@@ -653,7 +696,7 @@ $padding: 70px;
     li {
       display: inline-block;
       font-size: 10px;
-      padding: 12px 21px 12px;
+      padding: 8px 21px;
       letter-spacing: 2px;
       min-width: 160px;
       text-transform: uppercase;
@@ -672,11 +715,13 @@ $padding: 70px;
         line-height: 1;
       }
 
-      &:hover {
-        background: #FFFFFF;
-        color: #000000;
+      @media #{$desktop} {
+        &:hover {
+          background: #FFFFFF;
+          color: #000000;
 
-        a { color: #000000; }
+          a { color: #000000; }
+        }
       }
 
       a {
@@ -878,14 +923,14 @@ aside.printThis {
 
   .pageTop .designblock.tekst {
 
-    @media #{$tablet} {
-      margin-top: -100px;
-    }
-
     @media #{$desktop} {
       margin-top: -100px;
     }
 
+  }
+
+  .designblock {
+    margin-top: 0;
   }
 
   .apningstider {
@@ -1067,6 +1112,15 @@ aside.printThis {
     padding-left: 10px;
     padding-right: 10px;
     padding: 50px;
+    //border-bottom: 35px solid #e0e0e0;
+  }
+
+  .black-block {
+    border-bottom: 0;
+
+    @media #{$tablet} {
+      border-bottom: 35px solid #e0e0e0;
+    }
   }
 }
 
@@ -1327,7 +1381,7 @@ aside.printThis {
   font-size: 0;
   border-bottom: $padding / 2 solid $color_pr3;
 
-  @media #{$tablet} {
+  @media #{$desktop} {
     border-bottom: $padding solid $color_pr3;
   }
 
@@ -1541,7 +1595,6 @@ aside.printThis {
     h2 {
       display: inline-block;
       text-align: right;
-      margin-bottom: 2.5em;
     }
 
   }
