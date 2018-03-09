@@ -1,6 +1,6 @@
 {% set midnight = now|date_modify("+1 day")|date("Y-m-d") ~ ' 00:00' %}
 {% set cdnUrl = craft.config.cdnUrl ?? siteUrl %}
-{% set LP = craft.request.isLivePreview ?? false %}	
+{% set LP = craft.request.isLivePreview ?? false %}
 <!doctype html>
 {% if craft.config.env == 'PROD' %}{% include '_admin/_mustasj_logo' %}{% endif %}
 <html class="no-js" lang="{{craft.locale}}">
@@ -28,11 +28,8 @@
 		<![endif]-->
 
 		<header id="topHeader">
-
 			<nav>
-
 			<a href="/" class="logo"></a>
-
 
 			{% set nav = craft.amNav.getNavRaw("navigasjon") %}
 
@@ -69,16 +66,16 @@
 					{% for node in nav %}
 							{{ _self.addNodeToNavigation(node, loop.index) }}
 					{% endfor %}
+
+					<span class="menu-logo">
+						{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
+					</span>
+
 				</ul>
 
 				<a href="/" id="menu-btn">Meny</a>
 
 			</nav>
-
-			{# <div class="searchbox"></div>
-			<span class="search-btn">
-				{{craft.inlin.er('/static/svg/symbols/icon-search.svg') | raw }}
-			</span> #}
 		</header>
 
 		{% block content %}
