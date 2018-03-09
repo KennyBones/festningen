@@ -177,7 +177,15 @@ a:hover { text-decoration: underline; }
     margin-right: auto;
 
     @media #{$tablet} {
+      max-width: 940px;
+    }
 
+    @media #{$desktop} {
+      max-width: 1160px;
+    }
+
+    @media #{$desktop-huge} {
+      max-width: 1360px;
     }
 }
 
