@@ -328,7 +328,16 @@ body {
 
 $mellomrom: 40px;
 $mellomrom-lite: 17px;
-$padding: 70px;
+$padding: 30px;
+
+@media #{$tablet} {
+  $padding: 40px;
+}
+
+@media #{$desktop} {
+  $padding: 70px;
+}
+
 
 .designblock, .restaurant-menu-parent {
   position: relative;
@@ -1122,6 +1131,7 @@ aside.printThis {
   font-size: 0;
   display: block;
   overflow: hidden;
+  background: $color_pr3;
 
   @media #{$tablet} {
     display: flex;
@@ -1132,6 +1142,7 @@ aside.printThis {
 
     @media #{$tablet} {
       height: auto;
+      margin-top: $padding;
     }
   }
 
@@ -1175,7 +1186,12 @@ aside.printThis {
 #kontaktskjema {
 
   form {
-    margin-top: $padding;
+    margin-top: $padding / 2;
+
+    @media #{$tablet} {
+      margin-top: $padding;
+    }
+
   }
 
   .heading {
@@ -1216,7 +1232,8 @@ aside.printThis {
 
   input[type="submit"] {
     appearance: none;
-    background-color: #bababa;
+    background-color: #FFFFFF;
+    color: $color_pr4;
     border: none;
     padding: 10px;
 
