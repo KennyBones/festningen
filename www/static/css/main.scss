@@ -1803,6 +1803,8 @@ aside.printThis {
   margin-bottom: -30px;
   margin-top: 60px;
   font-size: $h5;
+  z-index: 1;
+  position: relative;
 
   @media #{$tablet} {
     margin-bottom: -60px;
