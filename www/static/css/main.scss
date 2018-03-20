@@ -356,6 +356,10 @@ $padding: 70px;
     padding: 30px;
 
     @media #{$tablet} {
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
       padding: $padding;
     }
 
@@ -383,11 +387,16 @@ $padding: 70px;
     width: 50%;
     background-color: #000000;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     padding: 30px;
 
     @media #{$tablet} {
-      padding: $padding;
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
+      padding: 70px;
+      font-size: $basesize;
     }
 
 
@@ -443,6 +452,10 @@ $padding: 70px;
 
       @media #{$tablet} {
         width: 50%;
+        font-size: $h5;
+      }
+
+      @media #{$desktop} {
         font-size: $basesize;
       }
     }
@@ -479,41 +492,63 @@ $padding: 70px;
       img { max-width: 100%; position: static; }
 
       .bildetekst {
-        background-color: #FFFFFF;
-        position: relative;
+        background-color: #ffffffeb;
+        position: static;
         padding: 30px;
         width: 100%;
         font-size: $h5;
 
         @media #{$tablet} {
+          padding: 50px;
+          width: 80%;
+          position: absolute;
+        }
+
+        @media #{$desktop} {
+          width: 50%;
+          position: absolute;
           font-size: $basesize;
           padding: $padding;
         }
 
-        @media #{$desktop} {
-          position: absolute;
-          width: 50%;
+        &.drop-right {
+          bottom: $padding / 2;
+          right: -$mellomrom / 2;
 
-          &.drop-right {
+          @media #{$desktop} {
             bottom: $padding * 2;
             right: -$mellomrom;
           }
+        }
 
-          &.drop-left {
+        &.drop-left {
+          bottom: $padding / 2;
+          left: -$mellomrom / 2;
+
+          @media #{$desktop} {
             bottom: $padding * 2;
             left: -$mellomrom;
           }
+        }
 
-          &.right {
+        &.right {
+          top: $padding / 2;
+          right: -$mellomrom / 2;
+
+          @media #{$desktop} {
             top: $padding * 2;
             right: -$mellomrom;
           }
+        }
 
-          &.left {
+        &.left {
+          top: $padding / 2;
+          left: -$mellomrom / 2;
+
+          @media #{$desktop} {
             top: $padding * 2;
             left: -$mellomrom;
           }
-
         }
 
       }
@@ -525,9 +560,9 @@ $padding: 70px;
 .sticky-block {
   display: none;
 
-  @media #{$desktop} {
+  @media #{$tablet} {
     display: inline-block;
-    width: 20%;
+    width: 25%;
     vertical-align: top;
     padding-top: 200px;
     padding-bottom: 200px;
@@ -535,6 +570,10 @@ $padding: 70px;
     top: 0;
     left: 0;
     transform:translate3d(0%, 0, 0);
+  }
+
+  @media #{$desktop} {
+    width: 20%;
   }
 
   .sticky-block--wrapper {
@@ -603,19 +642,18 @@ $padding: 70px;
     padding: 20px;
 
     @media #{$tablet} {
-      padding: $padding;
+      padding: 25px;
     }
 
     @media #{$desktop} {
       padding: 20px;
     }
 
-
     &.left table, &.left table .table--heading.title  { text-align: left; }
     &.center table, &.center table .table--heading.title { text-align: center; }
     &.right table, &.right table .table--heading.title { text-align: right; }
 
-    @media #{$desktop} {
+    @media #{$tablet} {
       &.left table, &.left table .table--heading.title  { text-align: left; }
       &.center table, &.center table .table--heading.title { text-align: left; }
       &.right table, &.right table .table--heading.title { text-align: left; }
@@ -623,7 +661,7 @@ $padding: 70px;
 
   }
 
-  @media #{$desktop} {
+  @media #{$tablet} {
     padding-left: 30%;
   }
 
@@ -643,9 +681,14 @@ $padding: 70px;
   .designblock {
     max-width: 100%;
 
+    @media #{$tablet} {
+      max-width: 70%;
+    }
+
     @media #{$desktop} {
       max-width: 60%;
     }
+
 
   }
 
@@ -917,14 +960,10 @@ aside.printThis {
 
   .pageTop .designblock.tekst {
 
-    @media #{$desktop} {
+    @media #{$tablet} {
       margin-top: -100px;
     }
 
-  }
-
-  .designblock {
-    margin-top: 0;
   }
 
   .apningstider {
@@ -949,7 +988,12 @@ aside.printThis {
       @media #{$tablet} {
         width: 50%;
         display: inline-block;
+        padding: 50px;
+      }
+
+      @media #{$desktop} {
         padding: $padding;
+        font-size: $basesize;
       }
 
       &.first {
@@ -968,12 +1012,15 @@ aside.printThis {
       &.second { background: $color_pr6; }
 
       .knapp {
-        position: absolute;
-        bottom: $mellomrom;
-        left: 0;
-        right: 0;
 
         p { margin: 0; }
+
+        @media #{$desktop} {
+          position: absolute;
+          bottom: $mellomrom;
+          left: 0;
+          right: 0;
+        }
       }
     }
 
@@ -1052,7 +1099,6 @@ aside.printThis {
 
       @media #{$tablet} {
         text-align: left;
-        padding: $padding;
 
         h2 { font-size: $h2; }
       }
@@ -1138,11 +1184,17 @@ aside.printThis {
   #booking-map, #kontaktskjema  {
     display: block;
     width: 100%;
-    font-size: $basesize;
+    font-size: $h4;
 
     @media #{$tablet} {
       width: 50%;
       display: inline-block;
+    }
+
+    @media #{$desktop} {
+      width: 50%;
+      display: inline-block;
+      font-size: $basesize;
     }
   }
 
@@ -1158,7 +1210,13 @@ aside.printThis {
     text-align: center;
 
     @media #{$tablet} {
+      padding: 50px;
+      width: 80%;
+    }
+
+    @media #{$desktop} {
       padding: $padding;
+      width: 50%;
     }
 
     svg {
@@ -1175,7 +1233,11 @@ aside.printThis {
 #kontaktskjema {
 
   form {
-    margin-top: $padding;
+    margin-top: $padding / 2;
+
+    @media #{$desktop} {
+      margin-top: $padding;
+    }
   }
 
   .heading {
@@ -1246,10 +1308,6 @@ aside.printThis {
 .restaurant-menu {
   text-align: center;
   position: relative;
-
-  @media #{$tablet} {
-    margin-bottom: 60px;
-  }
 
   @media #{$desktop} {
     margin-bottom: 140px;
@@ -1382,7 +1440,7 @@ aside.printThis {
   .designblock {
     font-size: $h5;
 
-    @media #{$tablet} {
+    @media #{$desktop} {
       font-size: $basesize;
     }
 
@@ -1403,33 +1461,57 @@ aside.printThis {
       padding: $padding / 1.5;
       width: 430px;
       text-align: center;
-      font-size: $basesize;
+      font-size: $h5;
       line-height: 1.2em;
       letter-spacing: 1px;
       display: none;
 
-      @media #{$desktop} {
+      @media #{$tablet} {
         display: block;
+        padding: 50px;
+      }
+
+      @media #{$desktop} {
+        font-size: $basesize;
       }
 
       &.drop-right {
-        bottom: $padding;
-        right: $padding;
+        bottom: $padding / 2;
+        right: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
       }
 
       &.drop-left {
-        bottom: $padding;
-        left: $padding;
+        bottom: $padding / 2;
+        left: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
       }
 
       &.right {
-        top: $padding;
-        right: $padding;
+        top: $padding / 2;
+        right: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
       }
 
       &.left {
-        top: $padding;
-        left: $padding;
+        top: $padding / 2;
+        left: $padding / 2;
+
+        @media #{$desktop} {
+
+        }
       }
 
       p {
@@ -1511,12 +1593,19 @@ aside.printThis {
     padding-bottom: 0;
     display: none;
 
+    @media #{$tablet} {
+      display: inline-block;
+      width: 25%;
+      padding: 50px;
+      font-size: $h5;
+    }
+
     &.mobile {
       display: block;
 
       ul { text-align: center; padding: 0; margin: 0; }
 
-      @media #{$desktop} {
+      @media #{$tablet} {
         display: none;
       }
 
@@ -1525,17 +1614,6 @@ aside.printThis {
     li {
       display: inline-block;
     }
-
-    @media #{$tablet} {
-
-    }
-
-    @media #{$desktop} {
-      display: inline-block;
-      width: 25%;
-      padding: 50px;
-    }
-
 
     ul {
       list-style: none;
@@ -1579,8 +1657,12 @@ aside.printThis {
     padding: 30px;
     line-height: 1.6em;
 
-    @media #{$desktop} {
+    @media #{$tablet} {
       width: 75%;
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
       padding: 90px;
       padding-right: 130px;
       font-size: $basesize;

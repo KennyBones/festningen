@@ -41,6 +41,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 				//$html.addClass('phone').removeClass('desktop tablet');
 				desktop = tablet = false;
                 phone = true;
+                console.log('phone');
 			}
 		} else if (window_width < 1025) {
 			label = 'tablet';
@@ -48,6 +49,15 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 				//$html.removeClass('phone').addClass('desktop tablet');
 				desktop = phone = false;
                 tablet = true;
+                console.log('tablet');
+			}
+		} else if (window_width > 1679) {
+			label = 'desktop-huge';
+			if (gammel_label !== label) {
+				//$html.removeClass('phone').addClass('desktop tablet');
+				desktop = phone = false;
+                tablet = true;
+                console.log('desktop-huge');
 			}
 		} else {
 			label = 'desktop';
@@ -55,6 +65,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 				//$html.removeClass('phone tablet').addClass('desktop');
 				desktop = true;
                 tablet = phone = false;
+                console.log('desktop');
 			}
 		}
 		gammel_label = label;
