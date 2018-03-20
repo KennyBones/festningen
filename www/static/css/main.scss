@@ -1065,6 +1065,18 @@ aside.printThis {
       width: 100%!important;
       background-size: cover;
       background-position: center center;
+      overflow: hidden;
+
+      @media #{$tablet} {
+        width: 80%!important;
+      }
+
+
+      h2 {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
       &:after {
         content: '';
@@ -1073,14 +1085,17 @@ aside.printThis {
         width: 100%;
         top: 0;
         left: 0;
-        
+
       }
 
       svg {
-        fill: #FFFFFF;
-        height: 55px;
-        width: 20px;
+        fill: #ffffff30;
+        height: 605px;
+        width: 450px;
         margin-bottom: 30px;
+        position: absolute;
+        top: 20px;
+        left: 60%;
       }
 
     }

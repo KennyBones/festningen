@@ -56,11 +56,10 @@
 				{# Bildeposisjon høyre eller venstre #}
 				<section class="row designblock enkel">
 						<article class="designblock tekst black">
-							<h2>Hva skjer på Kristiansten Festning?</h2>
+							<h2>{{blokk.title}}</h2>
 							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
 							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
 
-							<h3>{{blokk.title}}</h3>
 							{{blokk.rikTekst|striptags|slice(0,100)}}
 
 							<aside class="hvaskjer-buttons">
@@ -80,6 +79,9 @@
 							</aside>
 						</article>
 
+						<article class="designblock bilde">
+							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						</article>
 
 					</section>
 			</section>
