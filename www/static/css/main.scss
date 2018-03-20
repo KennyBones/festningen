@@ -1062,36 +1062,28 @@ aside.printThis {
 
     .black {
       text-align: center;
+      width: 100%!important;
+      background-size: cover;
+      background-position: center center;
 
-      @media #{$tablet} {
-        width: 45%;
-      }
-
-      @media #{$desktop} {
-        width: 35%;
+      &:after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        
       }
 
       svg {
         fill: #FFFFFF;
         height: 55px;
         width: 20px;
-        margin-bottom: 30px;        
+        margin-bottom: 30px;
       }
 
     }
-
-    .bilde {
-
-      @media #{$tablet} {
-        width: 75%;
-      }
-
-      @media #{$desktop} {
-        width: 65%;
-      }
-
-    }
-
 
   }
 
