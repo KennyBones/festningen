@@ -40,9 +40,7 @@
 			{% if loop.index is even %}
 
 					<article class="designblock bilde">
-						<a href="{{blokk.renTekst}}">
-							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
-						</a>
+						<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
 					</article>
 
 					<article class="designblock tekst">
@@ -91,9 +89,7 @@
 					</article>
 
 					<article class="designblock bilde">
-						<a href="{{blokk.renTekst}}" target="_blank">
-							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
-						</a>
+						<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
 					</article>
 
 				{% endif %}

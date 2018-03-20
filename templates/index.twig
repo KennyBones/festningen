@@ -44,6 +44,53 @@
 
 	</section>
 
+	{% if entry.visHvaSkjer %}
+		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('lft desc') if entry.postDate < now %}
+
+			{% set img = blokk.toppbilde | length ? blokk.toppbilde.first %}
+			{% set bilde = craft.imager.transformImage(img, [
+				{ width: 700, height: 380 },
+				], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
+			<section class="row designblock parent hvaSkjer">
+				{# Bildeposisjon høyre eller venstre #}
+				<section class="row designblock enkel">
+						<article class="designblock tekst black">
+							<h2>Hva skjer på Kristiansten Festning?</h2>
+							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
+							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
+
+							<h3>{{blokk.title}}</h3>
+							{{blokk.rikTekst}}
+
+							<aside class="hvaskjer-buttons">
+								<ul>
+										<li><strong>Tidspunkt:</strong>
+											<p>{{blokk.tidspunkt}}</p>
+										</li>
+										<li>
+											<strong>Lokasjon:</strong>
+											<p>{{blokk.lokasjon}}</p>
+										</li>
+										<li>
+											<strong>Billetter:</strong>
+											<p><a href="{{blokk.renTekst}}" target="_blank">Klikk her</a></p>
+										</li>
+								</ul>
+							</aside>
+						</article>
+
+						<article class="designblock bilde">
+								<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						</article>
+
+					</section>
+			</section>
+
+		{% endfor %}
+	{% endif %}
+
+
 	<section class="row designblock enkel menyer">
 		<article class="tekst">
 			{{entry.vareMenyer.tekst}}
