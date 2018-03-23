@@ -1744,11 +1744,12 @@ aside.printThis {
 
 // PRINT this
 
+
 @media print {
   #devmode { display: none; }
 
   @page {
-     size: 7in 9.25in;
+     size: A4 landscape;
      margin: 27mm 16mm 27mm 16mm;
   }
 
@@ -1758,39 +1759,34 @@ aside.printThis {
     #topHeader { display: none; }
     .pageTop { display: none; }
     .designblock * {
-      display: none;
+      visibility: hidden;
     }
 
     .row { margin-left: 0; }
-
-    .restaurant-menu-parent {
-      max-width: 100%;
-      column-count: 2;
-      column-gap: 120px;
-      padding-top: 0;
-      position: relative;
-
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        border-right: 1px solid #e8e8e8;
-      }
-    }
-
-    .designblock.parent { border: none; }
+    .designblock.block-parent { border: none; }
     .sticky-block { display: none; }
     .sticky-block--right {
       padding: 0;
     }
     .printThis { display: none; }
+    .block-parent.printThisActive {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      * { visibility: visible; }
+    }
+    .restaurant-menu { display: none;}
+    .restaurant-menu.printThisActive {
+        display: inline-block;
+        width: 100%;
+        padding: 7%;
+    }
     .black-block { display: none; }
     .sticky-block--right { display: block; }
     .restaurant-menu {
-      display: block;
       table { padding-right: 0; }
     }
     footer { display: none; }

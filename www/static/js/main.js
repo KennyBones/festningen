@@ -327,6 +327,21 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
 
   });
 
+  $document.on('click', '.printThis', function (e) {
+
+    console.log('Print this');
+    var thisMenuParent = $(this).parents('.block-parent');
+    var thisMenu = $(this).parents('.restaurant-menu');
+    console.log(thisMenu);
+
+    $('.block-parent').removeClass('printThisActive');
+    $('.restaurant-menu').removeClass('printThisActive');
+    thisMenuParent.addClass('printThisActive');
+    thisMenu.addClass('printThisActive');
+
+    window.print();
+    });
+
   $document.on('click', '#menu-btn', function (e) {
     // Toggle menu
     e.preventDefault();
