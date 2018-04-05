@@ -636,6 +636,14 @@ $padding: 70px;
 
   &:first-of-type {
     padding-top: 30px;
+
+    @media #{$tablet} {
+      padding-top: 50px;
+    }
+
+    @media #{$desktop} {
+      padding-top: 90px;
+    }
   }
 
   .restaurant-menu {
@@ -1453,6 +1461,8 @@ aside.printThis {
     }
 
 
+
+
     svg {
       width: 20px;
       height: 20px;
@@ -1801,7 +1811,7 @@ aside.printThis {
 
   @page {
      size: A4 landscape;
-     margin: 27mm 16mm 27mm 16mm;
+     margin: 23mm 16mm 23mm 16mm;
   }
 
   body { padding: 20px; }
