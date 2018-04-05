@@ -1024,7 +1024,16 @@ aside.printThis {
       }
     }
 
-    h2 { text-align: center; text-transform: uppercase; }
+    h2 {
+      text-align: center;
+      text-transform: uppercase;
+
+      @media #{$tablet} {
+        margin: 1em;
+      }
+
+
+    }
 
     svg {
       margin: 17px;
@@ -1033,10 +1042,14 @@ aside.printThis {
       width: 70px;
 
       @media #{$tablet} {
-        margin: $mellomrom-lite;
-        margin-bottom: $mellomrom;
+        margin: 0;
+        margin-bottom: 20px;
         height: 60px;
         width: 90px;
+      }
+
+      @media #{$desktop} {
+        margin-bottom: $mellomrom;
       }
 
     }
@@ -1265,6 +1278,12 @@ aside.printThis {
       font-size: $basesize;
     }
 
+    h2 {
+      @media #{$tablet} {
+        margin-bottom: 1em;
+      }
+    }
+
     svg {
       fill: #FFFFFF;
       display: block;
@@ -1272,6 +1291,16 @@ aside.printThis {
       margin-bottom: $mellomrom;
       margin-left: auto;
       margin-right: auto;
+
+      @media #{$tablet} {
+        height: 40px;
+        width: 70px;
+      }
+
+      @media #{$desktop} {
+        height: 45px;
+        width: 80px;
+      }
     }
   }
 }
@@ -1322,14 +1351,36 @@ aside.printThis {
     background-position: center center;
   }
 
+  .submit {
+    position: relative;
+    float: right;
+    display: inline-block;
+
+    &:after {
+      content: "";
+      position: absolute;
+      background-color: #FFFFFF;
+      height: 14px;
+      width: 3px;
+      top: 5px;
+      left: -5px;
+    }
+  }
+
   input[type="submit"] {
     appearance: none;
-    background-color: #bababa;
+    background-color: transparent;
     border: none;
-    padding: 10px;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: Century,sans-serif;
+    letter-spacing: .2em;
+    text-transform: uppercase;
 
     &:hover {
       text-decoration: underline;
+      cursor: pointer;
     }
   }
 
