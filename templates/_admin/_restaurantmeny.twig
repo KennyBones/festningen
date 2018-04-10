@@ -42,37 +42,57 @@
           </div>
           <a href="">Skriv ut</a>
         </aside>
+
         {% for rett in enkeltmeny.retter %}
-          <table>
-            <tr>
-              <th class="table--heading title {% if rett.rett.overskrift %}table-overskrift{% endif %}">{{rett.title}}</th>
+
+          <article class="menu-item--wrapper">
+            <div class="menu-item--row">
+              <div class="menu-item--cell-wrapper table--heading title {% if rett.rett.overskrift %}table-overskrift{% endif %}">
+                <div class="menu-item--cell">
+                  {{rett.title}}
+                </div>
+              </div>
               {% if rett.rett.pris %}
-                <th class="table--heading price">{{rett.rett.pris}}</th>
+                <div class="menu-item--cell-wrapper table--heading price">
+                  <div class="menu-item--cell">
+                    {{rett.rett.pris}}
+                  </div>
+                </div>
               {% endif %}
-            </tr>
-            <tr>
-              {% if rett.rett.tekst %}
-                <td class="table--body">{{rett.rett.tekst}}</td>
-              {% endif %}
-            </tr>
-            <tr>
-              <td>
-                {% for category in rett.rett.allergener %}
-                  {% set hasDescendants = category.getDescendants().total() != 0 %}
-                  {% if not hasDescendants %}
-                    <div class="table-allergen">
-                      {{craft.inlin.er(category.ikon[0].url, true) | raw }}
-                      <span class="table-allergen--text">{{category.title}}</span>
-                    </div>
-                  {% endif %}
-                {% endfor %}
-              </td>
-            </tr>
-          </table>
+            </div>
+            {% if rett.rett.tekst %}
+            <div class="menu-item--row">
+              <div class="menu-item--cell-wrapper table--body">
+                <div class="menu-item--cell table-tekst">
+                  {{rett.rett.tekst}}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="menu-item--row">
+              <div class="menu-item--cell-wrapper">
+
+              {% for category in rett.rett.allergener %}
+                {% set hasDescendants = category.getDescendants().total() != 0 %}
+                {% if not hasDescendants %}
+
+                      <div class="menu-item--cell table-allergen">
+                        {{craft.inlin.er(category.ikon[0].url, true) | raw }}
+                        <span class="table-allergen--text">{{category.title}}</span>
+                      </div>
+
+                {% endif %}
+              {% endfor %}
+
+              </div>
+            </div>
+
+          </article>
           <hr>
+
         {% endfor %}
       </article>
-
     {% endfor %}
   </section>
 

@@ -1450,7 +1450,7 @@ aside.printThis {
     }
   }
 
-  table {
+  .menu-item--row {
     width: 100%;
     text-align: left;
     letter-spacing: .1em;
@@ -1459,9 +1459,6 @@ aside.printThis {
     @media #{$desktop} {
       padding-right: 10%;
     }
-
-
-
 
     svg {
       width: 20px;
@@ -1475,7 +1472,7 @@ aside.printThis {
 
     }
 
-    td { width: 85%; }
+    .table-tekst { width: 85%; }
 
   }
 
@@ -1783,6 +1780,56 @@ aside.printThis {
   }
 }
 
+// RESTAURANT MENYER
+
+.menu-item--row {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.menu-item--wrapper {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
+.menu-item--cell-wrapper {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+
+    &.price {
+        flex-basis: 8.33333333%;
+        max-width: 8.33333333%;
+    }
+}
+
+.menu-item--cell {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
 .lokaler, .underside, .lokaler, .selskap, .hvaskjer {
   .designblock.block-parent.first {
     margin-top: 55px;
@@ -1815,6 +1862,17 @@ aside.printThis {
   }
 
   body { padding: 20px; }
+
+  .table-overskrift:not(first-of-type) {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .table-allergen {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 
   .restaurant {
     #topHeader { display: none; }
@@ -1851,6 +1909,7 @@ aside.printThis {
       table { padding-right: 0; }
     }
     footer { display: none; }
+
   }
 
 }
