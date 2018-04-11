@@ -1863,15 +1863,20 @@ aside.printThis {
 
   body { padding: 20px; }
 
-  .table-overskrift:not(first-of-type) {
+  .break-page {
     page-break-before: always;
     break-before: page;
   }
 
-  .table-allergen {
-    -webkit-column-break-inside: avoid;
+  .avoid-break {
     page-break-inside: avoid;
     break-inside: avoid;
+
+    * {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
   }
 
   .restaurant {
