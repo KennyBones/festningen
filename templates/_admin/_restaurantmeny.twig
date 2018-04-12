@@ -29,19 +29,21 @@
 
     {% for enkeltmeny in meny %}
       <article id="menu-eq{{loop.index0}}" class="restaurant-menu {{enkeltmeny.align}}">
-          {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
-          <h2>{{enkeltmeny.title}}</h2>
+        {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
+        <h2>{{enkeltmeny.title}}</h2>
 
-          {% if enkeltmeny.egenPris %}
-            <span class="pris">{{enkeltmeny.pris}}</span>
-          {% endif %}
+        {% if enkeltmeny.egenPris %}
+          <span class="pris">{{enkeltmeny.pris}}</span>
+        {% endif %}
 
-        <aside class="printThis">
-          <div class="printThis--wrapper">
-            {{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
-          </div>
-          <a href="">Skriv ut</a>
-        </aside>
+        {% if currentUser %}
+          <aside class="printThis">
+            <div class="printThis--wrapper">
+              {{craft.inlin.er('/static/svg/symbols/icon-print.svg') | raw }}
+            </div>
+            <a href="">Skriv ut</a>
+          </aside>
+        {% endif %}
 
         {% set overskrift = 0 %}
 
