@@ -14,10 +14,10 @@ $customDbConfig = array(
 	),
 	'LOCAL' => array(
 		'server' 	=> 'localhost',
-		'user' 		=> 'root',
+		'user' 		=> 'festningen',
 		//'port' => '3306',
 		//'password' 	=> 'root',
-		'password' 	=> 'root',
+		'password' 	=> 'festningen',
 		'database' 	=> 'festningen_craft'
 	),
 	'DEV' => array(
