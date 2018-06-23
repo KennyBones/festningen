@@ -17,7 +17,7 @@ $customDbConfig = array(
 		'user' 		=> 'root',
 		//'port' => '3306',
 		//'password' 	=> 'root',
-		'password' 	=> '',
+		'password' 	=> 'root',
 		'database' 	=> 'festningen_craft'
 	),
 	'DEV' => array(

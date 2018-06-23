@@ -10,6 +10,47 @@ class SimpleMapService extends BaseApplicationComponent {
 
 	public $searchLatLng;
 	public $searchEarthRad;
+	public $searchDistanceUnit;
+
+	private static $_parts = [
+		'room',
+		'floor',
+		'establishment',
+		'subpremise',
+		'premise',
+		'street_number',
+		'postal_code',
+		'street_address',
+		'colloquial_area',
+		'neighborhood',
+		'route',
+		'intersection',
+		'postal_town',
+		'sublocality_level_5',
+		'sublocality_level_4',
+		'sublocality_level_3',
+		'sublocality_level_2',
+		'sublocality_level_1',
+		'sublocality',
+		'locality',
+		'political',
+		'administrative_area_level_5',
+		'administrative_area_level_4',
+		'administrative_area_level_3',
+		'administrative_area_level_2',
+		'administrative_area_level_1',
+		'ward',
+		'country',
+		'parking',
+		'post_box',
+		'point_of_interest',
+		'natural_feature',
+		'park',
+		'airport',
+		'bus_station',
+		'train_station',
+		'transit_station',
+	];
 
 	// Public
 	// =========================================================================
@@ -62,9 +103,50 @@ class SimpleMapService extends BaseApplicationComponent {
 			$model = new SimpleMap_MapModel;
 		}
 
+		$model->parts = $this->_padParts($model);
+
 		$model->distance = $this->_calculateDistance($model);
 
 		return $model;
+	}
+
+	/**
+	 * Validates the field
+	 *
+	 * @param SimpleMap_MapFieldType $fieldType
+	 *
+	 * @return bool
+	 */
+	public function validateField (SimpleMap_MapFieldType $fieldType)
+	{
+		$owner = $fieldType->element;
+		$field = $fieldType->model;
+		$content = $fieldType->element->getContent();
+
+		$handle = $field->handle;
+		$data = $content->getAttribute($handle);
+
+		if (
+			!array_key_exists('lat', $data)
+			|| !array_key_exists('lng', $data)
+		) {
+			if (!array_key_exists('address', $data)) {
+				$owner->addError($handle, 'Missing lat/lng');
+				return false;
+			}
+
+			$addressToLatLng = self::getLatLngFromAddress($data['address']);
+			if ($addressToLatLng == null) {
+				$owner->addError($handle, 'Missing lat/lng or valid address');
+				return false;
+			}
+
+			$data['lat'] = $addressToLatLng['lat'];
+			$data['lng'] = $addressToLatLng['lng'];
+		}
+
+		$content->setAttribute($handle, $data);
+		return true;
 	}
 
 	/**
@@ -149,16 +231,17 @@ class SimpleMapService extends BaseApplicationComponent {
 	private function _searchLocation (DbCommand &$query, $params)
 	{
 		$location = $params['location'];
-		$radius   = array_key_exists('radius', $params) ? $params['radius'] : 50;
+		$country  = array_key_exists('country', $params) ? $params['country'] : null;
+		$radius   = array_key_exists('radius', $params) ? $params['radius'] : 50.0;
 		$unit     = array_key_exists('unit', $params) ? $params['unit'] : 'kilometers';
 
 		if (!is_numeric($radius)) $radius = (float)$radius;
-		if (!is_numeric($radius)) $radius = 50;
+		if (!is_numeric($radius)) $radius = 50.0;
 
 		if (!in_array($unit, array('km', 'mi'))) $unit = 'km';
 
 		if (is_string($location))
-			$location = self::getLatLngFromAddress($location);
+			$location = self::getLatLngFromAddress($location, $country);
 		if (is_array($location)) {
 			if (!array_key_exists('lat', $location) ||
 			    !array_key_exists('lng', $location))
@@ -172,18 +255,46 @@ class SimpleMapService extends BaseApplicationComponent {
 			return;
 		}
 
-		if ($unit == 'km') $earthRad = 6371;
-		else $earthRad = 3959;
+		if ($unit == 'km') $distanceUnit = 111.045;
+		else $distanceUnit = 69.0;
 
 		$this->searchLatLng = $location;
-		$this->searchEarthRad = $earthRad;
+		$this->searchDistanceUnit = $distanceUnit;
 
 		$table = craft()->db->tablePrefix . SimpleMap_MapRecord::TABLE_NAME;
 
-		$haversine = "($earthRad * acos(cos(radians($location[lat])) * cos(radians($table.lat)) * cos(radians($table.lng) - radians($location[lng])) + sin(radians($location[lat])) * sin(radians($table.lat))))";
+		$haversine = "
+(
+	$distanceUnit
+	* DEGREES(
+		ACOS(
+			COS(RADIANS($location[lat]))
+			* COS(RADIANS($table.lat))
+			* COS(RADIANS($location[lng]) - RADIANS($table.lng))
+			+ SIN(RADIANS($location[lat]))
+			* SIN(RADIANS($table.lat))
+		)
+	)
+)
+";
+
+		$restrict = [
+			'and',
+			[
+				'and',
+				"$table.lat >= $location[lat] - ($radius / $distanceUnit)",
+				"$table.lat <= $location[lat] + ($radius / $distanceUnit)",
+			],
+			[
+				'and',
+				"$table.lng >= $location[lng] - ($radius / ($distanceUnit * COS(RADIANS($location[lat]))))",
+				"$table.lng <= $location[lng] + ($radius / ($distanceUnit * COS(RADIANS($location[lat]))))",
+			]
+		];
 
 		$query
 			->addSelect($haversine . ' AS distance')
+			->andWhere($restrict)
 			->having('distance <= ' . $radius);
 	}
 
@@ -191,11 +302,13 @@ class SimpleMapService extends BaseApplicationComponent {
 	 * Find lat/lng from string address
 	 *
 	 * @param $address
+	 * @param string|null $country
+	 *
 	 * @return null|array
 	 *
 	 * TODO: Cache results?
 	 */
-	public static function getLatLngFromAddress ($address)
+	public static function getLatLngFromAddress ($address, $country = null)
 	{
 		$browserApiKey = self::getAPIKey();
 
@@ -204,6 +317,9 @@ class SimpleMapService extends BaseApplicationComponent {
 		$url = 'https://maps.googleapis.com/maps/api/geocode/json?address='
 		       . rawurlencode($address)
 		       . '&key=' . $browserApiKey;
+
+		if ($country)
+			$url .= '&components=country:' . rawurldecode($country);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -295,7 +411,33 @@ class SimpleMapService extends BaseApplicationComponent {
 		$lt2 = $model->lat;
 		$ln2 = $model->lng;
 
-		return ($this->searchEarthRad * acos(cos(deg2rad($lt1)) * cos(deg2rad($lt2)) * cos(deg2rad($ln2) - deg2rad($ln1)) + sin(deg2rad($lt1)) * sin(deg2rad($lt2))));
+		return (
+			$this->searchDistanceUnit
+			* rad2deg(
+				acos(
+					cos(deg2rad($lt1))
+					* cos(deg2rad($lt2))
+					* cos(deg2rad($ln1) - deg2rad($ln2))
+					+ sin(deg2rad($lt1))
+					* sin(deg2rad($lt2))
+				)
+			)
+		);
+//		return ($this->searchEarthRad * acos(cos(deg2rad($lt1)) * cos(deg2rad($lt2)) * cos(deg2rad($ln2) - deg2rad($ln1)) + sin(deg2rad($lt1)) * sin(deg2rad($lt2))));
+	}
+
+	private function _padParts (SimpleMap_MapModel $model)
+	{
+		$parts = $model->parts ?: [];
+
+		foreach (self::$_parts as $part) {
+			if (!array_key_exists($part, $parts)) {
+				$parts[$part]            = '';
+				$parts[$part . '_short'] = '';
+			}
+		}
+
+		return $parts;
 	}
 
 	private function _formatLocaleForMap ($locale) {

@@ -2,7 +2,7 @@
 
 namespace Craft;
 
-class SimpleMap_MapFieldType extends BaseFieldType {
+class SimpleMap_MapFieldType extends BaseFieldType implements IPreviewableFieldType {
 
 	public function getName()
 	{
@@ -345,6 +345,11 @@ class SimpleMap_MapFieldType extends BaseFieldType {
 			'countries'=> $countries,
 			'types'=> $types,
 		));
+	}
+
+	public function validate ($value)
+	{
+		return craft()->simpleMap->validateField($this);
 	}
 
 	public function onAfterElementSave()
