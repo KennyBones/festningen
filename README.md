@@ -1,40 +1,27 @@
-## Oppstart
-Bedre terminal: [ZSH](http://www.maclife.com/article/columns/terminal_101_better_shell_zsh)
-```
-#!terminal
-curl -L github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
-```
+<p align="center"><a href="https://craftcms.com/" target="_blank"><img width="312" height="90" src="https://craftcms.com/craftcms.svg" alt="Craft CMS"></a></p>
 
-Installer [Homebrew](http://brew.sh/)
-```
-#!terminal
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-Installer [Node](https://nodejs.org)
-```
-#!terminal
-brew install node
-```
-Installer [gulp](http://gulpjs.com/) globalt
-```
-#!terminal
-npm install -g gulp
-```
-## Prosjekt start
+## About Craft CMS
 
-1. Clone dette repositoriet her: https://bitbucket.org/repo/import med URL fra samme url som steg 4
-2. Kopier clone-link
-3. Åpne terminal og gå til rett mappe (eks: cd GitHub/mustasj/)
-4. Kjør git clone (eks: git clone https://peirix@bitbucket.org/mustasj/mustasj.no.git)
-5. Kjør **npm install** der package.json ligger
-6. Opprett ny database i Sequel Pro (kundenavn_craft)
-7. Sett inn databasenavnet i {/craft/config/db.php}
-8. Sett opp MAMP Pro til www-mappen (domenet MÅ slutte på .dev om ikke db.php eksisterer i /craft/config/local)
-9. Gå inn på /admin og logg inn med mustasj og vanlig passord
-10. Endre nettstedsnavn på Generelle instillinger (/admin/settings/general)
-11. Kjør gulp ved å skrive **gulp** i terminal
+Craft is a content-first CMS that aims to make life enjoyable for developers and content managers alike. It is optimized for bespoke web and application development, offering developers a clean slate to build out exactly what they want, rather than wrestling with a theme.
 
-Hvis gulp ikke kjører (zsh: command not found: gulp), prøv dette: 
+Learn more about Craft at [craftcms.com](https://craftcms.com).
 
-1. npm config set prefix /usr/local 
-2. sudo npm install -g gulp
+## How to Install Craft 3
+
+See the Craft 3 documentation for [installation](https://docs.craftcms.com/v3/installation.html) and [updating](https://docs.craftcms.com/v3/updating.html) instructions.
+
+## Resources
+
+#### Official Resources
+- [Craft 3 Documentation](https://docs.craftcms.com/v3/)
+- [Craft 3 Class Reference](https://docs.craftcms.com/api/v3/)
+- [Craft 3 Plugins](https://plugins.craftcms.com)
+- [Demo site](https://demo.craftcms.com/)
+- [Craft Slack](https://craftcms.com/community#slack)
+- [Craft CMS Stack Exchange](http://craftcms.stackexchange.com/)
+
+#### Community Resources
+- [Mijingo](https://mijingo.com/craft) – Video courses and other learning resources
+- [Envato Tuts+](https://webdesign.tutsplus.com/categories/craft-cms/courses) – Video courses
+- [Straight Up Craft](http://straightupcraft.com/) – Articles, tutorials, and more
+- [pluginfactory.io](https://pluginfactory.io/) – Craft plugin scaffold generator

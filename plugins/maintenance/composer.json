@@ -1,9 +1,0 @@
-{
-  "name": "carlcs/craft-maintenance",
-  "description": "Maintenance plugin for Craft CMS",
-  "type": "craft-plugin",
-  "require": {
-    "composer/installers": "~1.0",
-    "php": ">=5.3.0"
-  }
-}

@@ -1,7 +1,0 @@
-{
-	buttons: ['formatting','bold','italic','link'],
-	structure: true,
-	plugins: ['table'],
-  formatting: ['p', 'h3', 'h2'],
-	toolbarFixedBox: true
-}
