@@ -3,48 +3,25 @@
  * General Configuration
  *
  * All of your system's general configuration settings go in here. You can see a
- * list of the available settings in vendor/craftcms/cms/src/config/GeneralConfig.php.
- *
- * @see craft\config\GeneralConfig
+ * list of the default settings in `vendor/craftcms/cms/src/config/defaults/general.php`.
  */
 
 return [
-    // Global settings
-    '*' => [
-        // Default Week Start Day (0 = Sunday, 1 = Monday...)
-        'defaultWeekStartDay' => 0,
+    // Base site URL
+    'siteUrl' => null,
 
-        // Enable CSRF Protection (recommended)
-        'enableCsrfProtection' => true,
+    // Default Week Start Day (0 = Sunday, 1 = Monday...)
+    'defaultWeekStartDay' => 0,
 
-        // Whether generated URLs should omit "index.php"
-        'omitScriptNameInUrls' => true,
+    // Enable CSRF Protection (recommended, will be enabled by default in Craft 3)
+    'enableCsrfProtection' => true,
 
-        // Control Panel trigger word
-        'cpTrigger' => 'admin',
+    // Whether "index.php" should be visible in URLs (true, false, "auto")
+    'omitScriptNameInUrls' => 'auto',
 
-        // The secure key Craft will use for hashing and encrypting data
-        'securityKey' => getenv('SECURITY_KEY'),
-    ],
+    // Control Panel trigger word
+    'cpTrigger' => 'admin',
 
-    // Dev environment settings
-    'dev' => [
-        // Base site URL
-        'siteUrl' => null,
-
-        // Dev Mode (see https://craftcms.com/support/dev-mode)
-        'devMode' => true,
-    ],
-
-    // Staging environment settings
-    'staging' => [
-        // Base site URL
-        'siteUrl' => null,
-    ],
-
-    // Production environment settings
-    'production' => [
-        // Base site URL
-        'siteUrl' => null,
-    ],
+    // Dev Mode (see https://craftcms.com/support/dev-mode)
+    'devMode' => false,
 ];

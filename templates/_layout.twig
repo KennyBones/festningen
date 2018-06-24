@@ -1,101 +1,12 @@
-{% set midnight = now|date_modify("+1 day")|date("Y-m-d") ~ ' 00:00' %}
-{% set cdnUrl = craft.config.cdnUrl ?? siteUrl %}
-{% set LP = craft.request.isLivePreview ?? false %}
-<!doctype html>
-{% if craft.config.env == 'PROD' %}{% include '_admin/_mustasj_logo' %}{% endif %}
-<html class="no-js" lang="{{craft.locale}}">
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
-
-		{% hook 'seomaticRender' %}
-		{% include "_admin/_ekstraHead" %}
-		{% if craft.request.isLivePreview %}
-		<!-- Åpne alle linker i nytt vindu hvis vi er i previewmodus -->
-		<script type="text/javascript">
-			var links = document.links;
-			for (var i = 0; i < links.length; i++) {
-				links[i].target = "_blank";
-			}
-		</script>
-		{% endif %}
+		<title></title>
 	</head>
-	<body class="{{ bodyClass is defined ? bodyClass }}">
-	{% include '_admin/_maintenanceBanner' %}
-		<!--[if lt IE 7]>
-			<p class="browsehappy">You are using a <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
-
-		<header id="topHeader">
-			<nav>
-			<a href="/" class="logo"></a>
-
-			{% set nav = craft.amNav.getNavRaw("navigasjon") %}
-
-			{% macro addNodeToNavigation(node, index) %}
-			    {%- set nodeClasses = [] -%}
-			    {%- if node.hasChildren -%}
-			        {%- set nodeClasses = nodeClasses|merge(['has-children']) -%}
-			    {%- endif -%}
-			    {%- if node.active or node.hasActiveChild -%}
-			        {%- set nodeClasses = nodeClasses|merge(['active']) -%}
-			    {%- endif -%}
-			    {%- if node.level == 1 and index == 1 -%}
-			        {%- set nodeClasses = nodeClasses|merge(['first']) -%}
-			    {%- endif -%}
-			    {%- if node.listClass|length -%}
-			        {%- set nodeClasses = nodeClasses|merge([node.listClass]) -%}
-			    {%- endif -%}
-
-			    <li{% if nodeClasses|length %} class="{{ nodeClasses|join(' ') }}"{% endif %}>
-			        <a href="{{ node.url }}" title="{{ node.name }}"{% if node.blank %} target="_blank"{% endif %}>{{ node.name }}</a>
-			        {% if node.hasChildren %}
-			            <ul class="nav__level{{ (node.level + 1) }}">
-			                {% for subnode in node.children %}
-			                    {{ _self.addNodeToNavigation(subnode, loop.index) }}
-			                {% endfor %}
-			            </ul>
-			        {% endif %}
-			    </li>
-			{% endmacro %}
-
-
-
-				<ul id="desktop_nav-ul">
-					{% for node in nav %}
-							{{ _self.addNodeToNavigation(node, loop.index) }}
-					{% endfor %}
-
-					<span class="menu-logo">
-						{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
-					</span>
-
-				</ul>
-
-				<a href="/" id="menu-btn">Meny</a>
-
-			</nav>
-		</header>
-
+	<body>
 		{% block content %}
-			<p>Du mangler innhold</p>
+		<p>no content, bitch</p>
 		{% endblock %}
-	<!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
-
-		<footer class="row">
-			<span>
-				{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
-			</span>
-				<div>{{footer.rikTekst}}</div>
-			</div>
-		</footer>
-
-		<script>
-			loadCSS("{{cdnUrl}}dist/{{ rev('css/main.css') |default('')}}");
-			requirejs(["main"]);
-		</script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{craft.simpleMap.apiKey}}" type="text/javascript"></script>
-		<noscript><link rel="stylesheet" href="{{cdnUrl}}dist/{{ rev('css/main.css') }}" /></noscript>
 	</body>
 </html>
