@@ -14,7 +14,7 @@ var gulp			= require("gulp"),
 	loadPlugins 	= require('gulp-load-plugins')({DEBUG: false});
 
 // Directories
-var START 	= startfolders(["www","public","public_html"]),
+var START 	= startfolders(["web","public","public_html"]),
 	SRC 	= START + "/static",
 	DIST 	= START + "/dist",
 	REV		= START + "/.REV";

@@ -1,0 +1,2059 @@
+@import "_inc/mixins";
+@import "_inc/variables";
+
+
+
+// body
+html {
+   height: 100%;
+}
+
+body {
+   min-height: 100%;
+   overflow-x: hidden;
+}
+
+
+// Header
+
+#topHeader {
+  background: $color_pr2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  @media #{$tablet} {
+    position: fixed;
+  }
+
+
+  .logo {
+    position: absolute;
+    background: $color_pr2;
+    background-image: url('/static/svg/symbols/logo-bg.svg');
+    background-repeat: no-repeat;
+    background-position: -29px 50%;
+    background-size: 322px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55px;
+    z-index: 0;
+    margin: 0;
+
+    @media #{$tablet} {
+      background-position: 70px 60%;
+      background-size: 660px;
+      height: 72px;
+  	}
+
+
+  }
+
+  @keyframes headerSlideDown {
+
+    from {
+      top: -50%;
+    }
+
+    to {
+      top: 0;
+    }
+  }
+
+  &.fixed {
+    @media #{$tablet} {
+      position: fixed;
+      animation-duration: .6s;
+      animation-name: headerSlideDown;
+      z-index: 3;
+  	}
+  }
+
+  &.menu-open {
+      position: fixed;
+      height: 100%;
+
+      #desktop_nav-ul{
+        display: block;
+        top: 0;
+        width: 100%;
+        padding-top: 68px;
+
+        li { display: block; }
+      }
+
+  }
+
+.menu-logo {
+  display: block;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+
+  @media #{$tablet} {
+    display: none;
+  }
+
+  svg {
+    width: 130px;
+    height: 60px;
+  }
+}
+
+#menu-btn {
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  margin: 0;
+  padding: 5px;
+  width: 55px;
+  height: 55px;
+  line-height: 42px;
+  font-weight: bold;
+  font-size: 16px;
+
+  @media #{$tablet} {
+		display: none;
+	}
+
+  svg {
+    height: 40px;
+    width: 40px;
+  }
+
+  .svg--menu-close {
+    display: none;
+  }
+
+  &.menu-open {
+    .svg-menu-open {
+      display: none;
+    }
+
+    .svg-menu-close {
+      display: block;
+    }
+  }
+
+}
+
+#desktop_nav-ul {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  line-height: 2.5em;
+  text-align: center;
+  display: none;
+
+  @media #{$tablet} {
+    display: block;
+  }
+
+  li {
+    display: inline-block;;
+    position: relative;
+
+    @media #{$tablet} {
+      position: static;
+    }
+
+    a {
+      letter-spacing: .1em;
+      position: relative;
+      display: block;
+      padding: 6px;
+      padding-left: 40px;
+      padding-right: 40px;
+      margin: 0;
+      font-weight: bold;
+      font-size: 14px;
+
+      @media #{$tablet} {
+        padding: 16px;
+        padding-right: 20px;
+        padding-left: 20px;
+    	}
+
+      @media #{$desktop} {
+    		font-size: 15px;
+    	}
+
+
+  		&:hover {
+  			color: $color_pr4;
+  		}
+
+    }
+
+    &.has-children {
+      >a {
+
+        &:before {
+          content: "...";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          font-size: 30px;
+
+          @media #{$tablet} {
+            bottom: 5px;
+          }
+        }
+      }
+    }
+
+    ul.nav__level2 {
+      max-height: 0;
+      opacity: 0;
+      left: 0;
+      top: -72px;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      line-height: 2.5em;
+      transition: opacity .3s ease, max-height .3s ease;
+      background: #000000;
+      z-index: -1;
+      border-top: 1px solid $color_pr6;
+
+      @media #{$tablet} {
+        position: absolute;
+        background: #FFFFFF;
+
+        li a {
+          font-size: 13px;
+          color: #000000;
+        }
+
+    	}
+
+      li {
+        margin: 0;
+        padding: 4px;
+        display: none;
+
+        a {
+          font-size: 11px;
+          color: #FFFFFF;
+          padding: 0;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        &.active a {
+
+
+          @media #{$tablet} {
+            color: $color_pr4;
+          }
+        }
+
+        &.active.generell a { color: black; }
+      }
+
+    }
+
+    &.activated {
+
+			ul.nav__level2 {
+        max-height: 1000px;
+        top: 72px;
+        opacity: 1;
+        visibility: visible;
+        z-index: 1;
+
+        li {
+          display: block;
+
+          @media #{$tablet} {
+            display: inline-block;
+        	}
+        }
+			}
+
+			>a {
+				font-weight: 600;
+			}
+		}
+
+
+  }
+
+}
+
+
+  .searchbox {
+    display: none;
+  }
+
+  .search-btn {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 68px;
+
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+
+      background-color: $color_pr4;
+
+      svg path{
+        fill: #FFFFFF;
+      }
+    }
+
+    svg {
+      height: 30px;
+      width: 30px;
+      top: 20px;
+      left: 3px;
+      position: relative;
+    }
+  }
+
+}
+
+// DESIGNBLOCKS
+
+$mellomrom: 40px;
+$mellomrom-lite: 17px;
+$padding: 70px;
+
+.designblock, .restaurant-menu-parent {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #FFFFFF;
+  vertical-align: top;
+
+  &.black { background: #000000; color: #ffffff; a { color: #ffffff; }}
+
+  .tekst, .block-brodtekst, .bildetekst {
+    line-height: 1.7em;
+    letter-spacing: 1px;
+  }
+
+  &.parent, .first {
+    //border-bottom: $mellomrom solid $color_pr3;
+  }
+
+  &.nospacing {border-bottom: 0;}
+
+  a { font-weight: bold; }
+
+  .tekst {
+    padding: 30px;
+
+    @media #{$tablet} {
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
+      padding: $padding;
+    }
+
+    &.col-1 {
+        //padding-right: $padding * 5;
+        p{ column-count: 1; }
+    }
+
+    &.col-2 p{ column-count: 2; }
+
+    table {
+      width: 100%;
+      margin-top: $padding / 2;
+
+      tr { vertical-align: top; }
+      td {
+        padding: 10px;
+      }
+    }
+
+  }
+
+  .fargeblokk {
+    display: inline-block;
+    width: 50%;
+    background-color: #000000;
+    color: white;
+    font-size: 14px;
+    padding: 30px;
+
+    @media #{$tablet} {
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
+      padding: 70px;
+      font-size: $basesize;
+    }
+
+
+    a { color: #FFFFFF; display: block; margin: 0; }
+
+    img { max-width: 50px; max-height: 50px; }
+  }
+
+  .knapp {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: $font_century;
+    letter-spacing: .2em;
+
+    a {
+      font-weight: bold;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        background-color: #000000;
+        height: 14px;
+        width: 3px;
+        top: 2px;
+        left: -16px;
+      }
+
+    }
+
+  }
+
+  // Forskjellige typer designblokker
+  &.enkel {
+    padding: 0;
+    font-size: 0;
+    display: block;
+    margin-top: $padding / 2;
+
+    @media #{$tablet} {
+      display: flex;
+    }
+
+    @media #{$desktop} {
+      display: flex;
+      margin-top: $padding;
+    }
+
+    .tekst, .bilde {
+      display: inline-block;
+      font-size: $h5;
+      width: 100%;
+
+      @media #{$tablet} {
+        width: 50%;
+        font-size: $h5;
+      }
+
+      @media #{$desktop} {
+        font-size: $basesize;
+      }
+    }
+
+    .bilde {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    img {
+      min-height: 100%;
+      min-width: 100%;
+
+      @media #{$tablet} {
+        position: absolute;
+      }
+    }
+
+  }
+
+  &.bilde-full {
+    display: block;
+    width: 100%;
+
+    .tekst {
+      display: block;
+      width: 100%;
+    }
+
+    .bilde {
+      width: 100%;
+      position: relative;
+
+      img { max-width: 100%; position: static; }
+
+      .bildetekst {
+        background-color: #ffffffeb;
+        position: static;
+        padding: 30px;
+        width: 100%;
+        font-size: $h5;
+
+        @media #{$tablet} {
+          padding: 50px;
+          width: 80%;
+          position: absolute;
+        }
+
+        @media #{$desktop} {
+          width: 50%;
+          position: absolute;
+          font-size: $basesize;
+          padding: $padding;
+        }
+
+        &.drop-right {
+          bottom: $padding / 2;
+          right: -$mellomrom / 2;
+
+          @media #{$desktop} {
+            bottom: $padding * 2;
+            right: -$mellomrom;
+          }
+        }
+
+        &.drop-left {
+          bottom: $padding / 2;
+          left: -$mellomrom / 2;
+
+          @media #{$desktop} {
+            bottom: $padding * 2;
+            left: -$mellomrom;
+          }
+        }
+
+        &.right {
+          top: $padding / 2;
+          right: -$mellomrom / 2;
+
+          @media #{$desktop} {
+            top: $padding * 2;
+            right: -$mellomrom;
+          }
+        }
+
+        &.left {
+          top: $padding / 2;
+          left: -$mellomrom / 2;
+
+          @media #{$desktop} {
+            top: $padding * 2;
+            left: -$mellomrom;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+
+.sticky-block {
+  display: none;
+
+  @media #{$tablet} {
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    padding-top: 200px;
+    padding-bottom: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform:translate3d(0%, 0, 0);
+  }
+
+  @media #{$desktop} {
+    width: 20%;
+  }
+
+  .sticky-block--wrapper {
+    background-color: #FFFFFF;
+    padding-top: $mellomrom;
+    padding-bottom: $mellomrom;
+  }
+
+  ul {
+    list-style: none;
+    text-transform: uppercase;
+    text-align: right;
+    letter-spacing: .2em;
+    font-family: $font_century;
+    padding: 0;
+    padding-right: $mellomrom-lite;
+
+    a, p {
+      right: 0;
+      position: relative;
+      transition: right .3s ease, color .3s ease;
+      cursor: pointer;
+    }
+
+    li { position: relative; }
+
+    p {
+      font-size: $h7;
+      font-family: $font_default;
+    }
+    a { font-size: $basesize; }
+
+    hr {
+      border: 0;
+      margin: 18px 0;
+      margin-top: 10px;
+      transition: width .3s ease;
+      width: 0;
+      border-top: 3px solid #ebebeb;
+    }
+
+  }
+
+    li.selected {
+      a, p {
+        color: $color_pr5;
+        right: 20px;
+      }
+
+      hr { width: 110%; }
+    }
+
+}
+
+.sticky-block--right {
+  display: inline-block;
+  padding-left: 0;
+  padding-top: $padding;
+  width: 100%;
+
+  &:first-of-type {
+    padding-top: 30px;
+
+    @media #{$tablet} {
+      padding-top: 50px;
+    }
+
+    @media #{$desktop} {
+      padding-top: 90px;
+    }
+  }
+
+  .restaurant-menu {
+    padding: 20px;
+
+    @media #{$tablet} {
+      padding: 25px;
+    }
+
+    @media #{$desktop} {
+      padding: 20px;
+    }
+
+    &.left table, &.left table .table--heading.title  { text-align: left; }
+    &.center table, &.center table .table--heading.title { text-align: center; }
+    &.right table, &.right table .table--heading.title { text-align: right; }
+
+    @media #{$tablet} {
+      &.left table, &.left table .table--heading.title  { text-align: left; }
+      &.center table, &.center table .table--heading.title { text-align: left; }
+      &.right table, &.right table .table--heading.title { text-align: left; }
+    }
+
+  }
+
+  @media #{$tablet} {
+    padding-left: 30%;
+  }
+
+}
+
+.pageTop {
+  background-color: #FFFFFF;
+  text-align: center;
+  margin-top: 55px;
+
+  @media #{$tablet} {
+    margin-top: 72px;
+  }
+
+  img { max-width: 100%; }
+
+  .designblock {
+    max-width: 100%;
+
+    @media #{$tablet} {
+      max-width: 70%;
+    }
+
+    @media #{$desktop} {
+      max-width: 60%;
+    }
+
+
+  }
+
+  .silhouette {
+    display: block;
+    margin-bottom: $mellomrom;
+
+    svg {
+      height: 50px;
+      width: 50px;
+    }
+
+  }
+
+  h1 { margin-bottom: .8em; }
+
+  hr {
+    border-top: 4px solid black;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 3em;
+  }
+
+}
+
+.black-block {
+  background-color: #000000;
+  font-size: 0!important;
+  overflow: hidden;
+  border-bottom: $padding / 2 solid $color_pr3;
+
+  &.menytopp {
+    border-bottom: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      font-size: 10px;
+      padding: 8px 21px;
+      letter-spacing: 2px;
+      min-width: 160px;
+      text-transform: uppercase;
+      white-space: normal;
+      background: #000;
+      color: #fff;
+      font-weight: 700;
+
+      @media #{$tablet} {
+        font-size: 14px;
+        padding: 13px 29px 14px;
+        border-radius: 500px;
+        border: 2px solid;
+        border-width: 2px;
+        margin: 10px;
+        line-height: 1;
+      }
+
+      @media #{$desktop} {
+        &:hover {
+          background: #FFFFFF;
+          color: #000000;
+
+          a { color: #000000; }
+        }
+      }
+
+      a {
+        &:before { display: none; }
+      }
+    }
+  }
+
+  >a {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: $font_century;
+    letter-spacing: .2em;
+    font-weight: bold;
+    position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        background-color: #FFFFFF;
+        height: 14px;
+        width: 3px;
+        top: 2px;
+        left: -16px;
+      }
+
+    }
+
+
+  .fargeblokk {
+    text-align: center;
+    vertical-align: top;
+    position: relative;
+  }
+
+  &.num-1 .fargeblokk {
+    width: 100%;
+  }
+
+  &.num-2 .fargeblokk{
+    width: 50%;
+
+    &:nth-of-type(1) {
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+    }
+
+    &:nth-of-type(2) {
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+    }
+
+  }
+
+  &.num-3 .fargeblokk {
+    width: 33.33%;
+
+    &:nth-of-type(1) {
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+    }
+
+    &:nth-of-type(2) {
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+    }
+
+    &:nth-of-type(3) {
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 120%;
+        width: 1px;
+        background-color: #FFFFFF;
+      }
+    }
+
+  }
+
+  .knapp {
+    a:before { background-color: #FFFFFF; }
+  }
+}
+
+aside.printThis {
+  position: absolute;
+  top: 100px;
+  right: -68px;
+  transition: width .3s ease;
+  text-align: left;
+  font-size: 0;
+  display: none;
+
+  @media #{$desktop} {
+    display: block;
+  }
+
+  &:hover {
+    cursor: pointer;
+    a { opacity: 1; left: 0; }
+  }
+
+  .printThis--wrapper {
+    background-color: $color_pr5;
+    height: 50px;
+    width: 50px;
+    padding: 15px;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+  }
+
+  svg {
+    fill: #FFFFFF;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    z-index: 2;
+  };
+
+  a {
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: opacity .1s ease, left .2s ease;
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    background-color: $color_pr5;
+    height: 50px;
+    padding: 15px;
+    padding-left: 0;
+    margin: 0;
+    vertical-align: top;
+    left: -50px;
+    opacity: 0;
+    line-height: 2em;
+  }
+
+}
+
+
+// FORSIDE
+.index {
+
+  .pageTop .designblock.tekst {
+
+    @media #{$tablet} {
+      margin-top: -100px;
+    }
+
+  }
+
+  .apningstider {
+    font-size: 0;
+    text-align: center;
+    padding: 0;
+    display: block;
+
+    @media #{$tablet} {
+      display: flex;
+      margin-top: $mellomrom;
+      margin-bottom: $mellomrom;
+    }
+
+    .designblock {
+      display: block;
+      width: 100%;
+      padding: 50px;
+      padding-bottom: 80px;
+      font-size: $h5;
+
+      @media #{$tablet} {
+        width: 50%;
+        display: inline-block;
+        padding: 50px;
+      }
+
+      @media #{$desktop} {
+        padding: $padding;
+        font-size: $basesize;
+      }
+
+      &.first {
+        background: $color_pr1;
+        color: #FFFFFF;
+
+        svg path { fill: #FFFFFF; }
+
+        .knapp {
+          a { color: #FFFFFF; }
+          a:before { background-color: #FFFFFF; }
+        }
+
+      }
+
+      &.second { background: $color_pr6; }
+
+      .knapp {
+
+        p { margin: 0; }
+
+        @media #{$desktop} {
+          position: absolute;
+          bottom: $mellomrom;
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+
+    h2 {
+      text-align: center;
+      text-transform: uppercase;
+
+      @media #{$tablet} {
+        margin: 1em;
+      }
+
+
+    }
+
+    svg {
+      margin: 17px;
+      margin-bottom: 30px;
+      height: 50px;
+      width: 70px;
+
+      @media #{$tablet} {
+        margin: 0;
+        margin-bottom: 20px;
+        height: 60px;
+        width: 90px;
+      }
+
+      @media #{$desktop} {
+        margin-bottom: $mellomrom;
+      }
+
+    }
+
+    table {
+      display: block;
+      margin-bottom: 20px;
+
+      tbody {
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      tr {
+        display:table;
+        table-layout: fixed;
+        width:100%;
+      }
+    }
+  }
+
+  .hvaSkjer {
+
+    .black {
+      text-align: center;
+      width: 100%!important;
+      background-size: cover;
+      background-position: center center;
+      overflow: hidden;
+
+      @media #{$tablet} {
+        width: 80%!important;
+      }
+
+
+      h2 {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+
+      }
+
+      svg {
+        fill: #ffffff0d;
+        height: 605px;
+        width: 450px;
+        margin-bottom: 30px;
+        position: absolute;
+        top: 20px;
+        left: 60%;
+      }
+
+    }
+
+  }
+
+  .menyer {
+
+    &.designblock {
+      display: block;
+
+      @media #{$desktop} {
+        display: flex;
+      }
+
+      .tekst {
+        width: 100%;
+
+        @media #{$desktop} {
+          width: 65%;
+        }
+
+      }
+
+      .fargeblokk {
+        width: 100%;
+
+        table { width: 100%; }
+
+        @media #{$desktop} {
+          width: 35%;
+        }
+
+      }
+    }
+
+    .tekst {
+      text-align: center;
+      padding: 50px;
+
+      h2 {
+        font-size: $h3;
+      }
+
+      @media #{$tablet} {
+        text-align: left;
+
+        h2 { font-size: $h2; }
+      }
+
+      @media #{$desktop} {
+        width: 65%;
+        text-align: left;
+        padding: $padding;
+        padding-right: $padding * 2;
+      }
+
+
+    }
+
+    .fargeblokk {
+      text-align: center;
+      padding: $mellomrom;
+
+      svg {
+        fill: #FFFFFF;
+        height: 50px;
+        width: 50px;
+        margin-bottom: 20px
+      }
+
+      h3 {
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        font-weight: bold;
+
+        td {
+          text-align: left;
+          padding-right: 20px;
+         }
+
+        td:first-of-type {
+          text-align: right;
+          padding-right: 20px;
+         }
+      }
+    }
+  }
+
+  .black-block .fargeblokk{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 50px;
+    //border-bottom: 35px solid #e0e0e0;
+  }
+
+  .black-block {
+    border-bottom: 0;
+
+    @media #{$tablet} {
+      border-bottom: 35px solid #e0e0e0;
+    }
+  }
+}
+
+.booking {
+  font-size: 0;
+  display: block;
+  overflow: hidden;
+
+  @media #{$tablet} {
+    display: flex;
+  }
+
+  #booking-map {
+    height: 300px;
+
+    @media #{$tablet} {
+      height: auto;
+    }
+  }
+
+  #booking-map, #kontaktskjema  {
+    display: block;
+    width: 100%;
+    font-size: $h4;
+
+    @media #{$tablet} {
+      width: 50%;
+      display: inline-block;
+    }
+
+    @media #{$desktop} {
+      width: 50%;
+      display: inline-block;
+      font-size: $basesize;
+    }
+  }
+
+  #booking-map img {
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  #kontaktskjema {
+    background-color: $color_pr4;
+    padding: 30px;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: $h5;
+
+    @media #{$tablet} {
+      padding: 50px;
+      width: 80%;
+      font-size: 15px;
+    }
+
+    @media #{$desktop} {
+      padding: $padding;
+      width: 50%;
+      font-size: $basesize;
+    }
+
+    h2 {
+      @media #{$tablet} {
+        margin-bottom: 1em;
+      }
+    }
+
+    svg {
+      fill: #FFFFFF;
+      display: block;
+      margin: $mellomrom-lite;
+      margin-bottom: $mellomrom;
+      margin-left: auto;
+      margin-right: auto;
+
+      @media #{$tablet} {
+        height: 40px;
+        width: 70px;
+      }
+
+      @media #{$desktop} {
+        height: 45px;
+        width: 80px;
+      }
+    }
+  }
+}
+
+#kontaktskjema {
+
+  form {
+    margin-top: $padding / 2;
+
+    @media #{$desktop} {
+      margin-top: $padding;
+    }
+  }
+
+  .heading {
+    margin-bottom: 5px;
+  }
+
+  .fields {
+    text-align: left;
+  }
+
+  .field {
+    margin-bottom: $mellomrom-lite;
+  }
+
+  input, textarea {padding-left: 10px;}
+
+  input[type='text'] {
+    width: 100%;
+    border: none;
+    line-height: 2em;
+  }
+
+  input[type='checkbox'] {
+    height: 2em;
+    width: 2em;
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-right: 10px;
+    background-color: #FFFFFF;
+  }
+
+  input[type='checkbox']:checked {
+    background-image: url('/static/svg/symbols/icon-checkmark.svg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .submit {
+    position: relative;
+    float: right;
+    display: inline-block;
+
+    &:after {
+      content: "";
+      position: absolute;
+      background-color: #FFFFFF;
+      height: 14px;
+      width: 3px;
+      top: 5px;
+      left: -5px;
+    }
+  }
+
+  input[type="submit"] {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: Century,sans-serif;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .typeReservasjon {
+    position: relative;
+
+    label { line-height: 2em; margin-right: 20px;}
+  }
+
+  textarea { width: 100%; }
+
+  .submit { text-align: right; }
+
+}
+
+// RESTAURANT
+
+.pageTop {
+  padding-bottom: $mellomrom-lite;
+}
+
+.restaurant-menu {
+  text-align: center;
+  position: relative;
+
+  @media #{$desktop} {
+    margin-bottom: 140px;
+  }
+
+  >svg {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: -10px;
+  }
+
+  h2 {
+
+    @media #{$desktop} {
+      margin-bottom: 120px;
+      margin-top: $mellomrom-lite;
+    }
+
+  }
+
+  .pris {
+    display: block;
+    font-weight: 600;
+    font-family: $font_century;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-size: $h3;
+    margin-bottom: 60px;
+    margin-top: -20px;
+
+    @media #{$desktop} {
+      margin-top: -120px;
+      margin-bottom: 120px;
+    }
+  }
+
+  .menu-item--row {
+    width: 100%;
+    text-align: left;
+    letter-spacing: .1em;
+    text-align: left;
+
+    @media #{$desktop} {
+      padding-right: 10%;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin: 7px;
+
+      @media #{$desktop} {
+        width: 30px;
+        height: 30px;
+      }
+
+    }
+
+    .table-tekst { width: 85%; }
+
+  }
+
+  hr {
+    margin-right: 0;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    @media #{$desktop} {
+      margin-right: 80px;
+    }
+
+  }
+
+  .table--heading {
+    text-transform: uppercase;
+    font-size: $h4;
+    font-family: $font_century;
+
+    &.title {
+      text-align: left;
+    }
+    &.price { text-align: right; }
+    &.table-overskrift { font-size: $h3; padding-top: 40px; }
+  }
+
+  .table--body {
+    font-size: $h5;
+    padding-bottom: 7px;
+  }
+
+  .table-allergen {
+    font-size: $h6;
+    display: inline-block;
+    text-align: center;
+
+    svg { display: inline-block; }
+
+    .table-allergen--text {
+      display: block;
+      margin-left: 7px;
+      margin-right: 7px;
+    }
+  }
+}
+
+.forside {
+
+  &.first {
+    margin-top: 55px;
+
+    @media #{$tablet} {
+      margin-top: 72px;
+    }
+
+  }
+
+}
+
+.block-parent {
+  position: relative;
+  font-size: 0;
+  border-bottom: $padding / 2 solid $color_pr3;
+
+  @media #{$desktop} {
+    border-bottom: $padding solid $color_pr3;
+  }
+
+  .designblock {
+    font-size: $h5;
+
+    @media #{$desktop} {
+      font-size: $basesize;
+    }
+
+  }
+
+  .block-topp {
+    position: relative;
+
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .bildetekst {
+      background-color: $color_pr4;
+      color: #FFFFFF;
+      position: absolute;
+      padding: $padding / 1.5;
+      width: 430px;
+      text-align: center;
+      font-size: $h5;
+      line-height: 1.2em;
+      letter-spacing: 1px;
+      display: none;
+
+      @media #{$tablet} {
+        display: block;
+        padding: 50px;
+      }
+
+      @media #{$desktop} {
+        font-size: $basesize;
+      }
+
+      &.drop-right {
+        bottom: $padding / 2;
+        right: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
+      }
+
+      &.drop-left {
+        bottom: $padding / 2;
+        left: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
+      }
+
+      &.right {
+        top: $padding / 2;
+        right: $padding / 2;
+
+        @media #{$desktop} {
+          bottom: $padding;
+          right: $padding;
+        }
+      }
+
+      &.left {
+        top: $padding / 2;
+        left: $padding / 2;
+
+        @media #{$desktop} {
+
+        }
+      }
+
+      p {
+        font-size: $h5;
+      }
+
+      a {
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+        font-size: $h6;
+        position: relative;
+
+        &:before {
+          content: "";
+          position: absolute;
+          background-color: #FFFFFF;
+          height: 14px;
+          width: 3px;
+          top: 2px;
+          left: -16px;
+        }
+      }
+    }
+  }
+
+  .swiper-slide {
+    .bildetekst {
+      background-color: #FFFFFF;
+      position: absolute;
+      display: none;
+      width: 430px;
+      text-align: center;
+      line-height: 1.2em;
+      letter-spacing: 1px;
+      font-size: $h5;
+
+      @media #{$tablet} {
+        padding: $padding / 1.5;
+        display: block;
+      }
+
+      @media #{$desktop} {
+        font-size: $h5;
+        padding: $padding / 1.5;
+        h4 { font-size: $h4; }
+      }
+
+      &.drop-right {
+        bottom: $padding;
+        right: $padding;
+      }
+
+      &.drop-left {
+        bottom: $padding;
+        left: $padding;
+      }
+
+      &.right {
+        top: $padding;
+        right: $padding;
+      }
+
+      &.left {
+        top: $padding;
+        left: $padding;
+      }
+
+    }
+  }
+
+  .fakta-block {
+    z-index: 2;
+    width: 100%;
+    display: inline-block;
+    font-size: $basesize;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 0;
+    display: none;
+
+    @media #{$tablet} {
+      display: inline-block;
+      width: 25%;
+      padding: 50px;
+      font-size: $h5;
+    }
+
+    &.mobile {
+      display: block;
+
+      ul { text-align: center; padding: 0; margin: 0; }
+
+      @media #{$tablet} {
+        display: none;
+      }
+
+    }
+
+    li {
+      display: inline-block;
+    }
+
+    ul {
+      list-style: none;
+      text-transform: uppercase;
+      text-align: left;
+      letter-spacing: .1em;
+      font-family: $font_century;
+      padding: 0;
+      padding-right: $mellomrom-lite;
+
+      @media #{$desktop} {
+        text-align: right;
+      }
+
+
+      p {
+        font-size: $h7;
+        font-family: $font_default;
+        margin-bottom: 2em;
+      }
+
+      strong { font-size: $h5; }
+
+      hr {
+        border: 0;
+        margin: 18px 0;
+        margin-top: 10px;
+        transition: width .3s ease;
+        width: 0;
+        border-top: 3px solid #ebebeb;
+      }
+
+    }
+  }
+
+  .block-brodtekst{
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    font-size: $h5;
+    padding: 30px;
+    line-height: 1.6em;
+
+    @media #{$tablet} {
+      width: 75%;
+      padding: 50px;
+    }
+
+    @media #{$desktop} {
+      padding: 90px;
+      padding-right: 130px;
+      font-size: $basesize;
+    }
+
+    h2 {
+      display: inline-block;
+      text-align: right;
+    }
+
+  }
+}
+
+// RESTAURANT MENYER
+
+.menu-item--row {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.menu-item--wrapper {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
+.menu-item--cell-wrapper {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+
+    &.price {
+        flex-basis: 8.33333333%;
+        max-width: 8.33333333%;
+    }
+}
+
+.menu-item--cell {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
+.lokaler, .underside, .lokaler, .selskap, .hvaskjer {
+  .designblock.block-parent.first {
+    margin-top: 55px;
+    border-bottom: 0;
+
+    @media #{$tablet} {
+      margin-top: 72px;
+    }
+
+  }
+}
+
+.hvaskjer .designblock.block-parent.first {
+  margin-bottom: $padding / 2;
+
+  @media #{$tablet} {
+    margin-bottom: 72px;
+  }
+}
+
+// PRINT this
+
+
+@media print {
+  #devmode { display: none; }
+
+  @page {
+     size: A4 portrait;
+     margin: 23mm 16mm 23mm 16mm;
+  }
+
+  body { padding: 20px; }
+
+  .break-page {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+
+    * {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+  }
+
+  .restaurant {
+    #topHeader { display: none; }
+    .pageTop { display: none; }
+    .designblock * {
+      visibility: hidden;
+    }
+
+    .row { margin-left: 0; }
+    .designblock.block-parent { border: none; }
+    .sticky-block { display: none; }
+    .sticky-block--right {
+      padding: 0;
+    }
+    .printThis { display: none; }
+    .block-parent.printThisActive {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      * { visibility: visible; }
+    }
+    .restaurant-menu { display: none;}
+    .restaurant-menu.printThisActive {
+        display: inline-block;
+        width: 100%;
+        padding: 7%;
+    }
+    .black-block { display: none; }
+    .sticky-block--right { display: block; }
+    .restaurant-menu {
+      table { padding-right: 0; }
+    }
+    footer { display: none; }
+
+  }
+
+}
+
+.hvaskjer-buttons {
+  text-align: center;
+  margin-bottom: -30px;
+  margin-top: 60px;
+  font-size: $h5;
+  z-index: 1;
+  position: relative;
+
+  @media #{$tablet} {
+    margin-bottom: -60px;
+  }
+
+  p { margin: 0; }
+
+  a { font-size: $h6; }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      padding: 15px;
+      line-height: 1.5em;
+    }
+  }
+
+}
+
+
+// SELSKAP
+
+.selskap {
+
+  .selskapsmeny-parent .tekst{
+    text-align: center;
+
+    h3 { font-size: $h1; }
+  }
+}
+
+.hvaskjer {
+  .pageTop .designblock.tekst {
+
+    @media #{$tablet} {
+      margin-top: -100px;
+    }
+
+    @media #{$desktop} {
+      margin-top: -100px;
+    }
+
+  }
+}
+
+footer {
+  padding: 30px;
+  text-align: center;
+  background-color: $color_pr3;
+
+  @media #{$tablet} {
+    padding: $mellomrom * 2;
+    text-align: left;
+  }
+
+  span {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 12px;
+
+    svg {
+      height: 60px;
+      width: 160px;
+      display: inline-block;
+      margin-bottom: 20px;
+
+      @media #{$tablet} {
+        height: 80px;
+        width: 180px;
+        margin-right: $mellomrom * 2;
+      }
+
+    }
+
+  }
+
+  div {
+    display: inline-block;
+    font-size: $h6;
+  }
+
+}
+
+
+
+
+
+// SWIPER
+
+.swiper-container {
+  z-index: 0;
+
+  img { max-width: 100%; width: 100%;}
+
+  .swiper-button-next, .swiper-button-prev {
+    width: 50px;
+    background-size: 50px 44px;
+    transform: scale(0.9);
+    transition: transform .3s ease;
+    display: none;
+
+    @media #{$tablet} {
+      display: block;
+    }
+
+
+    &:hover {
+      transform: scale(1);
+    }
+  }
+
+  .swiper-button-next {
+    background-image: url('/static/svg/symbols/icon-arrow_right.svg');
+    right: 30px;
+  }
+
+  .swiper-button-prev {
+    background-image: url('/static/svg/symbols/icon-arrow_left.svg');
+    left: 30px;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #FFFFFF;
+  }
+
+  .swiper-pagination-bullet:hover { cursor: pointer;  }
+
+}
