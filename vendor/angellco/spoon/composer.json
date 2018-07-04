@@ -1,0 +1,48 @@
+{
+    "name": "angellco/spoon",
+    "description": "A plugin for Craft to enhance your Matrix fields with groups, tabs and more!",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "spoon",
+        "matrix"
+    ],
+    "support": {
+        "docs": "https://github.com/angell-co/spoon/blob/master/README.md",
+        "issues": "https://github.com/angell-co/spoon/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Angell & Co",
+            "homepage": "https://angell.io"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "angellco\\spoon\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Spoon",
+        "handle": "spoon",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/angell-co/spoon/master/CHANGELOG.md",
+        "components": {
+            "fields": "angellco\\spoon\\services\\Fields",
+            "blockTypes": "angellco\\spoon\\services\\BlockTypes",
+            "loader": "angellco\\spoon\\services\\Loader"
+        },
+        "class": "angellco\\spoon\\Spoon",
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    }
+}
