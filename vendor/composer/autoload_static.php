@@ -8,10 +8,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
@@ -41,12 +41,17 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        'v' => 
+        array (
+            'verbb\\fieldmanager\\' => 19,
+        ),
         'm' => 
         array (
             'mikehaertl\\shellcommand\\' => 24,
         ),
         'e' => 
         array (
+            'ether\\simplemap\\' => 16,
             'enshrined\\svgSanitize\\' => 22,
         ),
         'c' => 
@@ -273,9 +278,17 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'verbb\\fieldmanager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/verbb/field-manager/src',
+        ),
         'mikehaertl\\shellcommand\\' => 
         array (
             0 => __DIR__ . '/..' . '/mikehaertl/php-shellcommand/src',
+        ),
+        'ether\\simplemap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ether/simplemap/src',
         ),
         'enshrined\\svgSanitize\\' => 
         array (
@@ -5845,7 +5858,27 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'enshrined\\svgSanitize\\data\\AllowedTags' => __DIR__ . '/..' . '/enshrined/svg-sanitize/src/data/AllowedTags.php',
         'enshrined\\svgSanitize\\data\\AttributeInterface' => __DIR__ . '/..' . '/enshrined/svg-sanitize/src/data/AttributeInterface.php',
         'enshrined\\svgSanitize\\data\\TagInterface' => __DIR__ . '/..' . '/enshrined/svg-sanitize/src/data/TagInterface.php',
+        'ether\\simplemap\\SimpleMap' => __DIR__ . '/..' . '/ether/simplemap/src/SimpleMap.php',
+        'ether\\simplemap\\Variable' => __DIR__ . '/..' . '/ether/simplemap/src/Variable.php',
+        'ether\\simplemap\\fields\\MapField' => __DIR__ . '/..' . '/ether/simplemap/src/fields/MapField.php',
+        'ether\\simplemap\\fields\\MapValidator' => __DIR__ . '/..' . '/ether/simplemap/src/fields/MapValidator.php',
+        'ether\\simplemap\\listeners\\GetCraftQLSchema' => __DIR__ . '/..' . '/ether/simplemap/src/listeners/GetCraftQLSchema.php',
+        'ether\\simplemap\\migrations\\Install' => __DIR__ . '/..' . '/ether/simplemap/src/migrations/Install.php',
+        'ether\\simplemap\\models\\Map' => __DIR__ . '/..' . '/ether/simplemap/src/models/Map.php',
+        'ether\\simplemap\\models\\Settings' => __DIR__ . '/..' . '/ether/simplemap/src/models/Settings.php',
+        'ether\\simplemap\\records\\MapRecord' => __DIR__ . '/..' . '/ether/simplemap/src/records/MapRecord.php',
+        'ether\\simplemap\\resources\\MapSettingsAsset' => __DIR__ . '/..' . '/ether/simplemap/src/resources/MapSettingsAsset.php',
+        'ether\\simplemap\\resources\\SimpleMapAsset' => __DIR__ . '/..' . '/ether/simplemap/src/resources/SimpleMapAsset.php',
+        'ether\\simplemap\\services\\MapService' => __DIR__ . '/..' . '/ether/simplemap/src/services/MapService.php',
         'mikehaertl\\shellcommand\\Command' => __DIR__ . '/..' . '/mikehaertl/php-shellcommand/src/Command.php',
+        'verbb\\fieldmanager\\FieldManager' => __DIR__ . '/..' . '/verbb/field-manager/src/FieldManager.php',
+        'verbb\\fieldmanager\\assetbundles\\FieldManagerAsset' => __DIR__ . '/..' . '/verbb/field-manager/src/assetbundles/FieldManagerAsset.php',
+        'verbb\\fieldmanager\\base\\PluginTrait' => __DIR__ . '/..' . '/verbb/field-manager/src/base/PluginTrait.php',
+        'verbb\\fieldmanager\\controllers\\BaseController' => __DIR__ . '/..' . '/verbb/field-manager/src/controllers/BaseController.php',
+        'verbb\\fieldmanager\\models\\Settings' => __DIR__ . '/..' . '/verbb/field-manager/src/models/Settings.php',
+        'verbb\\fieldmanager\\services\\Export' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Export.php',
+        'verbb\\fieldmanager\\services\\Import' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Import.php',
+        'verbb\\fieldmanager\\services\\Service' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Service.php',
         'yii\\BaseYii' => __DIR__ . '/..' . '/yiisoft/yii2/BaseYii.php',
         'yii\\base\\Action' => __DIR__ . '/..' . '/yiisoft/yii2/base/Action.php',
         'yii\\base\\ActionEvent' => __DIR__ . '/..' . '/yiisoft/yii2/base/ActionEvent.php',

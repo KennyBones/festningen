@@ -60,4 +60,25 @@ return array (
     'developerUrl' => 'https://ethercreative.co.uk',
     'developerEmail' => 'tam@ethercreative.co.uk',
   ),
+  'verbb/field-manager' => 
+  array (
+    'class' => 'verbb\\fieldmanager\\FieldManager',
+    'basePath' => $vendorDir . '/verbb/field-manager/src',
+    'handle' => 'field-manager',
+    'aliases' => 
+    array (
+      '@verbb/fieldmanager' => $vendorDir . '/verbb/field-manager/src',
+    ),
+    'name' => 'Field Manager',
+    'version' => '2.0.2',
+    'schemaVersion' => '1.0.0',
+    'description' => 'Manage your fields and field groups with ease with simple field or group cloning and quicker overall management.',
+    'developer' => 'Verbb',
+    'developerUrl' => 'https://verbb.io',
+    'developerEmail' => 'support@verbb.io',
+    'documentationUrl' => 'https://github.com/verbb/field-manager',
+    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/field-manager/craft-3/CHANGELOG.md',
+    'hasCpSettings' => true,
+    'hasCpSection' => true,
+  ),
 );
