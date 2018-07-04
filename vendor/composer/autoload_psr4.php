@@ -21,6 +21,7 @@ return array(
     'yii\\composer\\' => array($vendorDir . '/yiisoft/yii2-composer'),
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap/src'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'verbb\\supertable\\' => array($vendorDir . '/verbb/super-table/src'),
     'verbb\\fieldmanager\\' => array($vendorDir . '/verbb/field-manager/src'),
     'mikehaertl\\shellcommand\\' => array($vendorDir . '/mikehaertl/php-shellcommand/src'),
     'ether\\simplemap\\' => array($vendorDir . '/ether/simplemap/src'),

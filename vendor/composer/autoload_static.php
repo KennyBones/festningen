@@ -43,6 +43,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         ),
         'v' => 
         array (
+            'verbb\\supertable\\' => 17,
             'verbb\\fieldmanager\\' => 19,
         ),
         'm' => 
@@ -277,6 +278,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'verbb\\supertable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/verbb/super-table/src',
         ),
         'verbb\\fieldmanager\\' => 
         array (
@@ -5879,6 +5884,27 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'verbb\\fieldmanager\\services\\Export' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Export.php',
         'verbb\\fieldmanager\\services\\Import' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Import.php',
         'verbb\\fieldmanager\\services\\Service' => __DIR__ . '/..' . '/verbb/field-manager/src/services/Service.php',
+        'verbb\\supertable\\SuperTable' => __DIR__ . '/..' . '/verbb/super-table/src/SuperTable.php',
+        'verbb\\supertable\\assetbundles\\SuperTableAsset' => __DIR__ . '/..' . '/verbb/super-table/src/assetbundles/SuperTableAsset.php',
+        'verbb\\supertable\\elements\\SuperTableBlockElement' => __DIR__ . '/..' . '/verbb/super-table/src/elements/SuperTableBlockElement.php',
+        'verbb\\supertable\\elements\\db\\SuperTableBlockQuery' => __DIR__ . '/..' . '/verbb/super-table/src/elements/db/SuperTableBlockQuery.php',
+        'verbb\\supertable\\errors\\SuperTableBlockNotFoundException' => __DIR__ . '/..' . '/verbb/super-table/src/errors/SuperTableBlockNotFoundException.php',
+        'verbb\\supertable\\errors\\SuperTableBlockTypeNotFoundException' => __DIR__ . '/..' . '/verbb/super-table/src/errors/SuperTableBlockTypeNotFoundException.php',
+        'verbb\\supertable\\fields\\SuperTableField' => __DIR__ . '/..' . '/verbb/super-table/src/fields/SuperTableField.php',
+        'verbb\\supertable\\integrations\\schematic\\converters\\fields\\SuperTableSchematic' => __DIR__ . '/..' . '/verbb/super-table/src/integrations/schematic/converters/fields/SuperTableSchematic.php',
+        'verbb\\supertable\\integrations\\schematic\\converters\\models\\SuperTableBlockTypeSchematic' => __DIR__ . '/..' . '/verbb/super-table/src/integrations/schematic/converters/models/SuperTableBlockTypeSchematic.php',
+        'verbb\\supertable\\migrations\\CreateSuperTableContentTable' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/CreateSuperTableContentTable.php',
+        'verbb\\supertable\\migrations\\Install' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/Install.php',
+        'verbb\\supertable\\migrations\\m180210_000000_migrate_content_tables' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/m180210_000000_migrate_content_tables.php',
+        'verbb\\supertable\\migrations\\m180211_000000_type_columns' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/m180211_000000_type_columns.php',
+        'verbb\\supertable\\migrations\\m180219_000000_sites' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/m180219_000000_sites.php',
+        'verbb\\supertable\\migrations\\m180220_000000_fix_context' => __DIR__ . '/..' . '/verbb/super-table/src/migrations/m180220_000000_fix_context.php',
+        'verbb\\supertable\\models\\SuperTableBlockTypeModel' => __DIR__ . '/..' . '/verbb/super-table/src/models/SuperTableBlockTypeModel.php',
+        'verbb\\supertable\\records\\SuperTableBlockRecord' => __DIR__ . '/..' . '/verbb/super-table/src/records/SuperTableBlockRecord.php',
+        'verbb\\supertable\\records\\SuperTableBlockTypeRecord' => __DIR__ . '/..' . '/verbb/super-table/src/records/SuperTableBlockTypeRecord.php',
+        'verbb\\supertable\\services\\SuperTableMatrixService' => __DIR__ . '/..' . '/verbb/super-table/src/services/SuperTableMatrixService.php',
+        'verbb\\supertable\\services\\SuperTableService' => __DIR__ . '/..' . '/verbb/super-table/src/services/SuperTableService.php',
+        'verbb\\supertable\\variables\\SuperTableVariable' => __DIR__ . '/..' . '/verbb/super-table/src/variables/SuperTableVariable.php',
         'yii\\BaseYii' => __DIR__ . '/..' . '/yiisoft/yii2/BaseYii.php',
         'yii\\base\\Action' => __DIR__ . '/..' . '/yiisoft/yii2/base/Action.php',
         'yii\\base\\ActionEvent' => __DIR__ . '/..' . '/yiisoft/yii2/base/ActionEvent.php',
