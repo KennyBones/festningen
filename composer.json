@@ -31,7 +31,8 @@
         "verbb/field-manager": "2.0.2",
         "verbb/super-table": "2.0.7",
         "verbb/cp-nav": "2.0.7",
-        "angellco/spoon": "^3.0@beta"
+        "angellco/spoon": "^3.0@beta",
+        "aelvan/inlin": "v2.0.0"
     },
     "scripts": {
         "post-root-package-install": [

@@ -68,6 +68,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'a' => 
         array (
             'angellco\\spoon\\' => 15,
+            'aelvan\\inlin\\' => 13,
             'aelvan\\imager\\' => 14,
         ),
         'Z' => 
@@ -332,6 +333,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'angellco\\spoon\\' => 
         array (
             0 => __DIR__ . '/..' . '/angellco/spoon/src',
+        ),
+        'aelvan\\inlin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aelvan/inlin/src',
         ),
         'aelvan\\imager\\' => 
         array (

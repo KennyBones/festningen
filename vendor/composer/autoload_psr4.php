@@ -34,6 +34,7 @@ return array(
     'craft\\' => array($vendorDir . '/craftcms/cms/src'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'angellco\\spoon\\' => array($vendorDir . '/angellco/spoon/src'),
+    'aelvan\\inlin\\' => array($vendorDir . '/aelvan/inlin/src'),
     'aelvan\\imager\\' => array($vendorDir . '/aelvan/imager/src'),
     'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib/src'),
     'Zend\\Feed\\' => array($vendorDir . '/zendframework/zend-feed/src'),

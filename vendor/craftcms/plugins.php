@@ -147,4 +147,24 @@ return array (
       'loader' => 'angellco\\spoon\\services\\Loader',
     ),
   ),
+  'aelvan/inlin' => 
+  array (
+    'class' => 'aelvan\\inlin\\Inlin',
+    'basePath' => $vendorDir . '/aelvan/inlin/src',
+    'handle' => 'inlin',
+    'aliases' => 
+    array (
+      '@aelvan/inlin' => $vendorDir . '/aelvan/inlin/src',
+    ),
+    'name' => 'Inlin',
+    'version' => '2.0.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for inlining stuff in your templates.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'documentationUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/README.md',
+    'changelogUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
 );
