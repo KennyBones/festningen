@@ -1,0 +1,63 @@
+<?php
+
+$vendorDir = dirname(__DIR__);
+
+return array (
+  'craftcms/aws-s3' => 
+  array (
+    'class' => 'craft\\awss3\\Plugin',
+    'basePath' => $vendorDir . '/craftcms/aws-s3/src',
+    'handle' => 'aws-s3',
+    'aliases' => 
+    array (
+      '@craft/awss3' => $vendorDir . '/craftcms/aws-s3/src',
+    ),
+    'name' => 'Amazon S3',
+    'version' => '1.0.8',
+    'description' => 'Amazon S3 integration for Craft CMS',
+    'developer' => 'Pixel & Tonic',
+    'developerUrl' => 'https://pixelandtonic.com/',
+    'changelogUrl' => 'https://raw.githubusercontent.com/craftcms/aws-s3/master/CHANGELOG.md',
+    'downloadUrl' => 'https://github.com/craftcms/aws-s3/archive/master.zip',
+  ),
+  'aelvan/imager' => 
+  array (
+    'class' => 'aelvan\\imager\\Imager',
+    'basePath' => $vendorDir . '/aelvan/imager/src',
+    'handle' => 'imager',
+    'aliases' => 
+    array (
+      '@aelvan/imager' => $vendorDir . '/aelvan/imager/src',
+    ),
+    'name' => 'Imager',
+    'version' => 'v2.0.1.2',
+    'schemaVersion' => '2.0.0',
+    'description' => 'Image transforms gone wild',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'documentationUrl' => 'https://github.com/aelvan/Imager-Craft/blob/craft3/README.md',
+    'changelogUrl' => 'https://raw.githubusercontent.com/aelvan/Imager-Craft/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+    'components' => 
+    array (
+    ),
+  ),
+  'ether/simplemap' => 
+  array (
+    'class' => 'ether\\simplemap\\SimpleMap',
+    'basePath' => $vendorDir . '/ether/simplemap/src',
+    'handle' => 'simplemap',
+    'aliases' => 
+    array (
+      '@ether/simplemap' => $vendorDir . '/ether/simplemap/src',
+    ),
+    'name' => 'SimpleMap',
+    'version' => '3.3.3',
+    'schemaVersion' => '3.0.0',
+    'description' => 'A beautifully simple Google Map field type.',
+    'developer' => 'Ether Creative',
+    'developerUrl' => 'https://ethercreative.co.uk',
+    'developerEmail' => 'tam@ethercreative.co.uk',
+  ),
+);
