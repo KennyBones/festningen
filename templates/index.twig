@@ -6,7 +6,7 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	{% set img = entry.toppbilde.first | default(false) %}
+	{% set img = entry.bilde.first | default(false) %}
 	{% set bilde = craft.imager.transformImage(img.url, [
 		{ width: 320, height: 300 },
 		{ width: 840, height: 500 },

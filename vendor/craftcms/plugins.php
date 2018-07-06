@@ -226,4 +226,48 @@ return array (
     'hasCpSettings' => true,
     'hasCpSection' => false,
   ),
+  'nystudio107/craft-minify' => 
+  array (
+    'class' => 'nystudio107\\minify\\Minify',
+    'basePath' => $vendorDir . '/nystudio107/craft-minify/src',
+    'handle' => 'minify',
+    'aliases' => 
+    array (
+      '@nystudio107/minify' => $vendorDir . '/nystudio107/craft-minify/src',
+    ),
+    'name' => 'Minify',
+    'version' => '1.2.8',
+    'schemaVersion' => '1.0.0',
+    'description' => 'A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in Craft CMS templates.',
+    'developer' => 'nystudio107',
+    'developerUrl' => 'https://nystudio107.com/',
+    'documentationUrl' => 'https://github.com/nystudio107/craft-minify/blob/v1/README.md',
+    'changelogUrl' => 'https://raw.githubusercontent.com/nystudio107/craft-minify/v1/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+    'components' => 
+    array (
+      'minify' => 'nystudio107\\minify\\services\\MinifyService',
+    ),
+  ),
+  'clubstudioltd/craft-asset-rev' => 
+  array (
+    'class' => 'club\\assetrev\\AssetRev',
+    'basePath' => $vendorDir . '/clubstudioltd/craft-asset-rev/src',
+    'handle' => 'assetrev',
+    'aliases' => 
+    array (
+      '@club/assetrev' => $vendorDir . '/clubstudioltd/craft-asset-rev/src',
+    ),
+    'name' => 'Asset Rev',
+    'version' => '6.0.0',
+    'description' => 'A plugin to aid cache-busting in Craft 3',
+    'developer' => 'Club Studio Ltd',
+    'developerUrl' => 'https://clubstudio.co.uk',
+    'documentationUrl' => 'https://github.com/clubstudioltd/craft-asset-rev',
+    'changelogUrl' => 'https://github.com/clubstudioltd/craft-asset-rev/blob/master/CHANGELOG.md',
+    'downloadUrl' => 'https://github.com/clubstudioltd/craft-asset-rev/archive/v6.zip',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
 );

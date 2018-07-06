@@ -35,7 +35,9 @@
         "aelvan/inlin": "v2.0.0",
         "rias/craft-position-fieldtype": "1.0.13",
         "supercool/buttonbox": "2.0.1",
-        "craftcms/redactor": "2.1.0"
+        "craftcms/redactor": "2.1.0",
+        "nystudio107/craft-minify": "1.2.8",
+        "clubstudioltd/craft-asset-rev": "v6.0.0"
     },
     "scripts": {
         "post-root-package-install": [
