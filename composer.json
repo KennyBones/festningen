@@ -30,9 +30,12 @@
         "ether/simplemap": "v3.3.3",
         "verbb/field-manager": "2.0.2",
         "verbb/super-table": "2.0.7",
-        "verbb/cp-nav": "2.0.7",
+        "verbb/cp-nav": "2.0.8",
         "angellco/spoon": "^3.0@beta",
-        "aelvan/inlin": "v2.0.0"
+        "aelvan/inlin": "v2.0.0",
+        "rias/craft-position-fieldtype": "1.0.13",
+        "supercool/buttonbox": "2.0.1",
+        "craftcms/redactor": "2.1.0"
     },
     "scripts": {
         "post-root-package-install": [

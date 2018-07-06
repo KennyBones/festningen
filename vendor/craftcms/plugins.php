@@ -102,27 +102,6 @@ return array (
     'hasCpSettings' => false,
     'hasCpSection' => false,
   ),
-  'verbb/cp-nav' => 
-  array (
-    'class' => 'verbb\\cpnav\\CpNav',
-    'basePath' => $vendorDir . '/verbb/cp-nav/src',
-    'handle' => 'cp-nav',
-    'aliases' => 
-    array (
-      '@verbb/cpnav' => $vendorDir . '/verbb/cp-nav/src',
-    ),
-    'name' => 'Control Panel Nav',
-    'version' => '2.0.7',
-    'schemaVersion' => '2.0.0',
-    'description' => 'Control Panel Nav helps you managing your Control Panel navigation.',
-    'developer' => 'Verbb',
-    'developerUrl' => 'http://verbb.io',
-    'developerEmail' => 'support@verbb.io',
-    'documentationUrl' => 'https://github.com/verbb/cp-nav',
-    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/cp-nav/craft-3/CHANGELOG.md',
-    'hasCpSettings' => true,
-    'hasCpSection' => false,
-  ),
   'angellco/spoon' => 
   array (
     'class' => 'angellco\\spoon\\Spoon',
@@ -165,6 +144,86 @@ return array (
     'documentationUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/README.md',
     'changelogUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/CHANGELOG.md',
     'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'rias/craft-position-fieldtype' => 
+  array (
+    'class' => 'rias\\positionfieldtype\\PositionFieldtype',
+    'basePath' => $vendorDir . '/rias/craft-position-fieldtype/src',
+    'handle' => 'position-fieldtype',
+    'aliases' => 
+    array (
+      '@rias/positionfieldtype' => $vendorDir . '/rias/craft-position-fieldtype/src',
+    ),
+    'name' => 'Position Fieldtype',
+    'version' => '1.0.13',
+    'schemaVersion' => '1.0.0',
+    'description' => 'Brings back the Position fieldtype from Craft 2',
+    'developer' => 'Rias',
+    'developerUrl' => 'https://rias.be',
+    'documentationUrl' => 'https://github.com/Rias500/craft-position-fieldtype/blob/master/README.md',
+    'changelogUrl' => 'https://raw.githubusercontent.com/Rias500/craft-position-fieldtype/master/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'supercool/buttonbox' => 
+  array (
+    'class' => 'supercool\\buttonbox\\ButtonBox',
+    'basePath' => $vendorDir . '/supercool/buttonbox/src',
+    'handle' => 'buttonbox',
+    'aliases' => 
+    array (
+      '@supercool/buttonbox' => $vendorDir . '/supercool/buttonbox/src',
+    ),
+    'name' => 'Button Box',
+    'version' => '2.0.1',
+    'schemaVersion' => '1.0.0',
+    'description' => 'A collection of utility field types for Craft',
+    'developer' => 'Supercool',
+    'developerUrl' => 'http://supercooldesign.co.uk',
+    'documentationUrl' => 'https://github.com/supercool/buttonbox/blob/master/README.md',
+    'changelogUrl' => 'https://raw.githubusercontent.com/supercool/buttonbox/master/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'craftcms/redactor' => 
+  array (
+    'class' => 'craft\\redactor\\Plugin',
+    'basePath' => $vendorDir . '/craftcms/redactor/src',
+    'handle' => 'redactor',
+    'aliases' => 
+    array (
+      '@craft/redactor' => $vendorDir . '/craftcms/redactor/src',
+    ),
+    'name' => 'Redactor',
+    'version' => '2.1.0',
+    'description' => 'Edit rich text content in Craft CMS using Redactor by Imperavi.',
+    'developer' => 'Pixel & Tonic',
+    'developerUrl' => 'https://pixelandtonic.com/',
+    'developerEmail' => 'support@craftcms.com',
+    'documentationUrl' => 'https://github.com/craftcms/redactor',
+    'changelogUrl' => 'https://raw.githubusercontent.com/craftcms/redactor/master/CHANGELOG.md',
+    'downloadUrl' => 'https://github.com/craftcms/redactor/archive/master.zip',
+  ),
+  'verbb/cp-nav' => 
+  array (
+    'class' => 'verbb\\cpnav\\CpNav',
+    'basePath' => $vendorDir . '/verbb/cp-nav/src',
+    'handle' => 'cp-nav',
+    'aliases' => 
+    array (
+      '@verbb/cpnav' => $vendorDir . '/verbb/cp-nav/src',
+    ),
+    'name' => 'Control Panel Nav',
+    'version' => '2.0.8',
+    'schemaVersion' => '2.0.0',
+    'description' => 'Control Panel Nav helps you managing your Control Panel navigation.',
+    'developer' => 'Verbb',
+    'developerUrl' => 'http://verbb.io',
+    'developerEmail' => 'support@verbb.io',
+    'documentationUrl' => 'https://github.com/verbb/cp-nav',
+    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/cp-nav/craft-3/CHANGELOG.md',
+    'hasCpSettings' => true,
     'hasCpSection' => false,
   ),
 );
