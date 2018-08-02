@@ -86,6 +86,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'a' => 
         array (
             'angellco\\spoon\\' => 15,
+            'aelvan\\stamp\\' => 13,
             'aelvan\\inlin\\' => 13,
             'aelvan\\imager\\' => 14,
         ),
@@ -378,6 +379,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'angellco\\spoon\\' => 
         array (
             0 => __DIR__ . '/..' . '/angellco/spoon/src',
+        ),
+        'aelvan\\stamp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aelvan/stamp/src',
         ),
         'aelvan\\inlin\\' => 
         array (
@@ -5286,6 +5291,9 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'aelvan\\inlin\\Inlin' => __DIR__ . '/..' . '/aelvan/inlin/src/Inlin.php',
         'aelvan\\inlin\\models\\Settings' => __DIR__ . '/..' . '/aelvan/inlin/src/models/Settings.php',
         'aelvan\\inlin\\variables\\InlinVariable' => __DIR__ . '/..' . '/aelvan/inlin/src/variables/InlinVariable.php',
+        'aelvan\\stamp\\Stamp' => __DIR__ . '/..' . '/aelvan/stamp/src/Stamp.php',
+        'aelvan\\stamp\\models\\Settings' => __DIR__ . '/..' . '/aelvan/stamp/src/models/Settings.php',
+        'aelvan\\stamp\\variables\\StampVariable' => __DIR__ . '/..' . '/aelvan/stamp/src/variables/StampVariable.php',
         'angellco\\spoon\\Spoon' => __DIR__ . '/..' . '/angellco/spoon/src/Spoon.php',
         'angellco\\spoon\\assetbundles\\Spoon\\SpoonConfigurator' => __DIR__ . '/..' . '/angellco/spoon/src/assetbundles/spoon/SpoonConfigurator.php',
         'angellco\\spoon\\assetbundles\\Spoon\\SpoonFieldManipulator' => __DIR__ . '/..' . '/angellco/spoon/src/assetbundles/spoon/SpoonFieldManipulator.php',

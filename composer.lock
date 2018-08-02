@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e6f5016e9f5c99666ce9640e0584fa2",
+    "content-hash": "099ccf15021321930dfc6cbd1f9aa2ec",
     "packages": [
         {
             "name": "aelvan/imager",
@@ -121,6 +121,57 @@
                 "issues": "https://github.com/aelvan/Inlin-Craft/issues"
             },
             "time": "2017-08-09T22:00:10+00:00"
+        },
+        {
+            "name": "aelvan/stamp",
+            "version": "2.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aelvan/Stamp-Craft/zipball/eb32216a4b8bb0e971b8b96bc88638d04dad22ea",
+                "reference": "eb32216a4b8bb0e971b8b96bc88638d04dad22ea",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "~3.0.0-beta.23"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Stamp",
+                "handle": "stamp",
+                "schemaVersion": "2.0.0",
+                "hasCpSettings": false,
+                "hasCpSection": false,
+                "changelogUrl": "https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md",
+                "class": "aelvan\\stamp\\Stamp"
+            },
+            "autoload": {
+                "psr-4": {
+                    "aelvan\\stamp\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "André Elvan",
+                    "homepage": "https://www.vaersaagod.no"
+                }
+            ],
+            "description": "A simple plugin for adding timestamps to filenames.",
+            "keywords": [
+                "asset-rev",
+                "cms",
+                "craft",
+                "craft-plugin",
+                "craftcms",
+                "timestamp"
+            ],
+            "support": {
+                "docs": "https://github.com/aelvan/Stamp-Craft/blob/craft3/README.md",
+                "issues": "https://github.com/aelvan/Stamp-Craft/issues"
+            },
+            "time": "2017-08-11T19:08:58+00:00"
         },
         {
             "name": "angellco/spoon",

@@ -40,6 +40,7 @@ return array(
     'club\\assetrev\\' => array($vendorDir . '/clubstudioltd/craft-asset-rev/src'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'angellco\\spoon\\' => array($vendorDir . '/angellco/spoon/src'),
+    'aelvan\\stamp\\' => array($vendorDir . '/aelvan/stamp/src'),
     'aelvan\\inlin\\' => array($vendorDir . '/aelvan/inlin/src'),
     'aelvan\\imager\\' => array($vendorDir . '/aelvan/imager/src'),
     'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib/src'),

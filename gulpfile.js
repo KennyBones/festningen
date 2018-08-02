@@ -16,8 +16,7 @@ var gulp			= require("gulp"),
 // Directories
 var START 	= startfolders(["web","public","public_html"]),
 	SRC 	= START + "/static",
-	DIST 	= START + "/dist",
-	REV		= START + "/.REV";
+	DIST 	= START + "/dist"
 
 // sjekk om .key og .crt eksisterer, da blir Browsersync lagt til med ssl
 var sslBrowserSync = false,
@@ -68,14 +67,15 @@ gulp.task("css", function(done) {
 			//.pipe(gulp.dest(REV + "/css"))
 			.pipe(loadPlugins.cssnano())
 			//.pipe(loadPlugins.rename({ suffix: ".min" }))
-			.pipe(gulp.dest(REV + "/css"))
+			.pipe(gulp.dest(DIST + "/css"))
+			// .pipe(gulp.dest(REV + "/css"))
 			.on('end', function() {
 				counter--;
 				if (size > 1) loadPlugins.util.log(colors.blue("css") + colors.magenta(" (" + (size - counter) +"/"+size+")") + " ferdig");
 				if (counter === 0) {
 					done();
 					css_running = false;
-					gulp.start("rev");
+					// gulp.start("rev");
 				}
 			});
 	}
@@ -97,14 +97,15 @@ gulp.task("scripts", function(done) {
 			//.pipe(gulp.dest(DIST + "/js"))
 			.pipe(loadPlugins.uglify())
 			//.pipe(rename({ suffix: ".min" }))
-			.pipe(gulp.dest(REV+ "/js"))
+			// .pipe(gulp.dest(REV+ "/js"))
+			.pipe(gulp.dest(DIST + "/js"))
 			.on('end', function() {
 				counter--;
 				if (size > 1) loadPlugins.util.log(colors.blue("scripts") + colors.magenta(" (" + (size - counter) +"/"+size+")") + " ferdig");
 				if (counter === 0) {
 					done();
 					scripts_running = false;
-					gulp.start("rev");
+					// gulp.start("rev");
 				}
 			});
 	}
@@ -240,25 +241,25 @@ gulp.task("moveFiles", function(done) {
 	}
 });
 
-// Add rev to files
-gulp.task("rev", function() {
-	if (!css_running && !scripts_running) {
-		if (del([DIST+"/js/*", "!" + DIST + "/js/vendor", DIST+"/css/*", "!" + DIST + "/css/vendor"])) {
-			return gulp.src(REV+'/**/*.{js,css}')
-			.pipe(loadPlugins.plumber({ errorHandler: onError }))
-			//.pipe(gulp.dest(DIST))
-			.pipe(loadPlugins.rev())
-			.pipe(gulp.dest(DIST))
-			.pipe(browserSync.stream())
-			.pipe(loadPlugins.rev.manifest("cachebust.json", {
-				//merge: true
-			}))
-			.pipe(gulp.dest("./"));
-		}
-	} else {
-		return false;
-	}
-});
+// // Add rev to files
+// gulp.task("rev", function() {
+// 	if (!css_running && !scripts_running) {
+// 		if (del([DIST+"/js/*", "!" + DIST + "/js/vendor", DIST+"/css/*", "!" + DIST + "/css/vendor"])) {
+// 			return gulp.src(REV+'/**/*.{js,css}')
+// 			.pipe(loadPlugins.plumber({ errorHandler: onError }))
+// 			//.pipe(gulp.dest(DIST))
+// 			.pipe(loadPlugins.rev())
+// 			.pipe(gulp.dest(DIST))
+// 			.pipe(browserSync.stream())
+// 			.pipe(loadPlugins.rev.manifest("cachebust.json", {
+// 				//merge: true
+// 			}))
+// 			.pipe(gulp.dest("./"));
+// 		}
+// 	} else {
+// 		return false;
+// 	}
+// });
 
 
 // Add adminfiles

@@ -2,10 +2,15 @@
 {% include "_admin/_dns-prefetch" %}
 
 {% if not craft.request.isLivePreview %}<style>body { opacity: 0; }</style>{% endif %}
-<style>{{ craft.inlin.er('/dist/' ~ rev('css/initial.css')) | raw }}</style>
+
+<link rel="stylesheet" type="text/css" href="{{ craft.stamp.er('/dist/css/initial.css', 'query') }}">
+
 <noscript><style>body{ opacity: 1; }</style></noscript>
+
+<script src="{{ craft.stamp.er('/dist/js/initial.js', 'query') }}"></script>
+
 <script>
-{{ craft.inlin.er('/dist/' ~ rev('js/initial.js')) | default('') | raw }}
+
 
 requirejs.config({
     paths: {
@@ -13,11 +18,12 @@ requirejs.config({
 		admin: "/dist/admin/admin.min",
 		modenizer: "/dist/js/vendor/modernizr",
 		swiper: ["https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min", "vendor/swiper.min"],
-        main: "/dist/{{ rev('js/main.js') | replace({'.js': ''}) | default('') }}",
+    main: "{{ craft.stamp.er('/dist/js/main.js', 'query') }}",
     },
+
     shim: {
         'main': ["jquery", "modenizer", "Swiper"],
-		'admin': ["jquery"]
+		    'admin': ["jquery"]
     }
 });
 

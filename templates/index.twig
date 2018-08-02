@@ -7,12 +7,11 @@
 	{# {% endminify %}{% endcache %} #}
 
 	{% set img = entry.bilde.first | default(false) %}
-	{% set bilde = craft.imager.transformImage(img.url, [
+	{% set bilde = craft.imager.transformImage(img, [
 		{ width: 320, height: 300 },
 		{ width: 840, height: 500 },
 		{ width: 1360, height: 600 },
 		], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
-
 
 	<section class="row pageTop designblock">
 		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
@@ -112,11 +111,12 @@
 		</article>
 	</section>
 
-	{% for blokk in entry.blokkerNeo.level(1) %}
+	{% for blokk in entry.blokkSpoon %}
 		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
-			{% switch blokk.type.handle %}
 
+
+			{% switch blokk.type.handle %}
 					{% case 'menyer' %}
 						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
@@ -133,8 +133,8 @@
 	<section class="row booking designblock">
 		<div id="booking-map">
 			<script>
-				var map_lat = Number('{{ entry.booking.map.lat }}');
-				var map_lng = Number('{{ entry.booking.map.lng }}');
+				var map_lat = Number('{{ entry.booking.kart.lat }}');
+				var map_lng = Number('{{ entry.booking.kart.lng }}');
 			</script>
 			<img src="/static/img/map.png">
 		</div>

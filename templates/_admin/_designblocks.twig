@@ -52,7 +52,7 @@
           { width: 1680, height: 530 },
           ], { ratio:"16/9" }) %}
 
-          {% if blokk.bildetekstChkbox %}
+          {% if blokk.bildetekst | length %}
             <aside class="bildetekst designblokk {{blokk.bildetekstposisjon}}">
               {{blokk.bildetekst}}
             </aside>
@@ -82,7 +82,7 @@
         <div class="block-brodtekst {{blokk.align}}">
           <h2>{{blokk.tittel}}</h2>
           <div class="block-rikTekst">
-            {{blokk.rikTekst}}
+            {{blokk.tekst}}
           </div>
         </div>
       {% endif %}
@@ -105,7 +105,7 @@
     {# {% set bilde = entry.listebilde | length ? entry.listebilde.first : entry.hovedbilde.first %} #}
 
       {# Tekstblokk øverst, ingen bilde #}
-      {% if blokk.bildeChkbox == 1 %}
+      {% if blokk.bilde | length %}
         {% set img = blokk.bilde | length ? blokk.bilde.first %}
       	{% set bilde_stor = craft.imager.transformImage(img.url, [
           { width: 320, height: 400 },
@@ -118,20 +118,21 @@
           ], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
       {% endif %}
 
-      {% if blokk.bildeChkbox == 0 and blokk.tekstChkbox == 1 %}
+      {% if not blokk.bilde | length and blokk.tekst | length %}
         <section class="row designblock">
           <article class="designblock tekst col-{{blokk.antallKolonner}}">
-            {{blokk.rikTekst}}
+            {{blokk.tekst}}
           </article>
         </section>
 
       {# Kun bilde #}
-      {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 0 %}
+      {% elseif blokk.bilde | length and not blokk.tekst | length %}
+
         <section class="row designblock bilde-full">
           <article class="designblock bilde">
 
             {# Hvis det er bildetekst #}
-            {% if blokk.bildetekstChkbox == 1 %}
+            {% if blokk.bildetekst | length %}
               <aside class="bildetekst {{blokk.bildetekstposisjon}}">
                 {{blokk.bildetekst}}
               </aside>
@@ -143,7 +144,7 @@
         </section>
 
       {# Tekst og bilde #}
-      {% elseif blokk.bildeChkbox == 1 and blokk.tekstChkbox == 1 %}
+      {% elseif blokk.bilde | length and blokk.tekst | length %}
 
           {# Bildeposisjon full #}
           {% if blokk.bildeposisjon == 'full' %}
@@ -151,16 +152,16 @@
             <section class="row designblock bilde-full">
 
               {# Tekst over stort bilde #}
-              {% if blokk.tekstChkbox == 1 %}
+              {% if blokk.tekst | length %}
 
                 <article class="designblock tekst col-{{blokk.antallKolonner}}">
-                  {{blokk.rikTekst}}
+                  {{blokk.tekst}}
                 </article>
 
                 <article class="designblock bilde">
 
                   {# Hvis det er bildetekst #}
-                  {% if blokk.bildetekstChkbox == 1 %}
+                  {% if blokk.bildetekst | length %}
 
                     <aside class="bildetekst {{blokk.bildetekstposisjon}}">
                       {{blokk.bildetekst}}
@@ -186,14 +187,14 @@
                 </article>
 
                 <article class="designblock tekst">
-                  {{blokk.rikTekst}}
+                  {{blokk.tekst}}
                 </article>
 
             {% else %}
 
                 <article class="designblock tekst">
                   {{blokk.tittel}}
-                  {{blokk.rikTekst}}
+                  {{blokk.tekst}}
                 </article>
 
                 <article class="designblock bilde">

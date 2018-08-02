@@ -270,4 +270,24 @@ return array (
     'hasCpSettings' => false,
     'hasCpSection' => false,
   ),
+  'aelvan/stamp' => 
+  array (
+    'class' => 'aelvan\\stamp\\Stamp',
+    'basePath' => $vendorDir . '/aelvan/stamp/src',
+    'handle' => 'stamp',
+    'aliases' => 
+    array (
+      '@aelvan/stamp' => $vendorDir . '/aelvan/stamp/src',
+    ),
+    'name' => 'Stamp',
+    'version' => '2.0.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for adding timestamps to filenames.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'documentationUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/README.md',
+    'changelogUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
 );

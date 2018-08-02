@@ -7,7 +7,7 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	{% for blokk in entry.blokkerNeo.level(1) %}
+	{% for blokk in entry.blokkSpoon.level(1) %}
 		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
 			{% switch blokk.type.handle %}

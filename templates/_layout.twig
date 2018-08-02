@@ -9,14 +9,49 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
 
+		{% hook 'seomaticRender' %}
+		{% include "_admin/_ekstraHead" %}
+		{% if craft.request.isLivePreview %}
+		<!-- Åpne alle linker i nytt vindu hvis vi er i previewmodus -->
+		<script type="text/javascript">
+			var links = document.links;
+			for (var i = 0; i < links.length; i++) {
+				links[i].target = "_blank";
+			}
+		</script>
+		{% endif %}
 	</head>
 	<body class="{{ bodyClass is defined ? bodyClass }}">
+	{% include '_admin/_maintenanceBanner' %}
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using a <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
 
 		<header id="topHeader">
 			<nav>
 			<a href="/" class="logo"></a>
 
-			{# {% set nav = craft.amNav.getNavRaw("navigasjon") %}
+			{% set entries = craft.entries.section('sider').all() %}
+
+			<ul id="desktop_nav-ul">
+				{% nav entry in entries %}
+				<li class="{% if entry.children|length %}has-children{% endif %}">
+						<a href="{{ entry.url }}">{{ entry.title }}</a>
+						{% ifchildren %}
+								<ul class="nav__level2">
+										{% children %}
+								</ul>
+						{% endifchildren %}
+				</li>
+				{% endnav %}
+
+				<span class="menu-logo">
+					{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
+				</span>
+
+			</ul>
+
+			<a href="/" id="menu-btn">Meny</a>
 
 			{% macro addNodeToNavigation(node, index) %}
 			    {%- set nodeClasses = [] -%}
@@ -43,17 +78,17 @@
 			            </ul>
 			        {% endif %}
 			    </li>
-			{% endmacro %} #}
+			{% endmacro %}
 
 
 
 				<ul id="desktop_nav-ul">
-					{# {% for node in nav %}
+					{% for node in nav %}
 							{{ _self.addNodeToNavigation(node, loop.index) }}
-					{% endfor %} #}
+					{% endfor %}
 
 					<span class="menu-logo">
-						{# {{craft.inlin.er(footer.bilde[0].url, true) | raw }} #}
+						{{craft.inlin.er(footer.bilde[0].url, true) | raw }}
 					</span>
 
 				</ul>
@@ -77,10 +112,11 @@
 		</footer>
 
 		<script>
-			loadCSS("{{cdnUrl}}dist/{{ rev('css/main.css') |default('')}}");
+
+			loadCSS("/dist/css/main.css");
 			requirejs(["main"]);
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{craft.simpleMap.apiKey}}" type="text/javascript"></script>
-		<noscript><link rel="stylesheet" href="{{cdnUrl}}dist/{{ rev('css/main.css') }}" /></noscript>
+
 	</body>
 </html>
