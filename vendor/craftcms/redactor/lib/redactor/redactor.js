@@ -1,7 +1,7 @@
 /*
     Redactor
-    Version 3.0.9
-    Updated: May 11, 2018
+    Version 3.1.1
+    Updated: August 12, 2018
 
     http://imperavi.com/redactor/
 
@@ -1332,7 +1332,7 @@ var $R = function(selector, options)
 };
 
 // Globals
-$R.version = '3.0.9';
+$R.version = '3.1.1';
 $R.options = {};
 $R.modules = {};
 $R.services = {};
@@ -1397,7 +1397,7 @@ var RedactorApp = function(selector, options, args)
             uuid++;
         }
 
-         // API
+        // API
         if (instance && isApi)
         {
             var isDestroy = (options === 'destroy');
@@ -1760,7 +1760,7 @@ $R.opts = {
     blockTags: ['pre', 'ul', 'ol', 'li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  'dl', 'dt', 'dd', 'div', 'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'blockquote', 'output', 'figcaption', 'figure', 'address', 'section', 'header', 'footer', 'aside', 'article', 'iframe'],
     regex: {
         youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com\S*[^\w\-\s])([\w\-]{11})(?=[^\w\-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi,
-        vimeo: /https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/gi,
+        vimeo: /(http|https)?:\/\/(?:www.|player.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:[a-zA-Z0-9_-]+)?/gi,
         imageurl: /((https?|www)[^\s]+\.)(jpe?g|png|gif)(\?[^\s-]+)?/gi,
         url: /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi
     },
@@ -2472,6 +2472,10 @@ $R.add('mixin', 'formatter', {
         if (args['class'])
         {
             $elements.toggleClass(args['class']);
+            $elements.each(function(node)
+            {
+                if (node.className === '') node.removeAttribute('class');
+            });
         }
 
         var params;
@@ -2500,7 +2504,6 @@ $R.add('mixin', 'formatter', {
                 }
 
                 this._convertStyleQuotes($node);
-
                 if (this.utils.removeEmptyAttr(node, 'style'))
                 {
                     $node.removeAttr('data-redactor-style-cache');
@@ -2575,6 +2578,10 @@ $R.add('mixin', 'formatter', {
         if (args['class'])
         {
             $elements.removeClass(args['class']);
+            $elements.each(function(node)
+            {
+                if (node.className === '') node.removeAttribute('class');
+            });
         }
 
         if (args['style'])
@@ -2608,7 +2615,6 @@ $R.add('mixin', 'formatter', {
 
         return nodes;
     },
-
 
     // private
     _removeAllAttr: function($elements)
@@ -2796,7 +2802,7 @@ $R.add('service', 'callback', {
     trigger: function(name, args)
     {
         var value = this._loop(name, args, this.callbacks);
-        return (typeof value === 'undefined') ? args[0] : value;
+        return (typeof value === 'undefined' && args && args[0] !== false) ? args[0] : value;
     },
 
     // private
@@ -3409,7 +3415,7 @@ $R.add('service', 'caret', {
         var data = this.inspector.parse(node);
         node = this._getStartEndNode(node, data, type);
 
-        if (node)
+        if (node && (node.nodeType !== 3 && node.tagName !== 'LI'))
         {
             var html = (node.nodeType === 3) ? node.textContent : node.innerHTML;
             html = this.utils.trimSpaces(html);
@@ -3569,21 +3575,17 @@ $R.add('service', 'selection', {
             return true;
         }
 
-        //
         if (isEditor)
         {
             var $editor = this.editor.getElement();
-            var output = this.cleaner.output($editor.html());
-            output = output.replace(/<p><\/p>$/i, '');
-
-            var htmlLen = this.getHtml().length;
+            var output = $editor.html().replace(/<p><\/p>$/i, '');
+            var htmlLen = this.getHtml(false).length;
             var outputLen = output.length;
 
             if (htmlLen !== outputLen)
             {
                 return false;
             }
-
         }
 
         // editor empty or collapsed
@@ -4660,6 +4662,7 @@ $R.add('service', 'toolbar', {
         this.app = app;
 
         // local
+        this.buttons = [];
         this.dropdownOpened = false;
         this.buttonsObservers = {};
     },
@@ -4798,6 +4801,7 @@ $R.add('service', 'toolbar', {
     {
         position = position || 'end';
 
+        var index = this._getButtonIndex(name);
         var $button = $R.create('toolbar.button', this.app, name, btnObj);
 
         if (btnObj.observe)
@@ -4805,15 +4809,18 @@ $R.add('service', 'toolbar', {
             this.opts.activeButtonsObservers[name] = { observe: btnObj.observe, button: $button };
         }
 
+        // api added
         if (start !== true)
         {
-            var index = (this.opts.buttons.indexOf(name));
-
             if (index === 0) position = 'first';
             else if (index !== -1)
             {
-                $el = this.getButtonByIndex(index-1);
-                if ($el) position = 'after';
+                var $elm = this.getButtonByIndex(index-1);
+                if ($elm)
+                {
+                    position = 'after';
+                    $el = $elm;
+                }
             }
         }
 
@@ -4849,6 +4856,10 @@ $R.add('service', 'toolbar', {
     },
 
     // set
+    setButtons: function(buttons)
+    {
+        this.buttons = buttons;
+    },
     setDropdown: function(dropdown)
     {
         this.dropdownOpened = dropdown;
@@ -4890,6 +4901,12 @@ $R.add('service', 'toolbar', {
     },
 
     // private
+    _getButtonIndex: function(name)
+    {
+        var index = this.buttons.indexOf(name);
+
+        return (index === -1) ? false : index;
+    },
     _findButton: function(selector)
     {
         return (this.is()) ? this.$toolbar.find(selector) : $R.dom();
@@ -6751,7 +6768,7 @@ $R.add('service', 'offset', {
     },
     get: function(el, trimmed)
     {
-        var offset = { start: 0, end: 0 };
+        var offset = { start: 0, end: 0, newline: false };
         var node = this.utils.getNode(el);
         if (!node) return false;
 
@@ -6772,8 +6789,11 @@ $R.add('service', 'offset', {
             clonedRange.selectNodeContents(node);
             clonedRange.setEnd(range.startContainer, range.startOffset);
 
+            var selection = this._getString(range, trimmed);
+
+            offset.newline = (selection.search(/^\n/) !== -1 && selection.trim() === '');
             offset.start = this._getString(clonedRange, trimmed).length - fix;
-            offset.end = offset.start + this._getString(range, trimmed).length + fix;
+            offset.end = offset.start + selection.length + fix;
         }
 
         return offset;
@@ -6789,6 +6809,7 @@ $R.add('service', 'offset', {
         var size = this.size(node);
         var charIndex = 0, range = document.createRange();
 
+        offset.newline = (typeof offset.newline === 'undefined') ? false : offset.newline;
         offset.end = (offset.end > size) ? size : offset.end;
 
         range.setStart(node, 0);
@@ -6800,8 +6821,10 @@ $R.add('service', 'offset', {
             if (node.nodeType == 3)
             {
                 var nextCharIndex = charIndex + node.length;
+                var isNewLineStr = (node.nodeValue.search(/^\n/) !== -1 && node.nodeValue.trim() === '');
 
                 if (!foundStart && !this._isFigcaptionNext(node)
+                    && (offset.newline === false && !isNewLineStr)
                     && offset.start >= charIndex && offset.start <= nextCharIndex)
                 {
                     range.setStart(node, offset.start - charIndex);
@@ -7553,9 +7576,14 @@ $R.add('service', 'component', {
                 var src = scripts[i].src;
                 this.$doc.find('head script[src="' + src + '"]').remove();
 
-                var tag = document.createElement('script');
-                tag.src = src;
-                document.getElementsByTagName('head')[0].appendChild(tag);
+                var $script = $R.dom('<script>');
+                $script.attr('src', src);
+                $script.attr('async defer');
+
+                if (src.search('instagram') !== -1) $script.attr('onload', 'window.instgrm.Embeds.process()');
+
+                var head = document.getElementsByTagName('head')[0];
+                if (head) head.appendChild($script.get());
             }
             else
             {
@@ -7627,6 +7655,24 @@ $R.add('service', 'insertion', {
     insertRaw: function(html)
     {
         return this.insertHtml(html, false);
+    },
+    insertToEnd: function(lastNode, type)
+    {
+        if (!lastNode) return;
+        if (lastNode.nodeType === 3 && lastNode.nodeValue.search(/^\n/) !== -1)
+        {
+            lastNode = lastNode.previousElementSibling;
+        }
+
+        var $lastNode = $R.dom(lastNode);
+        if ($lastNode.attr('data-redactor-type') === type)
+        {
+            var tag = (this.opts.breakline) ? '<br>' : '<p>';
+            var $newNode = $R.dom(tag);
+
+            $lastNode.after($newNode);
+            this.caret.setStart($newNode);
+        }
     },
     insertPoint: function(e)
     {
@@ -7700,7 +7746,11 @@ $R.add('service', 'insertion', {
         // there is no selection
         if (!this.selection.is())
         {
-            this.editor.startFocus();
+            var $el = $R.dom('<p>');
+            var $editor = this.editor.getElement();
+
+            $editor.append($el);
+            this.caret.setStart($el);
         }
 
         // environment
@@ -8204,16 +8254,42 @@ $R.add('service', 'block', {
 
             return nodes;
         }
-        // td/th format
+        // td/th format uncollapsed
         else if (!this.selection.isCollapsed() && block && (block.tagName === 'TD' || block.tagName === 'TH'))
         {
             replacedTag = this._getReplacedTag('set');
+
             $wrapper = this._wrapInsideTable(replacedTag);
 
             this.selection.setAll($wrapper);
 
             return this._sendNodes([$wrapper.get()]);
         }
+        // td/th format collapsed
+        else if (this.selection.isCollapsed() && block && (block.tagName === 'TD' || block.tagName === 'TH'))
+        {
+            var textnodes = this._getChildTextNodes(block);
+
+            replacedTag = this._getReplacedTag('set');
+            var $wrapper = $R.dom('<' + replacedTag + '>');
+
+            $R.dom(textnodes.first).before($wrapper);
+
+            for (var i = 0; i < textnodes.nodes.length; i++)
+            {
+                $wrapper.append(textnodes.nodes[i]);
+            }
+
+            var nextBr = $wrapper.get().nextSibling;
+            if (nextBr && nextBr.tagName === 'BR')
+            {
+                $R.dom(nextBr).remove();
+            }
+
+            return this._sendNodes([$wrapper.get()]);
+        }
+
+        return nodes;
     },
     _wrapInsideTable: function(replacedTag)
     {
@@ -8274,6 +8350,27 @@ $R.add('service', 'block', {
         var replacedTag = (type === 'toggle') ? this.opts.markup : this.tag;
 
         return (this.opts.breakline && replacedTag === 'p') ? 'div' : replacedTag;
+    },
+    _getChildTextNodes: function(el)
+    {
+        var nodes = el.childNodes;
+        var firstNode = nodes[0];
+        var finalNodes = [];
+        for (var i = 0; i <= nodes.length; i++)
+        {
+            var node = nodes[i];
+            if (node && node.nodeType !== 3 && this.inspector.isBlockTag(node.tagName))
+            {
+                break;
+            }
+
+            finalNodes.push(node);
+        }
+
+        return {
+            nodes: finalNodes,
+            first: firstNode
+        };
     },
     _getTextNodesData: function()
     {
@@ -8604,6 +8701,7 @@ $R.add('service', 'inline', {
                     var args = (this.args[key]);
                     var value = this.utils.toParams(args);
                     var nodeAttrValue = $node.attr(key);
+
                     if (args)
                     {
                         if (key === 'style')
@@ -8689,6 +8787,20 @@ $R.add('service', 'inline', {
         var nodes = this._revertToInlines();
         nodes = this.applyArgs(nodes, false);
 
+        // unwrap if attributes was removed
+        for (var i = 0; i < nodes.length; i++)
+        {
+            var node = nodes[i];
+            var tag = node.tagName.toLowerCase();
+            var len = node.attributes.length;
+
+            if (tag === this.tag && len === 0 && this.args)
+            {
+                $R.dom(node).unwrap();
+                nodes.splice(i, 1);
+            }
+        }
+
         this.selection.restore();
 
         // clear and normalize
@@ -8746,6 +8858,10 @@ $R.add('service', 'inline', {
                 {
                     $inline.addClass('redactor-unconvertable-apply');
                 }
+                else if (!hasSameArgs)
+                {
+                    $inline.addClass('redactor-convertable-apply');
+                }
             }
         }
     },
@@ -8764,7 +8880,7 @@ $R.add('service', 'inline', {
         if (this.tag !== 'u') $editor.find('u').unwrap();
 
         // span convertable
-        $editor.find('span.redactor-convertable-apply').each(function(node)
+        $editor.find('.redactor-convertable-apply').each(function(node)
         {
             var $node = $R.dom(node);
             $node.find('strike').unwrap();
@@ -8940,13 +9056,12 @@ $R.add('service', 'autoparser', {
     {
         if (this._isKey(key))
         {
-            this._format();
+            this._format(key === this.keycodes.ENTER);
         }
     },
     parse: function(html)
     {
-        var tags = ['figure', 'pre', 'code', 'a', 'iframe', 'img', 'i', 'em', 'span'];
-        var singleReplace = ['img', 'i', 'em', 'span'];
+        var tags = ['figure', 'pre', 'iframe', 'code', 'a', 'img'];
         var stored = [];
         var z = 0;
 
@@ -8956,7 +9071,7 @@ $R.add('service', 'autoparser', {
         // store tags
         for (var i = 0; i < tags.length; i++)
         {
-            var reTags = (singleReplace.indexOf(tags[i]) !== -1) ? '<' + tags[i] + '[^>]*>' : '<' + tags[i] + '([\\w\\W]*?)</' + tags[i] + '>';
+            var reTags = (tags[i] === 'img') ? '<' + tags[i] + '[^>]*>' : '<' + tags[i] + '([\\w\\W]*?)</' + tags[i] + '>';
             var matched = html.match(new RegExp(reTags, 'gi'));
 
             if (matched !== null)
@@ -8983,7 +9098,7 @@ $R.add('service', 'autoparser', {
         // video
         if (this.opts.autoparseVideo && (html.match(this.opts.regex.youtube) || html.match(this.opts.regex.vimeo)))
         {
-            var iframeStart = '<iframe width="500" height="281" class="redactor-autoparser-object" src="';
+            var iframeStart = '<iframe width="500" height="281" src="';
             var iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
 
             var str, re;
@@ -8998,7 +9113,9 @@ $R.add('service', 'autoparser', {
                 re = this.opts.regex.vimeo;
             }
 
-            html = html.replace(re, iframeStart + str + iframeEnd);
+            var $video = this.component.create('video', iframeStart + str + iframeEnd);
+
+            html = html.replace(re, $video.get().outerHTML);
         }
 
         // links
@@ -9008,10 +9125,10 @@ $R.add('service', 'autoparser', {
         }
 
         // restore
-        for (var i = 0; i < stored.length; i++)
-        {
-            html = html.replace('#####replaceparse' + i + '#####', stored[i]);
-        }
+        html = this._restoreReplaced(stored, html);
+
+        // repeat for nested tags
+        html = this._restoreReplaced(stored, html);
 
         return html;
     },
@@ -9021,7 +9138,7 @@ $R.add('service', 'autoparser', {
     {
         return (key === this.keycodes.ENTER || key === this.keycodes.SPACE);
     },
-    _format: function()
+    _format: function(enter)
     {
         var parent = this.selection.getParent();
         var $parent = $R.dom(parent);
@@ -9090,14 +9207,23 @@ $R.add('service', 'autoparser', {
             // links
             else if (this.opts.autoparseLinks && content.match(this._convertToRegExp(this.opts.regex.url)))
             {
-                content = this._formatLinks(content);
+                content = this._formatLinks(content, enter);
                 type = 'link';
             }
 
             // replace
             if (type)
             {
-                $current.replaceWith(content);
+                if (enter)
+                {
+                    this.selection.save();
+                    $current.replaceWith(content);
+                    this.selection.restore();
+                }
+                else
+                {
+                    $current.replaceWith(content);
+                }
 
                 // object
                 var $editor = this.editor.getElement();
@@ -9107,7 +9233,7 @@ $R.add('service', 'autoparser', {
                 // caret
                 if (type === 'link')
                 {
-                    this.caret.setAfter($object);
+                    if (!enter) this.caret.setAfter($object);
                     this.app.broadcast('link.inserted', $object);
                 }
                 else
@@ -9125,12 +9251,17 @@ $R.add('service', 'autoparser', {
             }
         }
     },
-    _formatLinks: function(content)
+    _formatLinks: function(content, enter)
     {
         var matches = content.match(this.opts.regex.url);
         var obj = {};
         for (var i = 0; i < matches.length; i++)
         {
+            if (enter && matches[i].search(/\.$/) !== -1)
+            {
+                matches[i] = matches[i].replace(/\.$/, '');
+            }
+
             var href = matches[i], text = href;
             var linkProtocol = (href.match(/(https?|ftp):\/\//i) !== null) ? '' : 'http://';
             var regexB = (["/", "&", "="].indexOf(href.slice(-1)) !== -1) ? "" : "\\b";
@@ -9153,6 +9284,15 @@ $R.add('service', 'autoparser', {
         }
 
         return content;
+    },
+    _restoreReplaced: function(stored, html)
+    {
+        for (var i = 0; i < stored.length; i++)
+        {
+            html = html.replace('#####replaceparse' + i + '#####', stored[i]);
+        }
+
+        return html;
     },
     _convertToRegExp: function(str)
     {
@@ -9635,6 +9775,8 @@ $R.add('service', 'utils', {
     // object
     toParams: function(obj)
     {
+        if (typeof obj !== 'object') return obj;
+
         var keys = Object.keys(obj);
         if (!keys.length) return '';
         var result = '';
@@ -10274,6 +10416,7 @@ $R.add('class', 'editor.events', {
         this.opts = app.opts;
         this.$doc = app.$doc;
         this.uuid = app.uuid;
+        this.source = app.source;
         this.editor = app.editor;
         this.cleaner = app.cleaner;
         this.container = app.container;
@@ -10320,7 +10463,7 @@ $R.add('class', 'editor.events', {
         var $container = this.container.getElement();
         var $target = $R.dom(e.target);
         var targets = ['.redactor-in-' + this.uuid,  '.redactor-toolbar', '.redactor-dropdown',
-        '.redactor-context-toolbar', '#redactor-modal-box', '#redactor-image-resizer'];
+        '.redactor-context-toolbar', '#redactor-modal', '#redactor-image-resizer'];
 
         this.app.broadcast('originalblur', e);
         if (this.app.stopBlur) return;
@@ -10369,6 +10512,12 @@ $R.add('class', 'editor.events', {
         e = e.originalEvent || e;
         e.stopPropagation();
         this._removeOverClass();
+
+        if (this.opts.dragUpload === false)
+        {
+            e.preventDefault();
+            return;
+        }
 
         if (this.app.isDragComponentInside())
         {
@@ -10485,6 +10634,21 @@ $R.add('class', 'editor.events', {
             this.selection.setRange(range)
         }
 
+        // observe bottom click
+        var $target = $R.dom(e.target);
+        if ($target.hasClass('redactor-in'))
+        {
+            var top = $target.offset().top;
+            var pad = parseFloat($target.css('padding-bottom'));
+            var height = $target.height();
+            var posHeight = top + height - pad*2;
+
+            if (posHeight < e.pageY)
+            {
+                this.app.broadcast('bottomclick', e);
+            }
+        }
+
         this.app.broadcast('state', e);
         this.app.broadcast('click', e);
     },
@@ -10499,7 +10663,6 @@ $R.add('class', 'editor.events', {
     },
     keyup: function(e)
     {
-        this.app.broadcast('observe', e);
         this.app.broadcast('keyup', e);
     },
     mouseup: function(e)
@@ -10539,6 +10702,14 @@ $R.add('class', 'editor.events', {
 
             $editor[func](event, this[method].bind(this));
         }
+    },
+    _passAllToClipboard: function(e)
+    {
+        var clipboard = e.clipboardData;
+        var content = this.source.getCode();
+
+        clipboard.setData('text/html', content);
+        clipboard.setData('text/plain', content.toString().replace(/\n$/, ""));
     },
     _passSelectionToClipboard: function(e, data, remove)
     {
@@ -11087,13 +11258,10 @@ $R.add('module', 'observer', {
         var self = this;
         return new MutationObserver(function(mutations)
         {
-            mutations.forEach(function(mutation)
-            {
-                self._iterate(mutation, el);
-            });
+            self._observe(mutations[mutations.length-1], el);
         });
     },
-    _iterate: function(mutation, el)
+    _observe: function(mutation, el)
     {
         if (this.app.isReadOnly() || (mutation.type === 'attributes' && mutation.target === el))
         {
@@ -11347,6 +11515,11 @@ $R.add('module', 'contextbar', {
 
             this._build();
             $editor.on('click.redactor-context mouseup.redactor-context', this.open.bind(this));
+
+            if (this.opts.scrollTarget)
+            {
+                $R.dom(this.opts.scrollTarget).on('scroll.redactor-context', this.close.bind(this));
+            }
         }
     },
     stop: function()
@@ -11358,6 +11531,10 @@ $R.add('module', 'contextbar', {
         this.$win.off('.redactor-context');
 
         if (this.$contextbar) this.$contextbar.remove();
+        if (this.opts.scrollTarget)
+        {
+            $R.dom(this.opts.scrollTarget).off('.redactor-context');
+        }
     },
     is: function()
     {
@@ -11695,6 +11872,8 @@ $R.add('module', 'toolbar', {
     },
     _initButtons: function()
     {
+        this.toolbar.setButtons(this.buttons);
+
         for (var i = 0; i < this.buttons.length; i++)
         {
             var name = this.buttons[i];
@@ -11709,6 +11888,7 @@ $R.add('class', 'toolbar.air', {
     init: function(app)
     {
         this.app = app;
+        this.uuid = app.uuid;
         this.$doc = app.$doc;
         this.$win = app.$win;
         this.utils = app.utils;
@@ -11732,10 +11912,10 @@ $R.add('class', 'toolbar.air', {
         $wrapper.remove();
 
         var $editor = this.editor.getElement();
-        $editor.off('.redactor-air-trigger');
+        $editor.off('.redactor-air-trigger-' + this.uuid);
 
-        this.$doc.off('.redactor-air');
-        this.$doc.off('.redactor-air-trigger');
+        this.$doc.off('.redactor-air-' + this.uuid);
+        this.$doc.off('.redactor-air-trigger-' + this.uuid);
 
         this.toolbar.stopObservers();
     },
@@ -11768,7 +11948,7 @@ $R.add('class', 'toolbar.air', {
     },
     close: function()
     {
-        this.$doc.off('.redactor-air');
+        this.$doc.off('.redactor-air-' + this.uuid);
 
         var $toolbar = this.toolbar.getElement();
         $toolbar.removeClass('open');
@@ -11797,8 +11977,8 @@ $R.add('class', 'toolbar.air', {
         this.openSelected();
 
         // events
-        this.$doc.on('mouseup.redactor-air-trigger', this._open.bind(this));
-        $editor.on('keyup.redactor-air-trigger', this._openCmd.bind(this));
+        this.$doc.on('mouseup.redactor-air-trigger-' + this.uuid, this._open.bind(this));
+        $editor.on('keyup.redactor-air-trigger-' + this.uuid, this._openCmd.bind(this));
     },
     _isSelection: function()
     {
@@ -11856,6 +12036,14 @@ $R.add('class', 'toolbar.air', {
         var $container = this.container.getElement();
         var containerOffset = $container.offset();
         var leftFix = 0;
+        var winWidth = this.$win.width();
+        var toolbarWidth = $toolbar.width();
+
+        if (winWidth < (pos.left + toolbarWidth))
+        {
+            var selPos = this.selection.getPosition();
+            leftFix = toolbarWidth - selPos.width;
+        }
 
         $wrapper.css({
             left: (pos.left - containerOffset.left - leftFix) + 'px',
@@ -11866,8 +12054,8 @@ $R.add('class', 'toolbar.air', {
         $toolbar.addClass('open');
         $toolbar.show();
 
-        this.$doc.on('click.redactor-air', this._close.bind(this));
-        this.$doc.on('keydown.redactor-air', this._close.bind(this));
+        this.$doc.on('click.redactor-air-' + this.uuid, this._close.bind(this));
+        this.$doc.on('keydown.redactor-air-' + this.uuid, this._close.bind(this));
         this.app.broadcast('airOpened');
     },
     _close: function(e)
@@ -11892,6 +12080,7 @@ $R.add('class', 'toolbar.fixed', {
     init: function(app)
     {
         this.app = app;
+        this.uuid = app.uuid;
         this.opts = app.opts;
         this.$doc = app.$doc;
         this.$win = app.$win;
@@ -11906,8 +12095,8 @@ $R.add('class', 'toolbar.fixed', {
     // public
     stop: function()
     {
-        this.$fixedTarget.off('.redactor-toolbar');
-        this.$win.off('.redactor-toolbar');
+        this.$fixedTarget.off('.redactor-toolbar-' + this.uuid);
+        this.$win.off('.redactor-toolbar-' + this.uuid);
     },
     reset: function()
     {
@@ -11930,12 +12119,12 @@ $R.add('class', 'toolbar.fixed', {
 
         if (this.toolbar.isTarget())
         {
-            this.$win.on('scroll.redactor-toolbar', this._doFixed.bind(this));
-            this.$win.on('resize.redactor-toolbar', this._doFixed.bind(this));
+            this.$win.on('scroll.redactor-toolbar-' + this.uuid, this._doFixed.bind(this));
+            this.$win.on('resize.redactor-toolbar-' + this.uuid, this._doFixed.bind(this));
         }
 
-        this.$fixedTarget.on('scroll.redactor-toolbar', this._doFixed.bind(this));
-        this.$fixedTarget.on('resize.redactor-toolbar', this._doFixed.bind(this));
+        this.$fixedTarget.on('scroll.redactor-toolbar-' + this.uuid, this._doFixed.bind(this));
+        this.$fixedTarget.on('resize.redactor-toolbar-' + this.uuid, this._doFixed.bind(this));
     },
     _doFixed: function()
     {
@@ -11961,8 +12150,8 @@ $R.add('class', 'toolbar.fixed', {
         var toleranceEnd = 60;
         var containerOffset = $container.offset();
         var boxOffset = containerOffset.top;
-        var boxEnd = boxOffset + $container.height() - (toleranceEnd + this.opts.toolbarFixedTopOffset);
-        var scrollOffset = this.$fixedTarget.scrollTop();
+        var boxEnd = boxOffset + $container.height() - toleranceEnd;
+        var scrollOffset = this.$fixedTarget.scrollTop() + this.opts.toolbarFixedTopOffset;
         var top = (!this.toolbar.isTarget()) ? 0 : this.$fixedTarget.offset().top - this.$win.scrollTop();
 
         if (scrollOffset > boxOffset && scrollOffset < boxEnd)
@@ -12252,6 +12441,7 @@ $R.add('module', 'link', {
         this.app = app;
         this.opts = app.opts;
         this.lang = app.lang;
+        this.caret = app.caret;
         this.utils = app.utils;
         this.inline = app.inline;
         this.editor = app.editor;
@@ -12626,7 +12816,7 @@ $R.add('module', 'link', {
     },
     _truncateText: function(url)
     {
-        return (url.length > this.opts.linkSize) ? url.substring(0, this.opts.linkSize) + '...' : url;
+        return (url && url.length > this.opts.linkSize) ? url.substring(0, this.opts.linkSize) + '...' : url;
     },
     _validateData: function($form, data)
     {
@@ -13496,10 +13686,19 @@ $R.add('module', 'input', {
         var keys = [this.keycodes.ENTER, this.keycodes.SPACE, this.keycodes.BACKSPACE, this.keycodes.DELETE];
         var isKeys = (keys.indexOf(key) !== -1);
         var isXKey = ((e.ctrlKey || e.metaKey) && key === 88); // x
+        var isAlphaKeys = ((!e.ctrlKey && !e.metaKey) && ((key >= 48 && key <= 57) || (key >= 65 && key <= 90)));
 
-        if (this.selection.isAll() && (isXKey || !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey))
+        if (this.selection.isAll() && (isXKey || (!e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey)))
         {
-            if (isKeys || isXKey) e.preventDefault();
+            if (isXKey)
+            {
+                this.editor.disableNonEditables();
+                this.app.broadcast('empty');
+                return;
+            }
+
+            if (this._isArrowKey(key)) return true;
+            if (isKeys) e.preventDefault();
 
             if (this.element.isType('inline'))
             {
@@ -13513,7 +13712,7 @@ $R.add('module', 'input', {
                 this.insertion.set(this.opts.emptyHtml);
             }
 
-            if (isKeys || isXKey) return;
+            if (isKeys) return;
             else this.app.broadcast('empty');
         }
 
@@ -13524,7 +13723,7 @@ $R.add('module', 'input', {
         }
 
         // a-z, 0-9 - non editable
-        if ((!e.ctrlKey && !e.metaKey) && ((key >= 48 && key <= 57) || (key >= 65 && key <= 90)))
+        if (isAlphaKeys)
         {
             // has non-editable
             if (this.selection.hasNonEditable())
@@ -13826,7 +14025,7 @@ $R.add('class', 'input.arrow', {
             }
         }
         // component
-        else if (data.isComponent() && !data.isComponentType('variable'))
+        else if (data.isComponent() && !data.isComponentType('variable') && data.getTag() !== 'span')
         {
             this.component.clearActive();
             return this._exitNextElement(e, data.getComponent());
@@ -14096,7 +14295,7 @@ $R.add('class', 'input.delete', {
             }
         }
         // block
-        else if (isEnd && !data.isTable() && isNextBlock && !this.utils.isEmptyHtml(block.innerHTML))
+        else if (isEnd && !data.isList() && !data.isTable() && isNextBlock && !this.utils.isEmptyHtml(block.innerHTML))
         {
             e.preventDefault();
 
@@ -14679,7 +14878,15 @@ $R.add('class', 'input.paste', {
 
         if (this.isRawCode || !clipboard)
         {
-            var text = clipboard.getData("text/plain");
+            var text;
+            if (!this.isRawCode && !clipboard && window.clipboardData)
+            {
+                text = window.clipboardData.getData("text");
+            }
+            else
+            {
+                text = clipboard.getData("text/plain");
+            }
 
             e.preventDefault();
             this._insert(e, text);
@@ -14700,15 +14907,12 @@ $R.add('class', 'input.paste', {
             html = (!url || url === '') ? html : url;
 
             // file
-            var items = clipboard.items || clipboard.files;
-            var isFiles = (clipboard.items) ? false : (clipboard.files);
-
-            if (items && html === '')
+            if (clipboard.files.length > 0 && html === '')
             {
                 var files = [];
-                for (var i = 0; i < items.length; i++)
+                for (var i = 0; i < clipboard.files.length; i++)
                 {
-                    var file = (isFiles) ? items[i] : items[i].getAsFile();
+                    var file = clipboard.files[i] || clipboard.items[i].getAsFile();
                     if (file) files.push(file);
                 }
 
@@ -15024,7 +15228,7 @@ $R.add('class', 'input.tab', {
     _init: function(e)
     {
         // turn off tab
-        if (!this.opts.tabKey) return this._disable(e);
+        if (!this.opts.tabKey) return;
 
         // callback
         var stop = this.app.broadcast('tab', e);
@@ -15032,11 +15236,6 @@ $R.add('class', 'input.tab', {
 
         // traverse
         this._traverse(e);
-    },
-    _disable: function(e)
-    {
-        e.preventDefault();
-        return;
     },
     _traverse: function(e)
     {
@@ -15174,7 +15373,6 @@ $R.add('module', 'upload', {
     },
     _onChange: function(e)
     {
-        this.app.broadcast('upload.start');
         this._send(e, this.$el.get().files);
     },
     _onDrop: function(e)
@@ -15183,8 +15381,6 @@ $R.add('module', 'upload', {
 
         this._clear();
         this._setStatusDrop();
-
-        this.app.broadcast('upload.start');
         this._send(e);
     },
     _onDragOver: function(e)
@@ -15207,8 +15403,6 @@ $R.add('module', 'upload', {
 
         this._clear();
         this._setStatusDrop();
-
-        this.app.broadcast('upload.start');
         this._send(e);
     },
     _removeStatusHover: function()
@@ -15253,18 +15447,21 @@ $R.add('module', 'upload', {
         data = this._buildData(name, files, data);
         data = this.utils.extendData(data, this.p.data);
 
-        this._sendData(data, files, e);
+        var stop = this.app.broadcast('upload.start', e, data, files);
+        if (stop !== false)
+        {
+            this._sendData(data, files, e);
+        }
     },
     _sendData: function(data, files, e)
     {
         this.progress.show();
-
         if (typeof this.p.url === 'function')
         {
             var res = this.p.url(data, files, e, this);
             if (!(res instanceof Promise))
             {
-                this._complete(res);
+                this._complete(res, e);
             }
         }
         else
@@ -15304,7 +15501,7 @@ $R.add('module', 'upload', {
 
         return data;
     },
-    _complete: function (response, e)
+    _complete: function(response, e)
     {
         this._clear();
         this.progress.hide();
@@ -15552,7 +15749,8 @@ $R.add('module', 'image', {
             event: (clipboard) ? false : e,
             files: files,
             name: 'imagedrop',
-            data: this.opts.imageData
+            data: this.opts.imageData,
+            paramName: this.opts.imageUploadParam
         };
 
         this.app.api('module.upload.send', options);
@@ -15560,6 +15758,10 @@ $R.add('module', 'image', {
     onstop: function()
     {
         if (this.resizer) this.resizer.stop();
+    },
+    onbottomclick: function()
+    {
+        this.insertion.insertToEnd(this.editor.getLastNode(), 'image');
     },
     onimageresizer: {
         stop: function()
@@ -15979,7 +16181,8 @@ $R.add('module', 'image', {
             url: this.opts.imageUpload,
             files: e.dataTransfer.files,
             name: 'imagereplace',
-            data: this.opts.imageData
+            data: this.opts.imageData,
+            paramName: this.opts.imageUploadParam
         };
 
         this.app.api('module.upload.send', options);
@@ -16017,14 +16220,15 @@ $R.add('module', 'image', {
         if (!this.opts.imageUpload) return;
 
         var $desc = $R.dom('<div class="desc">');
-        $desc.html('Drop a new image to change');
+        $desc.html(this.lang.get('upload-change-label'));
 
         this.$preview.append($desc);
 
         var options = {
             url: this.opts.imageUpload,
             element: this.$previewBox,
-            name: 'imageedit'
+            name: 'imageedit',
+            paramName: this.opts.imageUploadParam
         };
 
         this.app.api('module.upload.build', options);
@@ -16642,7 +16846,7 @@ $R.add('module', 'file', {
                 else
                 {
                     var $inserted = $R.dom(inserted[0]);
-                    $inserted.after($file);
+                    $inserted.after($file).after(' ');
                     inserted = [$file.get()];
 
                     this.app.broadcast('file.inserted', $file);
@@ -17026,8 +17230,6 @@ $R.add('module', 'list', {
     // public
     toggle: function(type)
     {
-        this.selection.saveMarkers();
-
         var nodes = this._getBlocks();
         var block = this.selection.getBlock();
         var $list = $R.dom(block).parents('ul, ol',  '.redactor-in').last();
@@ -17036,8 +17238,12 @@ $R.add('module', 'list', {
             nodes = [$list.get()];
         }
 
-        // =TMP
-        //nodes = this.block.format('div');
+        if (block && (block.tagName === 'TD' || block.tagName === 'TH'))
+        {
+            nodes = this.block.format('div');
+        }
+
+        this.selection.saveMarkers();
 
         nodes = (nodes.length !== 0 && this._isUnformat(type, nodes)) ? this._unformat(type, nodes) : this._format(type, nodes);
 
@@ -17092,7 +17298,7 @@ $R.add('module', 'list', {
         {
 
             var $listItem = $item.parent();
-            var $liItem = $listItem.closest('li');
+            var $liItem = $listItem.closest('li', '.redactor-in');
             var $prev = $item.prevElement();
             var $next = $item.nextElement();
             var prev = $prev.get();
@@ -17568,6 +17774,52 @@ $R.add('module', 'list', {
         }
     }
 });
+$R.add('class', 'video.component', {
+    mixins: ['dom', 'component'],
+    init: function(app, el)
+    {
+        this.app = app;
+
+        // init
+        return (el && el.cmnt !== undefined) ? el : this._init(el);
+    },
+
+    // private
+    _init: function(el)
+    {
+        if (typeof el !== 'undefined')
+        {
+            var $node = $R.dom(el);
+            var $wrapper = $node.closest('figure');
+            if ($wrapper.length !== 0)
+            {
+                this.parse($wrapper);
+            }
+            else
+            {
+                this.parse('<figure>');
+                this.append(el);
+            }
+        }
+        else
+        {
+            this.parse('<figure>');
+        }
+
+
+        this._initWrapper();
+    },
+    _initWrapper: function()
+    {
+        this.addClass('redactor-component');
+        this.attr({
+            'data-redactor-type': 'video',
+            'tabindex': '-1',
+            'contenteditable': false
+        });
+    }
+});
+
 
     window.Redactor = window.$R = $R;
 

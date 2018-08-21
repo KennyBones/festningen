@@ -34,10 +34,8 @@
                     this.redactorConfig.direction = (settings.direction || Craft.orientation);
                 }
 
-                this.redactorConfig.imageUpload = true;
-                this.redactorConfig.fileUpload = true;
-                this.redactorConfig.dragImageUpload = false;
-                this.redactorConfig.dragFileUpload = false;
+                this.redactorConfig.imageUpload = false;
+                this.redactorConfig.fileUpload = false;
 
                 // Prevent a JS error when calling core.destroy() when opts.plugins == false
                 if (typeof this.redactorConfig.plugins !== typeof []) {
@@ -95,7 +93,7 @@
 
                 if (typeof this.redactorConfig.toolbarFixed === 'undefined' || this.redactorConfig.toolbarFixed) {
                     // Set the toolbarFixedTarget depending on the context
-                    var target = this.$textarea.closest('#content-container, .lp-editor');
+                    var target = this.$textarea.closest('#content, .lp-editor');
                     if (target.length) {
                         this.redactorConfig.toolbarFixedTarget = target;
                     }
@@ -106,22 +104,34 @@
 
                 this.redactor = $R(selector);
 
+                if (typeof this.redactorConfig.buttons === 'undefined') {
+                    this.redactorConfig.buttons = [];
+                }
+
                 var toolbarButtons = this.redactor.toolbar.getButtonsKeys();
 
-                if (toolbarButtons.includes('image')) {
-                    this.redactor.plugin.craftAssetImages.overrideButton('image');
+                if (this.redactorConfig.buttons.indexOf('image') !== -1) {
+                    if (toolbarButtons.indexOf('image') !== -1) {
+                        this.redactor.plugin.craftAssetImages.overrideButton('image');
+                    } else {
+                        this.redactor.plugin.craftAssetImages.addButton('image', this.redactorConfig.buttons.indexOf('image'));
+                    }
                     this.redactor.plugin.craftAssetImages.setTransforms(this.transforms);
                     this.redactor.plugin.craftAssetImages.setVolumes(this.volumes);
                     this.redactor.plugin.craftAssetImages.setElementSiteId(this.elementSiteId);
                 }
 
-                if (toolbarButtons.includes('file')) {
-                    this.redactor.plugin.craftAssetFiles.overrideButton('file');
+                if (this.redactorConfig.buttons.indexOf('file') !== -1) {
+                    if (toolbarButtons.indexOf('file') !== -1) {
+                        this.redactor.plugin.craftAssetFiles.overrideButton('file');
+                    } else {
+                        this.redactor.plugin.craftAssetFiles.addButton('file', this.redactorConfig.buttons.indexOf('file'));
+                    }
                     this.redactor.plugin.craftAssetFiles.setVolumes(this.volumes);
                     this.redactor.plugin.craftAssetFiles.setElementSiteId(this.elementSiteId);
                 }
 
-                if (toolbarButtons.includes('link')) {
+                if (toolbarButtons.indexOf('link') !== -1) {
                     this.redactor.plugin.craftEntryLinks.setElementSiteId(this.elementSiteId);
                     
                     if (this.linkOptions.length) {

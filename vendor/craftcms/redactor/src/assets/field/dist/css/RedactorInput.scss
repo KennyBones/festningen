@@ -89,7 +89,7 @@ body {
   }
 
   .redactor-box.focus:not(.redactor-box-fullscreen) {
-    border-color: $darkHairlineColorAlpha !important;
+    border-color: $blue !important;
   }
 
   /* redactor */
@@ -192,6 +192,10 @@ body {
     font-size: 16px;
     line-height: 22px;
     color: $textColor;
+
+    h6 {
+      text-transform: none;
+    }
 
     pre, time, small, var, code, kbd, mark {
       @include fixed-width-font;
