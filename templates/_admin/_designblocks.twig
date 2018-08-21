@@ -2,9 +2,11 @@
 {% set LP = craft.request.isLivePreview ?? false %}
     {# contents of the macro here #}
 
+
     {% if  blokk.type == 'svartBoks' %}
-      <section class="row designblock black-block num-{{blokk.svartBoks.boks | length}} {% if  blokk.getNext() | length and blokk.getNext().type == 'menyer' %} menytopp{% endif %}">
-        {% for boks in blokk.svartBoks.boks %}
+
+      <section class="row designblock black-block num-{{blokk.svartBoks | length}} {% if  blokk.getNext() | length and blokk.getNext().type == 'menyer' %} menytopp{% endif %}">
+        {% for boks in blokk.svartBoks %}
           <article class="fargeblokk">
             {{boks.boks}}
           </article>
@@ -45,7 +47,7 @@
     {% elseif blokk.type == 'topp' %}
     {# Topp #}
       <div class="block-topp">
-        {% set img = blokk.toppbilde.first | default(false) %}
+        {% set img = blokk.bilde.first | default(false) %}
         {% set bilde = craft.imager.transformImage(img, [
           { width: 320, height: 200 },
           { width: 840, height: 400 },
@@ -70,7 +72,7 @@
             {% for linje in blokk.faktaboks %}
               <li>
                 <strong>{{linje.tittel}}</strong>
-                {{linje.tekst}}
+                <p>{{linje.tekst}}</p>
               </li>
             {% endfor %}
           </ul>
@@ -94,7 +96,7 @@
             {% for linje in blokk.faktaboks %}
               <li>
                 <strong>{{linje.tittel}}</strong>
-                {{linje.tekst}}
+                <p>{{linje.tekst}}</p>
               </li>
             {% endfor %}
           </ul>

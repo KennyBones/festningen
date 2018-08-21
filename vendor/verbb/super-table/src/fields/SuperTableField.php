@@ -22,6 +22,8 @@ use craft\helpers\Json;
 use craft\helpers\StringHelper;
 use craft\validators\ArrayValidator;
 
+use yii\base\UnknownPropertyException;
+
 class SuperTableField extends Field implements EagerLoadingFieldInterface
 {
     // Static
@@ -88,9 +90,10 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
      */
     public $staticField;
 
+    public $columns = [];
+
     // Superseeded - but will throw an error when updating from Craft 2. These will exist in the field
     // settings, but not in this class - we just add them as 'dummy' properties for now...
-    public $columns;
     public $fieldLayout;
     public $selectionLabel;
 
@@ -204,20 +207,24 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
 
                 if (!empty($config['fields'])) {
                     foreach ($config['fields'] as $fieldId => $fieldConfig) {
-                        /** @noinspection SlowArrayOperationsInLoopInspection */
-                        $fieldConfig = array_merge($defaultFieldConfig, $fieldConfig);
+                        if ($fieldConfig instanceof Field) {
+                            $fields[] = $fieldConfig;
+                        } else {
+                            /** @noinspection SlowArrayOperationsInLoopInspection */
+                            $fieldConfig = array_merge($defaultFieldConfig, $fieldConfig);
 
-                        $fields[] = Craft::$app->getFields()->createField([
-                            'type' => $fieldConfig['type'],
-                            'id' => $fieldId,
-                            'name' => $fieldConfig['name'],
-                            'handle' => $fieldConfig['handle'],
-                            'instructions' => $fieldConfig['instructions'],
-                            'required' => (bool)$fieldConfig['required'],
-                            'translationMethod' => $fieldConfig['translationMethod'],
-                            'translationKeyFormat' => $fieldConfig['translationKeyFormat'],
-                            'settings' => $fieldConfig['typesettings'],
-                        ]);
+                            $fields[] = Craft::$app->getFields()->createField([
+                                'type' => $fieldConfig['type'],
+                                'id' => $fieldId,
+                                'name' => $fieldConfig['name'],
+                                'handle' => $fieldConfig['handle'],
+                                'instructions' => $fieldConfig['instructions'],
+                                'required' => (bool)$fieldConfig['required'],
+                                'translationMethod' => $fieldConfig['translationMethod'],
+                                'translationKeyFormat' => $fieldConfig['translationKeyFormat'],
+                                'settings' => $fieldConfig['typesettings'],
+                            ]);
+                        }
                     }
                 }
 
@@ -368,16 +375,14 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
         // Set the initially matched elements if $value is already set, which is the case if there was a validation
         // error or we're loading an entry revision.
         if (is_array($value) || $value === '') {
-            $query->status = null;
-            $query->enabledForSite = false;
-            $query->limit = null;
+            $query->anyStatus();
             $query->setCachedResult($this->_createBlocksFromSerializedData($value, $element));
         }
 
         // TODO: Properly fix this by diving into query...
-        if ($this->staticField && !Craft::$app->getRequest()->getIsCpRequest() && !Craft::$app->getRequest()->getIsConsoleRequest()) {
-            return $query->one();
-        }
+        // if ($this->staticField && !Craft::$app->getRequest()->getIsCpRequest() && !Craft::$app->getRequest()->getIsConsoleRequest()) {
+        //     return $query->one();
+        // }
 
         return $query;
     }
@@ -466,8 +471,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
         if ($value instanceof SuperTableBlockQuery) {
             $value = $value
                 ->limit(null)
-                ->status(null)
-                ->enabledForSite(false)
+                ->anyStatus()
                 ->all();
         }
 
@@ -482,6 +486,12 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
                 $block->fieldId = $this->id;
                 $block->typeId = $blockType->id;
                 $block->siteId = $element->siteId;
+
+                // Set each field to be fresh for auto-generated or static rows
+                foreach ($blockType->getFieldLayout()->getFields() as $field) {
+                    $field->setIsFresh(true);
+                }
+
                 $value[] = $block;
             }
         }
@@ -543,7 +553,11 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
             }
 
             if (!$block->validate()) {
-                $element->addModelErrors($block, "{$this->handle}[{$i}]");
+                foreach ($block->getErrors() as $attribute => $errors) {
+                    $element->addErrors([
+                        "{$this->handle}[{$i}].{$attribute}" => $errors,
+                    ]);
+                }
             }
         }
     }
@@ -629,7 +643,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
             ->all();
 
         return [
-            'elementType' => SuperTableBlock::class,
+            'elementType' => SuperTableBlockElement::class,
             'map' => $map,
             'criteria' => ['fieldId' => $this->id]
         ];
@@ -676,10 +690,9 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
         // Delete any SuperTable blocks that belong to this element(s)
         foreach (Craft::$app->getSites()->getAllSiteIds() as $siteId) {
             $supertableBlocksQuery = SuperTableBlockElement::find();
-            $supertableBlocksQuery->status(null);
-            $supertableBlocksQuery->enabledForSite(false);
+            $supertableBlocksQuery->anyStatus();
             $supertableBlocksQuery->siteId($siteId);
-            $supertableBlocksQuery->owner($element);
+            $supertableBlocksQuery->ownerId($element->id);
 
             /** @var SuperTableBlock[] $supertableBlocks */
             $supertableBlocks = $supertableBlocksQuery->all();
@@ -738,6 +751,9 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
                 'settingsFootHtml' => $settingsFootHtml,
             ];
         }
+
+        // Sort them by name
+        ArrayHelper::multisort($fieldTypes, 'name');
 
         Craft::$app->getView()->setNamespace($originalNamespace);
 
@@ -818,14 +834,14 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
      */
     private function _createBlocksFromSerializedData($value, ElementInterface $element = null): array
     {
+        if (!is_array($value)) {
+            return [];
+        }
+
         /** @var Element $element */
         // Get the possible block types for this field
         /** @var SuperTableBlockType[] $blockTypes */
         $blockTypes = ArrayHelper::index(SuperTable::$plugin->service->getBlockTypesByFieldId($this->id), 'id');
-
-        if (!is_array($value)) {
-            return [];
-        }
 
         $oldBlocksById = [];
 
@@ -846,9 +862,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
                 $oldBlocksQuery->fieldId($this->id);
                 $oldBlocksQuery->ownerId($ownerId);
                 $oldBlocksQuery->id($ids);
-                $oldBlocksQuery->limit(null);
-                $oldBlocksQuery->status(null);
-                $oldBlocksQuery->enabledForSite(false);
+                $oldBlocksQuery->anyStatus();
                 $oldBlocksQuery->siteId($element->siteId);
                 $oldBlocksQuery->indexBy('id');
                 $oldBlocksById = $oldBlocksQuery->all();
@@ -891,7 +905,13 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
             }
 
             if (isset($blockData['fields'])) {
-                $block->setFieldValues($blockData['fields']);
+                foreach ($blockData['fields'] as $fieldHandle => $fieldValue) {
+                    try {
+                        $block->setFieldValue($fieldHandle, $fieldValue);
+                    } catch (UnknownPropertyException $e) {
+                        // the field was probably deleted
+                    }
+                }
             }
             
             $sortOrder++;

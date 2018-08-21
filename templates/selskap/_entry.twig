@@ -3,11 +3,12 @@
 
 {% block content %}
 
-{% for blokk in entry.blokkerNeo.level(1) %}
+{% for blokk in entry.blokkSpoon %}
 	<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
-		{% switch blokk.type.handle %}
 
+
+		{% switch blokk.type.handle %}
 				{% case 'menyer' %}
 					{% import '_admin/_restaurantmeny' as designBlokkmacro %}
 					{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
@@ -15,7 +16,6 @@
 				{% default %}
 					{% import '_admin/_designblocks' as designBlokkmacro %}
 					{{ designBlokkmacro.designblocks(blokk) }}
-
 			{% endswitch %}
 
 	</section>

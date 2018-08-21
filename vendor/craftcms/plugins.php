@@ -81,27 +81,6 @@ return array (
     'hasCpSettings' => true,
     'hasCpSection' => true,
   ),
-  'verbb/super-table' => 
-  array (
-    'class' => 'verbb\\supertable\\SuperTable',
-    'basePath' => $vendorDir . '/verbb/super-table/src',
-    'handle' => 'super-table',
-    'aliases' => 
-    array (
-      '@verbb/supertable' => $vendorDir . '/verbb/super-table/src',
-    ),
-    'name' => 'Super Table',
-    'version' => '2.0.7',
-    'schemaVersion' => '2.0.4',
-    'description' => 'Super-charge your Craft workflow with Super Table. Use it to group fields together or build complex Matrix-in-Matrix solutions.',
-    'developer' => 'Verbb',
-    'developerUrl' => 'https://verbb.io',
-    'developerEmail' => 'support@verbb.io',
-    'documentationUrl' => 'https://github.com/verbb/super-table',
-    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/super-table/craft-3/CHANGELOG.md',
-    'hasCpSettings' => false,
-    'hasCpSection' => false,
-  ),
   'angellco/spoon' => 
   array (
     'class' => 'angellco\\spoon\\Spoon',
@@ -287,6 +266,27 @@ return array (
     'developerUrl' => 'https://www.vaersaagod.no',
     'documentationUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/README.md',
     'changelogUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'verbb/super-table' => 
+  array (
+    'class' => 'verbb\\supertable\\SuperTable',
+    'basePath' => $vendorDir . '/verbb/super-table/src',
+    'handle' => 'super-table',
+    'aliases' => 
+    array (
+      '@verbb/supertable' => $vendorDir . '/verbb/super-table/src',
+    ),
+    'name' => 'Super Table',
+    'version' => '2.0.8',
+    'schemaVersion' => '2.0.4',
+    'description' => 'Super-charge your Craft workflow with Super Table. Use it to group fields together or build complex Matrix-in-Matrix solutions.',
+    'developer' => 'Verbb',
+    'developerUrl' => 'https://verbb.io',
+    'developerEmail' => 'support@verbb.io',
+    'documentationUrl' => 'https://github.com/verbb/super-table',
+    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/super-table/craft-3/CHANGELOG.md',
     'hasCpSettings' => false,
     'hasCpSection' => false,
   ),

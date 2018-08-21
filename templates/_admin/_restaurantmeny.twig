@@ -1,23 +1,19 @@
 {% macro designblocks(blokk) %}
 {# // Hvis det kommer fra neo-blokk #}
 
-
-{% set meny = blokk.menyer %}
-
+{% set meny = blokk.menyEntry %}
 {% set menuCount = 0 %}
-
 {% set menuCount = menuCount + 1  %}
-
-
 
 <section class="row restaurant-menu-parent">
   <aside class="sticky-block">
     <div class="sticky-block--wrapper">
       <ul>
+        <h1>{{meny.index}}</h1>
         {% for enkeltmeny in meny %}
           <li {% if menuCount == loop.index %} class="selected" {% endif %}>
             <a id="menu-anchor-eq{{loop.index0}}" href="#menu-eq{{loop.index0}}">{{enkeltmeny.title}}</a>
-            <p>{{enkeltmeny.renTekst}}</p>
+            <p>{{enkeltmeny.notis}}</p>
             <hr></hr>
           </li>
         {% endfor %}
@@ -47,7 +43,7 @@
 
         {% set overskrift = 0 %}
 
-        {% for rett in enkeltmeny.retter %}
+        {% for rett in enkeltmeny.retter.all() %}
 
           {% if rett.rett.overskrift %}
             {% set overskrift = overskrift + 1 %}
@@ -64,19 +60,19 @@
                   {{rett.title}}
                 </div>
               </div>
-              {% if rett.rett.pris %}
+              {% if rett.rett[0].pris %}
                 <div class="menu-item--cell-wrapper table--heading price">
                   <div class="menu-item--cell">
-                    {{rett.rett.pris}}
+                    {{rett.rett[0].pris}}
                   </div>
                 </div>
               {% endif %}
             </div>
-            {% if rett.rett.tekst %}
+            {% if rett.rett[0].tekst | length %}
             <div class="menu-item--row">
               <div class="menu-item--cell-wrapper table--body">
                 <div class="menu-item--cell table-tekst">
-                  {{rett.rett.tekst}}
+                  {{rett.rett[0].tekst}}
                 </div>
               </div>
             </div>
@@ -85,7 +81,7 @@
             <div class="menu-item--row">
               <div class="menu-item--cell-wrapper">
 
-              {% for category in rett.rett.allergener %}
+              {% for category in rett.rett[0].allergener %}
                 {% set hasDescendants = category.getDescendants().total() != 0 %}
                 {% if not hasDescendants %}
 
