@@ -1603,7 +1603,7 @@ aside.printThis {
         right: $padding / 2;
 
         @media #{$desktop} {
-          bottom: $padding;
+          top: $padding;
           right: $padding;
         }
       }
@@ -1716,6 +1716,11 @@ aside.printThis {
 
     li {
       display: inline-block;
+
+      @media #{$tablet} {
+        display: block;
+      }
+
     }
 
     ul {
