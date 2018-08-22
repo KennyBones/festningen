@@ -119,7 +119,7 @@
 			{% switch blokk.type.handle %}
 					{% case 'menyer' %}
 						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk.menyEntry) }}
+						{{ designBlokkmacro.designblocks(blokk) }}
 
 					{% default %}
 						{% import '_admin/_designblocks' as designBlokkmacro %}
