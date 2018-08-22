@@ -153,6 +153,7 @@ class Loader extends Component
      */
     public function configurator($container, $context)
     {
+
         $view = Craft::$app->getView();
 
         $view->registerAssetBundle(SpoonConfigurator::class);
@@ -188,13 +189,13 @@ class Loader extends Component
 
             $view->registerAssetBundle(SpoonFieldManipulator::class);
 
-
             $settings = [
                 'blockTypes' => $spoonedBlockTypes,
-                'context' => $context
+                'context' => $context,
+                'nestedSettingsHandles' => Spoon::$plugin->getSettings()->nestedSettings
             ];
 
-            $view->registerJs('new Spoon.FieldManipulator('.Json::encode($settings, JSON_UNESCAPED_UNICODE).');');
+            $view->registerJs('Spoon.fieldmanipulator = new Spoon.FieldManipulator('.Json::encode($settings, JSON_UNESCAPED_UNICODE).');');
 
         }
 

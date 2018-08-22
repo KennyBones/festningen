@@ -8,10 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Rize\\UriTemplate' => array($vendorDir . '/rize/uri-template/src'),
-    'Props\\' => array($vendorDir . '/mrclay/props-dic/src', $vendorDir . '/mrclay/props-dic/test'),
-    'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'Kraken' => array($vendorDir . '/kraken-io/kraken-php/lib'),
-    'JSMin\\' => array($vendorDir . '/mrclay/jsmin-php/src'),
     'Imgix\\' => array($vendorDir . '/imgix/imgix-php/src'),
     'Imagine' => array($vendorDir . '/pixelandtonic/imagine/lib'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),

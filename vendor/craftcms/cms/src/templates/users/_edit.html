@@ -74,6 +74,7 @@
                     name: 'email',
                     value: user.email,
                     required: true,
+                    autocomplete: false,
                     errors: user.getErrors('email')|merge(user.getErrors('unverifiedEmail'))
                 }) }}
 
@@ -94,6 +95,7 @@
                     name: 'email',
                     value: user.email,
                     required: true,
+                    autocomplete: false,
                     errors: user.getErrors('email')|merge(user.getErrors('unverifiedEmail'))
                 }) }}
 
@@ -103,8 +105,13 @@
                         id: 'newPassword',
                         name: 'newPassword',
                         type: 'password',
+                        autocomplete: 'new-password',
                         errors: user.getErrors('newPassword')
                     }) }}
+
+                    {% js %}
+                        new Craft.PasswordInput('#newPassword');
+                    {% endjs %}
                 {% endif %}
 
                 {% if currentUser.admin %}
@@ -198,8 +205,15 @@
                 {% set languageInput %}
                     <div class="select">
                         <select id="language" name="preferredLanguage">
-                            {% set allAppLocales = craft.app.i18n.getAppLocales()|multisort('displayName') %}
+                            {% set allAppLocales = craft.app.i18n.getAppLocales()|multisort('displayName')|index('id') %}
                             {% set userLanguage = user.getPreferredLanguage() ?: craft.app.language %}
+
+                            {% if allAppLocales[userLanguage] is not defined %}
+                                {% set userLanguage = userLanguage|replace('/-.*/', '') %}
+                                {% if allAppLocales[userLanguage] is not defined %}
+                                    {% set userLanguage = 'en' %}
+                                {% endif %}
+                            {% endif %}
 
                             {% for locale in allAppLocales %}
                                 <option value="{{ locale.id }}" {% if locale.id == userLanguage %}selected{% endif %}>{{ locale.getDisplayName() }}</option>

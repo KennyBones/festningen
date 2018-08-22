@@ -25,6 +25,7 @@ This client supports the following Google Cloud Platform services at a [Beta](#v
 * [Google Cloud Natural Language](#google-cloud-natural-language-beta) (Beta)
 * [Google Cloud OsLogin](#google-cloud-oslogin-beta) (Beta)
 * [Google Cloud Tasks](#google-cloud-tasks-beta) (Beta)
+* [Google Cloud Text-to-Speech](#google-cloud-text-to-speech-beta) (Beta)
 * [Google Cloud Vision](#google-cloud-vision-beta) (Beta)
 * [Google DLP](#google-dlp-beta) (Beta)
 * [Google Stackdriver Error Reporting](#google-stackdriver-error-reporting-beta) (Beta)
@@ -503,7 +504,7 @@ $ composer require google/cloud-firestore
 
 ## Google Cloud Container (Beta)
 
-- [API Documentation](http://googlecloudplatform.github.io/google-cloud-php/#/docs/latest/monitoring/readme)
+- [API Documentation](http://googlecloudplatform.github.io/google-cloud-php/#/docs/latest/container/readme)
 - [Official Documentation](https://cloud.google.com/kubernetes-engine/docs)
 
 ```php
@@ -583,7 +584,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Google\ApiCore\ApiException;
 use Google\Cloud\Kms\V1\CryptoKey;
-use Google\Cloud\Kms\V1\CryptoKey_CryptoKeyPurpose;
+use Google\Cloud\Kms\V1\CryptoKey\CryptoKeyPurpose;
 use Google\Cloud\Kms\V1\KeyManagementServiceClient;
 use Google\Cloud\Kms\V1\KeyRing;
 
@@ -616,7 +617,7 @@ try {
 } catch (ApiException $e) {
     if ($e->getStatus() === 'NOT_FOUND') {
         $cryptoKey = new CryptoKey();
-        $cryptoKey->setPurpose(CryptoKey_CryptoKeyPurpose::ENCRYPT_DECRYPT);
+        $cryptoKey->setPurpose(CryptoKeyPurpose::ENCRYPT_DECRYPT);
         $cryptoKey = $client->createCryptoKey($keyRingName, $keyId, $cryptoKey);
     }
 }
@@ -711,7 +712,7 @@ $ composer require google/cloud-oslogin
 ```
 
 ## Google Cloud Tasks (Beta)
-- [API Documentation](http://googlecloudplatform.github.io/google-cloud-php/#/docs/latest/tasks/cloudtasksclient)
+- [API Documentation](http://googlecloudplatform.github.io/google-cloud-php/#/docs/latest/tasks/readme)
 
 #### Preview
 
@@ -782,6 +783,41 @@ $client->deleteQueue($queueName);
 
 ```
 $ composer require google/cloud-tasks
+```
+
+## Google Cloud Text-to-Speech (Beta)
+
+- [API Documentation](http://googlecloudplatform.github.io/google-cloud-php/#/docs/latest/text-to-speech/readme)
+- [Official Documentation](https://cloud.google.com/text-to-speech/docs/reference/rpc/)
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+
+use Google\Cloud\TextToSpeech\V1\AudioConfig;
+use Google\Cloud\TextToSpeech\V1\AudioEncoding;
+use Google\Cloud\TextToSpeech\V1\SynthesisInput;
+use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
+use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
+
+$textToSpeechClient = new TextToSpeechClient();
+
+$input = new SynthesisInput();
+$input->setText('Japan\'s national soccer team won against Colombia!');
+$voice = new VoiceSelectionParams();
+$voice->setLanguageCode('en-US');
+$audioConfig = new AudioConfig();
+$audioConfig->setAudioEncoding(AudioEncoding::MP3);
+
+$resp = $textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
+file_put_contents('test.mp3', $resp->getAudioContent());
+```
+
+#### google/cloud-text-to-speech
+
+[Google Cloud Text-to-Speech](https://github.com/GoogleCloudPlatform/google-cloud-php-text-to-speech) can be installed separately by requiring the [`google/cloud-text-to-speech`](https://packagist.org/packages/google/cloud-text-to-speech) composer package:
+
+```
+$ composer require google/cloud-text-to-speech
 ```
 
 ## Google Cloud Vision (Beta)

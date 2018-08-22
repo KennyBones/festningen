@@ -96,30 +96,6 @@ return array (
     'hasCpSettings' => true,
     'hasCpSection' => false,
   ),
-  'angellco/spoon' => 
-  array (
-    'class' => 'angellco\\spoon\\Spoon',
-    'basePath' => $vendorDir . '/angellco/spoon/src',
-    'handle' => 'spoon',
-    'aliases' => 
-    array (
-      '@angellco/spoon' => $vendorDir . '/angellco/spoon/src',
-    ),
-    'name' => 'Spoon',
-    'version' => '3.0.0-beta.4',
-    'description' => 'A plugin for Craft to enhance your Matrix fields with groups, tabs and more!',
-    'developer' => 'Angell & Co',
-    'developerUrl' => 'https://angell.io',
-    'changelogUrl' => 'https://raw.githubusercontent.com/angell-co/spoon/master/CHANGELOG.md',
-    'hasCpSettings' => true,
-    'hasCpSection' => false,
-    'components' => 
-    array (
-      'fields' => 'angellco\\spoon\\services\\Fields',
-      'blockTypes' => 'angellco\\spoon\\services\\BlockTypes',
-      'loader' => 'angellco\\spoon\\services\\Loader',
-    ),
-  ),
   'rias/craft-position-fieldtype' => 
   array (
     'class' => 'rias\\positionfieldtype\\PositionFieldtype',
@@ -154,8 +130,91 @@ return array (
     'description' => 'A collection of utility field types for Craft',
     'developer' => 'Supercool',
     'developerUrl' => 'http://supercooldesign.co.uk',
-    'documentationUrl' => 'https://github.com/supercool/buttonbox/blob/master/README.md',
     'changelogUrl' => 'https://raw.githubusercontent.com/supercool/buttonbox/master/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'angellco/spoon' => 
+  array (
+    'class' => 'angellco\\spoon\\Spoon',
+    'basePath' => $vendorDir . '/angellco/spoon/src',
+    'handle' => 'spoon',
+    'aliases' => 
+    array (
+      '@angellco/spoon' => $vendorDir . '/angellco/spoon/src',
+    ),
+    'name' => 'Spoon',
+    'version' => '3.0.1',
+    'description' => 'A plugin for Craft to enhance your Matrix fields with groups, tabs and more!',
+    'developer' => 'Angell & Co',
+    'developerUrl' => 'https://angell.io',
+    'changelogUrl' => 'https://raw.githubusercontent.com/angell-co/spoon/master/CHANGELOG.md',
+    'hasCpSettings' => true,
+    'hasCpSection' => false,
+    'components' => 
+    array (
+      'fields' => 'angellco\\spoon\\services\\Fields',
+      'blockTypes' => 'angellco\\spoon\\services\\BlockTypes',
+      'loader' => 'angellco\\spoon\\services\\Loader',
+    ),
+  ),
+  'aelvan/imager' => 
+  array (
+    'class' => 'aelvan\\imager\\Imager',
+    'basePath' => $vendorDir . '/aelvan/imager/src',
+    'handle' => 'imager',
+    'aliases' => 
+    array (
+      '@aelvan/imager' => $vendorDir . '/aelvan/imager/src',
+    ),
+    'name' => 'Imager',
+    'version' => 'v2.1.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'Image transforms gone wild',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'changelogUrl' => 'https://raw.githubusercontent.com/aelvan/Imager-Craft/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+    'components' => 
+    array (
+    ),
+  ),
+  'aelvan/inlin' => 
+  array (
+    'class' => 'aelvan\\inlin\\Inlin',
+    'basePath' => $vendorDir . '/aelvan/inlin/src',
+    'handle' => 'inlin',
+    'aliases' => 
+    array (
+      '@aelvan/inlin' => $vendorDir . '/aelvan/inlin/src',
+    ),
+    'name' => 'Inlin',
+    'version' => '2.0.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for inlining stuff in your templates.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'changelogUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'aelvan/stamp' => 
+  array (
+    'class' => 'aelvan\\stamp\\Stamp',
+    'basePath' => $vendorDir . '/aelvan/stamp/src',
+    'handle' => 'stamp',
+    'aliases' => 
+    array (
+      '@aelvan/stamp' => $vendorDir . '/aelvan/stamp/src',
+    ),
+    'name' => 'Stamp',
+    'version' => '2.0.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for adding timestamps to filenames.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'changelogUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md',
     'hasCpSettings' => false,
     'hasCpSection' => false,
   ),
@@ -173,7 +232,25 @@ return array (
     'description' => 'Edit rich text content in Craft CMS using Redactor by Imperavi.',
     'developer' => 'Pixel & Tonic',
     'developerUrl' => 'https://pixelandtonic.com/',
-    'developerEmail' => 'support@craftcms.com',
-    'documentationUrl' => 'https://github.com/craftcms/redactor',
+  ),
+  'clubstudioltd/craft-asset-rev' => 
+  array (
+    'class' => 'club\\assetrev\\AssetRev',
+    'basePath' => $vendorDir . '/clubstudioltd/craft-asset-rev/src',
+    'handle' => 'assetrev',
+    'aliases' => 
+    array (
+      '@club/assetrev' => $vendorDir . '/clubstudioltd/craft-asset-rev/src',
+    ),
+    'name' => 'Asset Rev',
+    'version' => '6.0.1',
+    'description' => 'A plugin to aid cache-busting in Craft 3',
+    'developer' => 'Club Studio Ltd',
+    'developerUrl' => 'https://clubstudio.co.uk',
+    'documentationUrl' => 'https://github.com/clubstudioltd/craft-asset-rev',
+    'changelogUrl' => 'https://github.com/clubstudioltd/craft-asset-rev/blob/master/CHANGELOG.md',
+    'downloadUrl' => 'https://github.com/clubstudioltd/craft-asset-rev/archive/v6.zip',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
   ),
 );

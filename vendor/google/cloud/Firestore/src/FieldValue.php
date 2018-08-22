@@ -84,4 +84,30 @@ class FieldValue
     {
         return '___google-cloud-php__serverTimestamp___';
     }
+
+    /**
+     * Check if the given value is a sentinel.
+     *
+     * @param string $value
+     * @return bool
+     * @access private
+     */
+    public static function isSentinelValue($value)
+    {
+        return in_array($value, self::sentinelValues(), true);
+    }
+
+    /**
+     * Get a list of sentinel values.
+     *
+     * @return array
+     * @access private
+     */
+    public static function sentinelValues()
+    {
+        return [
+            self::deleteField(),
+            self::serverTimestamp()
+        ];
+    }
 }

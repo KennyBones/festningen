@@ -350,7 +350,7 @@ class User extends Element implements IdentityInterface
     {
         $user = static::find()
             ->id($id)
-            ->status(null)
+            ->anyStatus()
             ->addSelect(['users.password'])
             ->one();
 
@@ -621,6 +621,22 @@ class User extends Element implements IdentityInterface
     /**
      * @inheritdoc
      */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+        $labels['currentPassword'] = Craft::t('app', 'Current Password');
+        $labels['email'] = Craft::t('app', 'Email');
+        $labels['firstName'] = Craft::t('app', 'First Name');
+        $labels['lastName'] = Craft::t('app', 'Last Name');
+        $labels['newPassword'] = Craft::t('app', 'New Password');
+        $labels['password'] = Craft::t('app', 'Password');
+        $labels['username'] = Craft::t('app', 'Username');
+        return $labels;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         $rules = parent::rules();
@@ -675,7 +691,7 @@ class User extends Element implements IdentityInterface
     {
         $query = self::find()
             ->where(['email' => $this->unverifiedEmail])
-            ->status(null);
+            ->anyStatus();
 
         if ($this->id) {
             $query->andWhere(['not', ['elements.id' => $this->id]]);

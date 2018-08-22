@@ -18,6 +18,9 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
+        '41726e7bf2a6c8c479b4598afabcba5a' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/colors.php',
+        '958eb7d15725dcb21015002795ed092f' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/helpers.php',
+        '4ea368213928f2a61682e096b10ce358' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/transformations.php',
         '74ed299072414d276bb7568fe71d5b0c' => __DIR__ . '/..' . '/tinify/tinify/lib/Tinify.php',
         '9635627915aaea7a98d6d14d04ca5b56' => __DIR__ . '/..' . '/tinify/tinify/lib/Tinify/Exception.php',
     );
@@ -47,10 +50,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'verbb\\fieldmanager\\' => 19,
             'verbb\\cpnav\\' => 12,
         ),
-        't' => 
-        array (
-            'tubalmartin\\CssMin\\' => 19,
-        ),
         's' => 
         array (
             'supercool\\buttonbox\\' => 20,
@@ -76,11 +75,15 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'craft\\composer\\' => 15,
             'craft\\awss3\\' => 12,
             'craft\\' => 6,
+            'club\\assetrev\\' => 14,
             'cebe\\markdown\\' => 14,
         ),
         'a' => 
         array (
             'angellco\\spoon\\' => 15,
+            'aelvan\\stamp\\' => 13,
+            'aelvan\\inlin\\' => 13,
+            'aelvan\\imager\\' => 14,
         ),
         'Z' => 
         array (
@@ -91,6 +94,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'T' => 
         array (
             'Twig\\' => 5,
+            'TrueBV\\' => 7,
             'Tinify\\' => 7,
         ),
         'S' => 
@@ -105,6 +109,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'Seld\\PharUtils\\' => 15,
             'Seld\\JsonLint\\' => 14,
             'Seld\\CliPrompt\\' => 15,
+            'SSNepenthe\\ColorUtils\\' => 22,
         ),
         'R' => 
         array (
@@ -114,7 +119,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
         ),
         'M' => 
@@ -135,8 +139,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         ),
         'I' => 
         array (
-            'Intervention\\Httpauth\\' => 22,
-            'Interop\\Container\\' => 18,
             'ImageOptim\\' => 11,
         ),
         'G' => 
@@ -155,6 +157,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'Google\\Cloud\\VideoIntelligence\\' => 31,
             'Google\\Cloud\\Translate\\' => 23,
             'Google\\Cloud\\Trace\\' => 19,
+            'Google\\Cloud\\TextToSpeech\\' => 26,
             'Google\\Cloud\\Tasks\\' => 19,
             'Google\\Cloud\\Storage\\' => 21,
             'Google\\Cloud\\Speech\\' => 20,
@@ -196,6 +199,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'GPBMetadata\\Google\\Container\\' => 29,
             'GPBMetadata\\Google\\Cloud\\Vision\\' => 32,
             'GPBMetadata\\Google\\Cloud\\Videointelligence\\' => 43,
+            'GPBMetadata\\Google\\Cloud\\Texttospeech\\' => 38,
             'GPBMetadata\\Google\\Cloud\\Tasks\\' => 31,
             'GPBMetadata\\Google\\Cloud\\Speech\\' => 32,
             'GPBMetadata\\Google\\Cloud\\Redis\\' => 31,
@@ -308,10 +312,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/verbb/cp-nav/src',
         ),
-        'tubalmartin\\CssMin\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/tubalmartin/cssmin/src',
-        ),
         'supercool\\buttonbox\\' => 
         array (
             0 => __DIR__ . '/..' . '/supercool/buttonbox/src',
@@ -356,6 +356,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/craftcms/cms/src',
         ),
+        'club\\assetrev\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/clubstudioltd/craft-asset-rev/src',
+        ),
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
@@ -363,6 +367,18 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'angellco\\spoon\\' => 
         array (
             0 => __DIR__ . '/..' . '/angellco/spoon/src',
+        ),
+        'aelvan\\stamp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aelvan/stamp/src',
+        ),
+        'aelvan\\inlin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aelvan/inlin/src',
+        ),
+        'aelvan\\imager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aelvan/imager/src',
         ),
         'Zend\\Stdlib\\' => 
         array (
@@ -379,6 +395,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'TrueBV\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/true/punycode/src',
         ),
         'Tinify\\' => 
         array (
@@ -424,6 +444,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/seld/cli-prompt/src',
         ),
+        'SSNepenthe\\ColorUtils\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ssnepenthe/color-utils/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -435,10 +459,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
         'Psr\\Cache\\' => 
         array (
@@ -471,14 +491,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'JmesPath\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/jmespath.php/src',
-        ),
-        'Intervention\\Httpauth\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/intervention/httpauth/src/Intervention/Httpauth',
-        ),
-        'Interop\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
         ),
         'ImageOptim\\' => 
         array (
@@ -539,6 +551,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'Google\\Cloud\\Trace\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/cloud/Trace/src',
+        ),
+        'Google\\Cloud\\TextToSpeech\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud/TextToSpeech/src',
         ),
         'Google\\Cloud\\Tasks\\' => 
         array (
@@ -705,6 +721,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/google/cloud/VideoIntelligence/metadata',
         ),
+        'GPBMetadata\\Google\\Cloud\\Texttospeech\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud/TextToSpeech/metadata',
+        ),
         'GPBMetadata\\Google\\Cloud\\Tasks\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/cloud/Tasks/metadata',
@@ -806,30 +826,11 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
                 0 => __DIR__ . '/..' . '/rize/uri-template/src',
             ),
         ),
-        'P' => 
-        array (
-            'Props\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/mrclay/props-dic/src',
-                1 => __DIR__ . '/..' . '/mrclay/props-dic/test',
-            ),
-            'Pimple' => 
-            array (
-                0 => __DIR__ . '/..' . '/pimple/pimple/src',
-            ),
-        ),
         'K' => 
         array (
             'Kraken' => 
             array (
                 0 => __DIR__ . '/..' . '/kraken-io/kraken-php/lib',
-            ),
-        ),
-        'J' => 
-        array (
-            'JSMin\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/mrclay/jsmin-php/src',
             ),
         ),
         'I' => 
@@ -860,56 +861,6 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
     );
 
     public static $classMap = array (
-        'HTTP_ConditionalGet' => __DIR__ . '/..' . '/mrclay/minify/lib/HTTP/ConditionalGet.php',
-        'HTTP_Encoder' => __DIR__ . '/..' . '/mrclay/minify/lib/HTTP/Encoder.php',
-        'Minify' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify.php',
-        'Minify\\App' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/App.php',
-        'Minify\\Config' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Config.php',
-        'Minify\\JS\\JShrink' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/JS/JShrink.php',
-        'Minify\\Logger\\LegacyHandler' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Logger/LegacyHandler.php',
-        'Minify_Build' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Build.php',
-        'Minify_CSS' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CSS.php',
-        'Minify_CSS_Compressor' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CSS/Compressor.php',
-        'Minify_CSS_UriRewriter' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CSS/UriRewriter.php',
-        'Minify_CSSmin' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CSSmin.php',
-        'Minify_CacheInterface' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CacheInterface.php',
-        'Minify_Cache_APC' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/APC.php',
-        'Minify_Cache_File' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/File.php',
-        'Minify_Cache_Memcache' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/Memcache.php',
-        'Minify_Cache_Null' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/Null.php',
-        'Minify_Cache_WinCache' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/WinCache.php',
-        'Minify_Cache_XCache' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/XCache.php',
-        'Minify_Cache_ZendPlatform' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Cache/ZendPlatform.php',
-        'Minify_ClosureCompiler' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ClosureCompiler.php',
-        'Minify_ClosureCompiler_Exception' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ClosureCompiler.php',
-        'Minify_CommentPreserver' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/CommentPreserver.php',
-        'Minify_ControllerInterface' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ControllerInterface.php',
-        'Minify_Controller_Base' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Controller/Base.php',
-        'Minify_Controller_Files' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Controller/Files.php',
-        'Minify_Controller_Groups' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Controller/Groups.php',
-        'Minify_Controller_MinApp' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Controller/MinApp.php',
-        'Minify_Controller_Page' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Controller/Page.php',
-        'Minify_DebugDetector' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/DebugDetector.php',
-        'Minify_Env' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Env.php',
-        'Minify_HTML' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/HTML.php',
-        'Minify_HTML_Helper' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/HTML/Helper.php',
-        'Minify_ImportProcessor' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ImportProcessor.php',
-        'Minify_JS_ClosureCompiler' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/JS/ClosureCompiler.php',
-        'Minify_JS_ClosureCompiler_Exception' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/JS/ClosureCompiler.php',
-        'Minify_LessCssSource' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/LessCssSource.php',
-        'Minify_Lines' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Lines.php',
-        'Minify_NailgunClosureCompiler' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/NailgunClosureCompiler.php',
-        'Minify_Packer' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Packer.php',
-        'Minify_ScssCssSource' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ScssCssSource.php',
-        'Minify_ServeConfiguration' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/ServeConfiguration.php',
-        'Minify_Source' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Source.php',
-        'Minify_SourceInterface' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/SourceInterface.php',
-        'Minify_SourceSet' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/SourceSet.php',
-        'Minify_Source_Factory' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Source/Factory.php',
-        'Minify_Source_FactoryException' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Source/FactoryException.php',
-        'Minify_YUICompressor' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/YUICompressor.php',
-        'MrClay\\Cli' => __DIR__ . '/..' . '/mrclay/minify/lib/MrClay/Cli.php',
-        'MrClay\\Cli\\Arg' => __DIR__ . '/..' . '/mrclay/minify/lib/MrClay/Cli/Arg.php',
         'RequirementsChecker' => __DIR__ . '/..' . '/craftcms/server-check/server/requirements/RequirementsChecker.php',
     );
 

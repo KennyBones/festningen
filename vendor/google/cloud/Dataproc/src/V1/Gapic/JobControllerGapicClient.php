@@ -280,18 +280,21 @@ class JobControllerGapicClient
      * try {
      *     $projectId = '';
      *     $region = '';
-     *     // Iterate through all elements
-     *     $pagedResponse = $jobControllerClient->listJobs($projectId, $region);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $jobControllerClient->listJobs($projectId, $region);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $jobControllerClient->listJobs($projectId, $region);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $jobControllerClient->close();
@@ -321,7 +324,7 @@ class JobControllerGapicClient
      *          (default = match ALL jobs).
      *
      *          If `filter` is provided, `jobStateMatcher` will be ignored.
-     *          For allowed values, use constants defined on {@see \Google\Cloud\Dataproc\V1\ListJobsRequest_JobStateMatcher}
+     *          For allowed values, use constants defined on {@see \Google\Cloud\Dataproc\V1\ListJobsRequest\JobStateMatcher}
      *     @type string $filter
      *          Optional. A filter constraining the jobs to list. Filters are
      *          case-sensitive and have the following syntax:

@@ -4,7 +4,7 @@ namespace Imgix;
 
 class UrlBuilder {
 
-    private $currentVersion = "1.2.1";
+    private $currentVersion = "2.1.1";
     private $domains;
     private $useHttps;
     private $signKey;
@@ -41,7 +41,11 @@ class UrlBuilder {
         $this->useHttps = $useHttps;
     }
 
-    public function createURL($path, $params=array(), $rawEncodePath = false) {
+    public function setIncludeLibraryParam($includeLibraryParam) {
+        $this->includeLibraryParam = $includeLibraryParam;
+    }
+
+    public function createURL($path, $params=array()) {
         $scheme = $this->useHttps ? "https" : "http";
 
         if ($this->shardStrategy === ShardStrategy::CRC) {
@@ -58,7 +62,7 @@ class UrlBuilder {
             $params['ixlib'] = "php-" . $this->currentVersion;
         }
 
-        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params, $rawEncodePath);
+        $uh = new UrlHelper($domain, $path, $scheme, $this->signKey, $params);
 
         return $uh->getURL();
     }

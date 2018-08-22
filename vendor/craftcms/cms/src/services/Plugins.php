@@ -594,12 +594,18 @@ class Plugins extends Component
             ]));
         }
 
+        if (!$plugin->beforeSaveSettings()) {
+            return false;
+        }
+
         $affectedRows = Craft::$app->getDb()->createCommand()
             ->update(
                 '{{%plugins}}',
                 ['settings' => Json::encode($plugin->getSettings())],
                 ['handle' => $plugin->id])
             ->execute();
+
+        $plugin->afterSaveSettings();
 
         // Fire an 'afterSavePluginSettings' event
         if ($this->hasEventHandlers(self::EVENT_AFTER_SAVE_PLUGIN_SETTINGS)) {
@@ -852,7 +858,7 @@ class Plugins extends Component
             switch ($status) {
                 case LicenseKeyStatus::Mismatched:
                     $info['licenseStatusMessage'] = Craft::t('app', 'This license is tied to another Craft install. Visit {url} to resolve.', [
-                        'url' => '<a href="https://id.craftcms.com" target="_blank">id.craftcms.com</a>',
+                        'url' => '<a href="https://id.craftcms.com" rel="noopener" target="_blank">id.craftcms.com</a>',
                     ]);
                     break;
                 case LicenseKeyStatus::Astray:

@@ -31,6 +31,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
+use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
@@ -401,6 +402,13 @@ class DataTransferServiceGapicClient
         $request = new GetDataSourceRequest();
         $request->setName($name);
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'GetDataSource',
             DataSource::class,
@@ -418,18 +426,21 @@ class DataTransferServiceGapicClient
      * $dataTransferServiceClient = new DataTransferServiceClient();
      * try {
      *     $formattedParent = $dataTransferServiceClient->projectName('[PROJECT]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $dataTransferServiceClient->listDataSources($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $dataTransferServiceClient->listDataSources($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $dataTransferServiceClient->listDataSources($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $dataTransferServiceClient->close();
@@ -472,6 +483,13 @@ class DataTransferServiceGapicClient
         if (isset($optionalArgs['pageSize'])) {
             $request->setPageSize($optionalArgs['pageSize']);
         }
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
 
         return $this->getPagedListResponse(
             'ListDataSources',
@@ -542,6 +560,13 @@ class DataTransferServiceGapicClient
             $request->setAuthorizationCode($optionalArgs['authorizationCode']);
         }
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'CreateTransferConfig',
             TransferConfig::class,
@@ -609,6 +634,13 @@ class DataTransferServiceGapicClient
             $request->setAuthorizationCode($optionalArgs['authorizationCode']);
         }
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'transfer_config.name' => $request->getTransferConfig()->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'UpdateTransferConfig',
             TransferConfig::class,
@@ -651,6 +683,13 @@ class DataTransferServiceGapicClient
     {
         $request = new DeleteTransferConfigRequest();
         $request->setName($name);
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
 
         return $this->startCall(
             'DeleteTransferConfig',
@@ -696,6 +735,13 @@ class DataTransferServiceGapicClient
         $request = new GetTransferConfigRequest();
         $request->setName($name);
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'GetTransferConfig',
             TransferConfig::class,
@@ -712,18 +758,21 @@ class DataTransferServiceGapicClient
      * $dataTransferServiceClient = new DataTransferServiceClient();
      * try {
      *     $formattedParent = $dataTransferServiceClient->projectName('[PROJECT]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $dataTransferServiceClient->listTransferConfigs($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $dataTransferServiceClient->listTransferConfigs($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $dataTransferServiceClient->listTransferConfigs($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $dataTransferServiceClient->close();
@@ -771,6 +820,13 @@ class DataTransferServiceGapicClient
         if (isset($optionalArgs['pageSize'])) {
             $request->setPageSize($optionalArgs['pageSize']);
         }
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
 
         return $this->getPagedListResponse(
             'ListTransferConfigs',
@@ -827,6 +883,13 @@ class DataTransferServiceGapicClient
         $request->setStartTime($startTime);
         $request->setEndTime($endTime);
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'ScheduleTransferRuns',
             ScheduleTransferRunsResponse::class,
@@ -871,6 +934,13 @@ class DataTransferServiceGapicClient
         $request = new GetTransferRunRequest();
         $request->setName($name);
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'GetTransferRun',
             TransferRun::class,
@@ -913,6 +983,13 @@ class DataTransferServiceGapicClient
         $request = new DeleteTransferRunRequest();
         $request->setName($name);
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->startCall(
             'DeleteTransferRun',
             GPBEmpty::class,
@@ -929,18 +1006,21 @@ class DataTransferServiceGapicClient
      * $dataTransferServiceClient = new DataTransferServiceClient();
      * try {
      *     $formattedParent = $dataTransferServiceClient->projectTransferConfigName('[PROJECT]', '[TRANSFER_CONFIG]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $dataTransferServiceClient->listTransferRuns($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $dataTransferServiceClient->listTransferRuns($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $dataTransferServiceClient->listTransferRuns($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $dataTransferServiceClient->close();
@@ -967,7 +1047,7 @@ class DataTransferServiceGapicClient
      *          there are additional values to be retrieved.
      *     @type int $runAttempt
      *          Indicates how run attempts are to be pulled.
-     *          For allowed values, use constants defined on {@see \Google\Cloud\BigQuery\DataTransfer\V1\ListTransferRunsRequest_RunAttempt}
+     *          For allowed values, use constants defined on {@see \Google\Cloud\BigQuery\DataTransfer\V1\ListTransferRunsRequest\RunAttempt}
      *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
@@ -997,6 +1077,13 @@ class DataTransferServiceGapicClient
             $request->setRunAttempt($optionalArgs['runAttempt']);
         }
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->getPagedListResponse(
             'ListTransferRuns',
             $optionalArgs,
@@ -1013,18 +1100,21 @@ class DataTransferServiceGapicClient
      * $dataTransferServiceClient = new DataTransferServiceClient();
      * try {
      *     $formattedParent = $dataTransferServiceClient->projectRunName('[PROJECT]', '[TRANSFER_CONFIG]', '[RUN]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $dataTransferServiceClient->listTransferLogs($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $dataTransferServiceClient->listTransferLogs($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $dataTransferServiceClient->listTransferLogs($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $dataTransferServiceClient->close();
@@ -1075,6 +1165,13 @@ class DataTransferServiceGapicClient
             $request->setMessageTypes($optionalArgs['messageTypes']);
         }
 
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'parent' => $request->getParent(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
         return $this->getPagedListResponse(
             'ListTransferLogs',
             $optionalArgs,
@@ -1123,6 +1220,13 @@ class DataTransferServiceGapicClient
     {
         $request = new CheckValidCredsRequest();
         $request->setName($name);
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
 
         return $this->startCall(
             'CheckValidCreds',
