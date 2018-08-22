@@ -72,6 +72,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'creocoder\\nestedsets\\' => 21,
             'craftcms\\oauth2\\client\\' => 23,
             'craft\\redactor\\' => 15,
+            'craft\\contactform\\' => 18,
             'craft\\composer\\' => 15,
             'craft\\awss3\\' => 12,
             'craft\\' => 6,
@@ -343,6 +344,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'craft\\redactor\\' => 
         array (
             0 => __DIR__ . '/..' . '/craftcms/redactor/src',
+        ),
+        'craft\\contactform\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/craftcms/contact-form/src',
         ),
         'craft\\composer\\' => 
         array (

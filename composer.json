@@ -36,7 +36,8 @@
         "aelvan/inlin": "^2.0",
         "aelvan/stamp": "^2.0",
         "craftcms/redactor": "^2.1",
-        "clubstudioltd/craft-asset-rev": "^6.0"
+        "clubstudioltd/craft-asset-rev": "^6.0",
+        "craftcms/contact-form": "^2.2"
     },
     "scripts": {
         "post-root-package-install": [
