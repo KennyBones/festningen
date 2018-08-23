@@ -1902,6 +1902,11 @@ aside.printThis {
       visibility: hidden;
     }
 
+    h2 {
+      font-size: $h2;
+      margin-bottom: 3em;
+    }
+
     .row { margin-left: 0; }
     .designblock.block-parent { border: none; }
     .sticky-block { display: none; }
@@ -1923,6 +1928,7 @@ aside.printThis {
         display: inline-block;
         width: 100%;
         padding: 7%;
+
     }
     .black-block { display: none; }
     .sticky-block--right { display: block; }
