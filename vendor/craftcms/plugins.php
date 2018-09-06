@@ -274,4 +274,53 @@ return array (
       'mailer' => 'craft\\contactform\\Mailer',
     ),
   ),
+  'ether/logs' => 
+  array (
+    'class' => 'ether\\logs\\Logs',
+    'basePath' => $vendorDir . '/ether/logs/src',
+    'handle' => 'logs',
+    'aliases' => 
+    array (
+      '@ether/logs' => $vendorDir . '/ether/logs/src',
+    ),
+    'name' => 'Logs',
+    'version' => '3.0.0',
+    'schemaVersion' => '3.0.0',
+    'description' => 'Access logs from the CP',
+    'developer' => 'Ether Creative',
+    'developerUrl' => 'https://ethercreative.co.uk',
+  ),
+  'ether/seo' => 
+  array (
+    'class' => 'ether\\seo\\Seo',
+    'basePath' => $vendorDir . '/ether/seo/src',
+    'handle' => 'seo',
+    'aliases' => 
+    array (
+      '@ether/seo' => $vendorDir . '/ether/seo/src',
+    ),
+    'name' => 'SEO',
+    'version' => '3.3.1',
+    'schemaVersion' => '3.0.0',
+    'description' => 'SEO utilities including a unique field type, sitemap, & redirect manager',
+    'developer' => 'Ether Creative',
+    'developerUrl' => 'https://ethercreative.co.uk',
+  ),
+  'doublesecretagency/craft-siteswitcher' => 
+  array (
+    'class' => 'doublesecretagency\\siteswitcher\\SiteSwitcher',
+    'basePath' => $vendorDir . '/doublesecretagency/craft-siteswitcher/src',
+    'handle' => 'site-switcher',
+    'aliases' => 
+    array (
+      '@doublesecretagency/siteswitcher' => $vendorDir . '/doublesecretagency/craft-siteswitcher/src',
+    ),
+    'name' => 'Site Switcher',
+    'version' => '2.0.0',
+    'schemaVersion' => '0.0.0',
+    'description' => 'Easily switch between sites on any page of your website.',
+    'developer' => 'Double Secret Agency',
+    'developerUrl' => 'https://www.doublesecretagency.com/plugins',
+    'changelogUrl' => 'https://raw.githubusercontent.com/doublesecretagency/craft-siteswitcher/v2/CHANGELOG.md',
+  ),
 );

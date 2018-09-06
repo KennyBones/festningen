@@ -1,6 +1,7 @@
 {% set midnight = now|date_modify("+1 day")|date("Y-m-d") ~ ' 00:00' %}
 {% set cdnUrl = craft.config.cdnUrl ?? siteUrl %}
 {% set LP = craft.request.isLivePreview ?? false %}
+
 <!doctype html>
 {% if craft.config.env == 'PROD' %}{% include '_admin/_mustasj_logo' %}{% endif %}
 <html class="no-js" lang="{{craft.locale}}">
@@ -8,8 +9,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
-
-		{% hook 'seomaticRender' %}
+		{% hook "seo" %}
 		{% include "_admin/_ekstraHead" %}
 		{% if craft.request.isLivePreview %}
 		<!-- Åpne alle linker i nytt vindu hvis vi er i previewmodus -->
@@ -95,10 +95,16 @@
 				</ul>
 
 				<a href="/" id="menu-btn">Meny</a>
-				<span class="menu-locals">
-					<a href="/">{{craft.inlin.er("/static/svg/symbols/icon_norflag.svg") | raw }}</a>
-					<a href="/en/{{craft.request.getSegment(1)}}">{{craft.inlin.er("/static/svg/symbols/icon_engflag.svg") | raw }}</a>
-				</span>
+
+				<ul class="menu-locals">
+
+					<select name="foo" id="my-select">
+					    <option value="{{ siteSwitcher('default', entry) }}">Nor</option>
+					    <option value="{{ siteSwitcher('english', entry) }}">Eng</option>
+					</select>
+
+				</ul>
+
 				<div class="hidden">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 			</nav>
@@ -119,7 +125,7 @@
 
 		<script>
 
-			loadCSS("/dist/css/main.css");
+			loadCSS("{{ craft.stamp.er('/dist/css/main.css', 'query') }}");
 			requirejs(["main"]);
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{craft.simpleMap.apiKey}}" type="text/javascript"></script>

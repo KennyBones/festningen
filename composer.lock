@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c4ff6b33a85fb05d35f3b8e1b8b4ee0c",
+    "content-hash": "7277ec03edda737129bd330f48d9e48f",
     "packages": [
         {
             "name": "aelvan/imager",
@@ -1193,6 +1193,63 @@
             "time": "2014-09-09T13:34:57+00:00"
         },
         {
+            "name": "doublesecretagency/craft-siteswitcher",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doublesecretagency/craft-siteswitcher.git",
+                "reference": "a16ab55341bf5050a2cd8ff1c875e8124d150e80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doublesecretagency/craft-siteswitcher/zipball/a16ab55341bf5050a2cd8ff1c875e8124d150e80",
+                "reference": "a16ab55341bf5050a2cd8ff1c875e8124d150e80",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0.0"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Site Switcher",
+                "handle": "site-switcher",
+                "schemaVersion": "0.0.0",
+                "changelogUrl": "https://raw.githubusercontent.com/doublesecretagency/craft-siteswitcher/v2/CHANGELOG.md",
+                "class": "doublesecretagency\\siteswitcher\\SiteSwitcher"
+            },
+            "autoload": {
+                "psr-4": {
+                    "doublesecretagency\\siteswitcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Double Secret Agency",
+                    "homepage": "https://www.doublesecretagency.com/plugins"
+                }
+            ],
+            "description": "Easily switch between sites on any page of your website.",
+            "keywords": [
+                "Craft",
+                "cms",
+                "craft-plugin",
+                "craftcms",
+                "language-link",
+                "language-switcher",
+                "languages",
+                "locales",
+                "multi-site",
+                "multisite",
+                "sites",
+                "switcher"
+            ],
+            "time": "2018-08-30T14:58:47+00:00"
+        },
+        {
             "name": "egulias/email-validator",
             "version": "2.1.5",
             "source": {
@@ -1323,6 +1380,79 @@
             ],
             "description": "An SVG sanitizer for PHP",
             "time": "2018-07-19T17:21:27+00:00"
+        },
+        {
+            "name": "ether/logs",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ethercreative/logs.git",
+                "reference": "4f22477b6ff2f497b6342d3cbef571bb617f9b59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ethercreative/logs/zipball/4f22477b6ff2f497b6342d3cbef571bb617f9b59",
+                "reference": "4f22477b6ff2f497b6342d3cbef571bb617f9b59",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0.0-RC1"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "handle": "logs",
+                "name": "Logs",
+                "developer": "Ether Creative",
+                "developerUrl": "https://ethercreative.co.uk",
+                "class": "ether\\logs\\Logs",
+                "schemaVersion": "3.0.0"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ether\\logs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Access logs from the CP",
+            "time": "2017-12-01T14:07:43+00:00"
+        },
+        {
+            "name": "ether/seo",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ethercreative/seo.git",
+                "reference": "b917148fc1976999806528d9da710723affe4bf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ethercreative/seo/zipball/b917148fc1976999806528d9da710723affe4bf5",
+                "reference": "b917148fc1976999806528d9da710723affe4bf5",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0.0-RC1"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "handle": "seo",
+                "name": "SEO",
+                "developer": "Ether Creative",
+                "developerUrl": "https://ethercreative.co.uk",
+                "class": "ether\\seo\\Seo",
+                "schemaVersion": "3.0.0"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ether\\seo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "SEO utilities including a unique field type, sitemap, & redirect manager",
+            "time": "2018-09-03T21:43:28+00:00"
         },
         {
             "name": "ether/simplemap",

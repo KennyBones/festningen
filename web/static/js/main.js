@@ -260,6 +260,8 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     initMap();
   }
 
+  easydropdown.all();
+
   // Sett sticky-block på restaurantblokker
   var restaurant_stickyOptions = {
     'spacer' : false,

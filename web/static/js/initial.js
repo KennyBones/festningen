@@ -25,11 +25,8 @@ function loadCSS(url, async) {
 	var ending = /(?:\.([^.]+))?$/,
 		async = typeof async !== 'undefined' ? async : false;
 
-	var ext = ending.exec(url)[1];
-	if (ext !== 'css') {
-		console.info('Dette er ikke en css fil');
-		return;
-	}
+	   var ext = ending.exec(url)[1];
+
 	var link = document.createElement("link");
 	link.type = "text/css";
 	link.rel = "stylesheet";

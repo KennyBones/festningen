@@ -288,17 +288,32 @@ body {
 
 }
 
+dropdown.lang-selector {
   .menu-locals {
     position: absolute;
-    top: 20px;
-    left: 7px;
+    top: 0;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display:flex;
+
+    li {
+      display:flex;
+      flex-direction: column-reverse;
+    }
+
+    span { display: none; }
 
     svg {
       width: 30px;
-      height: 20px;
-      margin-left: 7px;
+      height: 30px;
+      margin-left: 15px;
     }
   }
+}
+
+
 
 
   .searchbox {

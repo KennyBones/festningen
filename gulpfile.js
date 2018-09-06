@@ -22,7 +22,7 @@ var START 	= startfolders(["web","public","public_html"]),
 var sslBrowserSync = false,
 	sslCredentials = checkCredentials(["/Users/bruker1/mamp_ssl/craft.dev.key"]);
 
-// Files that shoild be moved
+// Files that should be moved
 var MOVE = {
 	"fonts"	: [ SRC + "/fonts/**"],
 	"php"	: [ SRC + "/php/**", "!" + SRC + "/php/admin/*"],

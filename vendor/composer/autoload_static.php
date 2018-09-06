@@ -65,7 +65,13 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'e' => 
         array (
             'ether\\simplemap\\' => 16,
+            'ether\\seo\\' => 10,
+            'ether\\logs\\' => 11,
             'enshrined\\svgSanitize\\' => 22,
+        ),
+        'd' => 
+        array (
+            'doublesecretagency\\siteswitcher\\' => 32,
         ),
         'c' => 
         array (
@@ -329,9 +335,21 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/ether/simplemap/src',
         ),
+        'ether\\seo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ether/seo/src',
+        ),
+        'ether\\logs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ether/logs/src',
+        ),
         'enshrined\\svgSanitize\\' => 
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
+        ),
+        'doublesecretagency\\siteswitcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doublesecretagency/craft-siteswitcher/src',
         ),
         'creocoder\\nestedsets\\' => 
         array (
