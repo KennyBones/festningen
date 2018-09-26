@@ -84,6 +84,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
 
 	$html.addClass('lastet');
   createSwipers();
+  crear_select();
 
   // Sleng på Google map
   function initMap() {
@@ -260,7 +261,6 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
     initMap();
   }
 
-  easydropdown.all();
 
   // Sett sticky-block på restaurantblokker
   var restaurant_stickyOptions = {

@@ -16,13 +16,14 @@ requirejs.config({
     paths: {
         jquery: ["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min","https://code.jquery.com/jquery-3.2.1.min", "vendor/jquery"],
 		admin: "/dist/admin/admin.min",
-		modenizer: "/dist/js/vendor/modernizr",
+		modernizr: "/dist/js/vendor/modernizr",
 		swiper: ["https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min", "vendor/swiper.min"],
+    easydropdown: "/dist/js/vendor/easydropdown",
     main: "{{ craft.stamp.er('/dist/js/main.js', 'query') }}",
     },
 
     shim: {
-        'main': ["jquery", "modenizer", "Swiper"],
+        'main': ["jquery", "modernizr", "Swiper", "easydropdown"],
 		    'admin': ["jquery"]
     }
 });

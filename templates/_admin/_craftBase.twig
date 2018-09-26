@@ -3,6 +3,7 @@
 {% set siteName = craft.app.getSiteName() -%}
 {% set docTitle = docTitle is defined ? docTitle : title|striptags -%}
 {% set bodyClass = (bodyClass ? bodyClass~' ' : '') ~ craft.i18n.getLocaleData().getOrientation() -%}
+{% set langClass = craft.i18n.getLocaleData()%}
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
