@@ -369,7 +369,7 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
     window.print();
   });
 
-  $document.on('click', '.scrolling .svg--scroll-to-top', function (e) {
+  $document.on('click', '.scrolling', function (e) {
     $('html, body').animate({
       scrollTop: 0
     }, 500);
