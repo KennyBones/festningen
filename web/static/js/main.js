@@ -230,7 +230,7 @@ if (typeof FastClick === 'function') { FastClick.attach(document.body); }
             draggable: false,
             zoom: 14,
             mapTypeControl: false,
-            panControl: false,
+            disableDefaultUI: true,
             zoomControlOptions: {
                 position: google.maps.ControlPosition.LEFT_CENTER
             }
@@ -329,6 +329,31 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
 
   });
 
+  $('#contact-form').submit(function(ev) {
+      // Prevent the form from actually submitting
+      ev.preventDefault();
+
+      // Send it to the server
+      $.post({
+          url: '/',
+          dataType: 'json',
+          data: $(this).serialize(),
+          success: function(response) {
+              if (response.success) {
+                  $('.form-response span').html('Meldingen ble sendt!');
+                  $('.form-response').addClass('success');
+              } else {
+                  // response.error will be an object containing any validation errors that occurred, indexed by field name
+                  // e.g. response.error.fromName => ['From Name is required']
+                  $('.form-response span').html('Beklager, noe gikk galt!');
+              }
+          }
+      });
+  });
+
+
+
+
   $document.on('click', '.printThis', function (e) {
 
     console.log('Print this');
@@ -342,7 +367,13 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
     thisMenu.addClass('printThisActive');
 
     window.print();
-    });
+  });
+
+  $document.on('click', '.scrolling .svg--scroll-to-top', function (e) {
+    $('html, body').animate({
+      scrollTop: 0
+    }, 500);
+  });
 
   $document.on('click', '#menu-btn', function (e) {
     // Toggle menu
@@ -378,6 +409,18 @@ $document.on('click', 'a[href*="#"]:not([href="#"])', function (e) {
           $header.removeClass('fixed');
         }
         lastScroll = st;
+
+        if (st > $body.height() / 1.6 ) {
+          if ($('.scroll-to-top').hasClass('scrolling')) {
+            return;
+          } else {
+            $('.scroll-to-top').addClass('scrolling');
+          }
+
+        } else {
+          $('.scroll-to-top').removeClass('scrolling')
+        }
+
     });
 
 

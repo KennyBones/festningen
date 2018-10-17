@@ -17,6 +17,7 @@ return array(
     '8a9dc1de0ca7e01f3e08231539562f61' => $vendorDir . '/aws/aws-sdk-php/src/functions.php',
     '2c102faa651ef8ea5874edb585946bce' => $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
     '65fec9ebcfbb3cbb4fd0d519687aea01' => $vendorDir . '/danielstjules/stringy/src/Create.php',
+    '72579e7bd17821bb1321b87411366eae' => $vendorDir . '/illuminate/support/helpers.php',
     '41726e7bf2a6c8c479b4598afabcba5a' => $vendorDir . '/ssnepenthe/color-utils/inc/colors.php',
     '958eb7d15725dcb21015002795ed092f' => $vendorDir . '/ssnepenthe/color-utils/inc/helpers.php',
     '4ea368213928f2a61682e096b10ce358' => $vendorDir . '/ssnepenthe/color-utils/inc/transformations.php',

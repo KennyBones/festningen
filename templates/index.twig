@@ -141,7 +141,7 @@
 		</div>
 		<aside id="kontaktskjema" class="designblock">
 			<h2>{{entry.booking.tittel}}</h2>
-			{{craft.inlin.er(entry.booking.ikon[0].url, true) | raw }}
+			<div class="booking-icon">{{craft.inlin.er(entry.booking.ikon[0].url, true) | raw }}</div>
 			{{entry.booking.tekst}}
 
 			{% macro errorList(errors) %}
@@ -156,10 +156,9 @@
 
 			{% from _self import errorList %}
 
-			<form method="post" action="" accept-charset="UTF-8">
+			<form id="contact-form" method="post" action="" accept-charset="UTF-8">
 			    {{ csrfInput() }}
 			    <input type="hidden" name="action" value="contact-form/send">
-
 
 			    <label class="heading" for="from-name">Navn</label>
 			    <input class="field" id="from-name" type="text" name="fromName" value="{{ message.fromName ?? '' }}">
@@ -169,17 +168,20 @@
 			    <input class="field" id="from-email" type="email" name="fromEmail" value="{{ message.fromEmail ?? '' }}">
 			    {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
 
+					<label class="heading" for="subject">Hva henvendelsen gjelder</label>
+			    <input class="field" id="subject" type="text" name="subject" value="{{ message.subject ?? '' }}">
+			    {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+
 			    <label class="heading" for="message">Melding</label>
 			    <textarea class="field" rows="10" cols="40" id="message" name="message">{{ message.message ?? '' }}</textarea>
 			    {{ message is defined and message ? errorList(message.getErrors('message')) }}
 
 			    <div class="submit"><input type="submit" value="Send"></div>
 
-					{% if craft.app.session.hasFlash('notice') %}
-					    <p class="message notice">{{ craft.app.session.getFlash('notice') }}</p>
-					{% elseif craft.app.session.hasFlash('error') %}
-					    <p class="message error">{{ craft.app.session.getFlash('error') }}</p>
-					{% endif %}
+					<div class="form-response">
+						{{craft.inlin.er('/static/svg/symbols/mailsending.svg') | raw }}
+						<span></span>
+					</div>
 			</form>
 
 		</aside>

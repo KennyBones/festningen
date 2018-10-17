@@ -18,6 +18,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
+        '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
         '41726e7bf2a6c8c479b4598afabcba5a' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/colors.php',
         '958eb7d15725dcb21015002795ed092f' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/helpers.php',
         '4ea368213928f2a61682e096b10ce358' => __DIR__ . '/..' . '/ssnepenthe/color-utils/inc/transformations.php',
@@ -57,6 +58,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'r' => 
         array (
             'rias\\positionfieldtype\\' => 23,
+            'rias\\contactformextensions\\' => 27,
         ),
         'm' => 
         array (
@@ -108,6 +110,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
@@ -124,8 +127,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         ),
         'P' => 
         array (
+            'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
         ),
         'M' => 
@@ -147,6 +152,8 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'I' => 
         array (
             'ImageOptim\\' => 11,
+            'Illuminate\\Support\\' => 19,
+            'Illuminate\\Contracts\\' => 21,
         ),
         'G' => 
         array (
@@ -231,6 +238,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
@@ -243,6 +251,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'A' => 
         array (
             'Aws\\' => 4,
+            'AlbertCht\\InvisibleReCaptcha\\' => 29,
         ),
     );
 
@@ -326,6 +335,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'rias\\positionfieldtype\\' => 
         array (
             0 => __DIR__ . '/..' . '/rias/craft-position-fieldtype/src',
+        ),
+        'rias\\contactformextensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rias/craft-contact-form-extensions/src',
         ),
         'mikehaertl\\shellcommand\\' => 
         array (
@@ -435,6 +448,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
         'Symfony\\Component\\Process\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
@@ -475,6 +492,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
         ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -482,6 +503,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
         'Psr\\Cache\\' => 
         array (
@@ -518,6 +543,14 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         'ImageOptim\\' => 
         array (
             0 => __DIR__ . '/..' . '/imageoptim/imageoptim/src',
+        ),
+        'Illuminate\\Support\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/support',
+        ),
+        'Illuminate\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/contracts',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -808,6 +841,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
+        ),
         'Composer\\Spdx\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/spdx-licenses/src',
@@ -832,6 +869,14 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/aws/aws-sdk-php/src',
         ),
+        'AlbertCht\\InvisibleReCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/albertcht/invisible-recaptcha/src',
+        ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -892,6 +937,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867::$classMap;
 

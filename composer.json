@@ -40,7 +40,8 @@
         "craftcms/contact-form": "^2.2",
         "ether/logs": "v3.0.0",
         "ether/seo": "^3.3",
-        "doublesecretagency/craft-siteswitcher": "^2.0"
+        "doublesecretagency/craft-siteswitcher": "^2.0",
+        "rias/craft-contact-form-extensions": "^1.0"
     },
     "scripts": {
         "post-root-package-install": [
