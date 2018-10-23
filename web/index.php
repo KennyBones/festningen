@@ -4,7 +4,8 @@
  */
 
 // Project root path
-$root = dirname(__DIR__);
+$root = realpath(dirname(__FILE__)) . '/web/';
+
 
 // Composer autoloader
 require_once $root.'/vendor/autoload.php';
