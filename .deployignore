@@ -1,7 +1,6 @@
 craft/storage/runtime/**
 db/**
 .vagrant/**
-*/dynamic/**
 gulpfile.js
 package.json
 .gitignore
