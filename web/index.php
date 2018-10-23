@@ -4,7 +4,7 @@
  */
 
 // Project root path
-$root = realpath(dirname(__FILE__)) . '/web/';
+$root = dirname(__DIR__);
 
 
 // Composer autoloader
