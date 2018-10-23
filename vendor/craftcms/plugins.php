@@ -56,26 +56,6 @@ return array (
     'hasCpSettings' => true,
     'hasCpSection' => true,
   ),
-  'verbb/super-table' => 
-  array (
-    'class' => 'verbb\\supertable\\SuperTable',
-    'basePath' => $vendorDir . '/verbb/super-table/src',
-    'handle' => 'super-table',
-    'aliases' => 
-    array (
-      '@verbb/supertable' => $vendorDir . '/verbb/super-table/src',
-    ),
-    'name' => 'Super Table',
-    'version' => '2.0.8',
-    'schemaVersion' => '2.0.4',
-    'description' => 'Super-charge your Craft workflow with Super Table. Use it to group fields together or build complex Matrix-in-Matrix solutions.',
-    'developer' => 'Verbb',
-    'developerUrl' => 'https://verbb.io',
-    'documentationUrl' => 'https://github.com/verbb/super-table',
-    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/super-table/craft-3/CHANGELOG.md',
-    'hasCpSettings' => false,
-    'hasCpSection' => false,
-  ),
   'verbb/cp-nav' => 
   array (
     'class' => 'verbb\\cpnav\\CpNav',
@@ -134,30 +114,6 @@ return array (
     'hasCpSettings' => false,
     'hasCpSection' => false,
   ),
-  'angellco/spoon' => 
-  array (
-    'class' => 'angellco\\spoon\\Spoon',
-    'basePath' => $vendorDir . '/angellco/spoon/src',
-    'handle' => 'spoon',
-    'aliases' => 
-    array (
-      '@angellco/spoon' => $vendorDir . '/angellco/spoon/src',
-    ),
-    'name' => 'Spoon',
-    'version' => '3.0.1',
-    'description' => 'A plugin for Craft to enhance your Matrix fields with groups, tabs and more!',
-    'developer' => 'Angell & Co',
-    'developerUrl' => 'https://angell.io',
-    'changelogUrl' => 'https://raw.githubusercontent.com/angell-co/spoon/master/CHANGELOG.md',
-    'hasCpSettings' => true,
-    'hasCpSection' => false,
-    'components' => 
-    array (
-      'fields' => 'angellco\\spoon\\services\\Fields',
-      'blockTypes' => 'angellco\\spoon\\services\\BlockTypes',
-      'loader' => 'angellco\\spoon\\services\\Loader',
-    ),
-  ),
   'aelvan/imager' => 
   array (
     'class' => 'aelvan\\imager\\Imager',
@@ -179,44 +135,6 @@ return array (
     'components' => 
     array (
     ),
-  ),
-  'aelvan/inlin' => 
-  array (
-    'class' => 'aelvan\\inlin\\Inlin',
-    'basePath' => $vendorDir . '/aelvan/inlin/src',
-    'handle' => 'inlin',
-    'aliases' => 
-    array (
-      '@aelvan/inlin' => $vendorDir . '/aelvan/inlin/src',
-    ),
-    'name' => 'Inlin',
-    'version' => '2.0.0',
-    'schemaVersion' => '2.0.0',
-    'description' => 'A simple plugin for inlining stuff in your templates.',
-    'developer' => 'André Elvan',
-    'developerUrl' => 'https://www.vaersaagod.no',
-    'changelogUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/CHANGELOG.md',
-    'hasCpSettings' => false,
-    'hasCpSection' => false,
-  ),
-  'aelvan/stamp' => 
-  array (
-    'class' => 'aelvan\\stamp\\Stamp',
-    'basePath' => $vendorDir . '/aelvan/stamp/src',
-    'handle' => 'stamp',
-    'aliases' => 
-    array (
-      '@aelvan/stamp' => $vendorDir . '/aelvan/stamp/src',
-    ),
-    'name' => 'Stamp',
-    'version' => '2.0.0',
-    'schemaVersion' => '2.0.0',
-    'description' => 'A simple plugin for adding timestamps to filenames.',
-    'developer' => 'André Elvan',
-    'developerUrl' => 'https://www.vaersaagod.no',
-    'changelogUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md',
-    'hasCpSettings' => false,
-    'hasCpSection' => false,
   ),
   'craftcms/redactor' => 
   array (
@@ -290,22 +208,6 @@ return array (
     'developer' => 'Ether Creative',
     'developerUrl' => 'https://ethercreative.co.uk',
   ),
-  'ether/seo' => 
-  array (
-    'class' => 'ether\\seo\\Seo',
-    'basePath' => $vendorDir . '/ether/seo/src',
-    'handle' => 'seo',
-    'aliases' => 
-    array (
-      '@ether/seo' => $vendorDir . '/ether/seo/src',
-    ),
-    'name' => 'SEO',
-    'version' => '3.3.1',
-    'schemaVersion' => '3.0.0',
-    'description' => 'SEO utilities including a unique field type, sitemap, & redirect manager',
-    'developer' => 'Ether Creative',
-    'developerUrl' => 'https://ethercreative.co.uk',
-  ),
   'doublesecretagency/craft-siteswitcher' => 
   array (
     'class' => 'doublesecretagency\\siteswitcher\\SiteSwitcher',
@@ -345,5 +247,102 @@ return array (
     array (
       'contactFormExtensionsService' => 'rias\\contactformextensions\\services\\ContactFormExtensionsService',
     ),
+  ),
+  'verbb/super-table' => 
+  array (
+    'class' => 'verbb\\supertable\\SuperTable',
+    'basePath' => $vendorDir . '/verbb/super-table/src',
+    'handle' => 'super-table',
+    'aliases' => 
+    array (
+      '@verbb/supertable' => $vendorDir . '/verbb/super-table/src',
+    ),
+    'name' => 'Super Table',
+    'version' => '2.0.10',
+    'schemaVersion' => '2.0.4',
+    'description' => 'Super-charge your Craft workflow with Super Table. Use it to group fields together or build complex Matrix-in-Matrix solutions.',
+    'developer' => 'Verbb',
+    'developerUrl' => 'https://verbb.io',
+    'documentationUrl' => 'https://github.com/verbb/super-table',
+    'changelogUrl' => 'https://raw.githubusercontent.com/verbb/super-table/craft-3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'angellco/spoon' => 
+  array (
+    'class' => 'angellco\\spoon\\Spoon',
+    'basePath' => $vendorDir . '/angellco/spoon/src',
+    'handle' => 'spoon',
+    'aliases' => 
+    array (
+      '@angellco/spoon' => $vendorDir . '/angellco/spoon/src',
+    ),
+    'name' => 'Spoon',
+    'version' => '3.2.4',
+    'description' => 'A plugin for Craft to enhance your Matrix fields with groups, tabs and more!',
+    'developer' => 'Angell & Co',
+    'developerUrl' => 'https://angell.io',
+    'changelogUrl' => 'https://raw.githubusercontent.com/angell-co/spoon/master/CHANGELOG.md',
+    'hasCpSettings' => true,
+    'hasCpSection' => false,
+    'components' => 
+    array (
+      'fields' => 'angellco\\spoon\\services\\Fields',
+      'blockTypes' => 'angellco\\spoon\\services\\BlockTypes',
+      'loader' => 'angellco\\spoon\\services\\Loader',
+    ),
+  ),
+  'aelvan/inlin' => 
+  array (
+    'class' => 'aelvan\\inlin\\Inlin',
+    'basePath' => $vendorDir . '/aelvan/inlin/src',
+    'handle' => 'inlin',
+    'aliases' => 
+    array (
+      '@aelvan/inlin' => $vendorDir . '/aelvan/inlin/src',
+    ),
+    'name' => 'Inlin',
+    'version' => '2.1.1',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for inlining stuff in your templates.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'changelogUrl' => 'https://github.com/aelvan/Inlin-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'aelvan/stamp' => 
+  array (
+    'class' => 'aelvan\\stamp\\Stamp',
+    'basePath' => $vendorDir . '/aelvan/stamp/src',
+    'handle' => 'stamp',
+    'aliases' => 
+    array (
+      '@aelvan/stamp' => $vendorDir . '/aelvan/stamp/src',
+    ),
+    'name' => 'Stamp',
+    'version' => '2.1.0',
+    'schemaVersion' => '2.0.0',
+    'description' => 'A simple plugin for adding timestamps to filenames.',
+    'developer' => 'André Elvan',
+    'developerUrl' => 'https://www.vaersaagod.no',
+    'changelogUrl' => 'https://github.com/aelvan/Stamp-Craft/blob/craft3/CHANGELOG.md',
+    'hasCpSettings' => false,
+    'hasCpSection' => false,
+  ),
+  'ether/seo' => 
+  array (
+    'class' => 'ether\\seo\\Seo',
+    'basePath' => $vendorDir . '/ether/seo/src',
+    'handle' => 'seo',
+    'aliases' => 
+    array (
+      '@ether/seo' => $vendorDir . '/ether/seo/src',
+    ),
+    'name' => 'SEO',
+    'version' => '3.4.4',
+    'description' => 'SEO utilities including a unique field type, sitemap, & redirect manager',
+    'developer' => 'Ether Creative',
+    'developerUrl' => 'https://ethercreative.co.uk',
   ),
 );

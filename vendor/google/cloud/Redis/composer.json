@@ -14,12 +14,12 @@
             "id": "cloud-redis",
             "path": "Redis",
             "entry": null,
-            "target": "GoogleCloudPlatform/google-cloud-php-redis.git"
+            "target": "googleapis/google-cloud-php-redis.git"
         }
     },
     "require": {
         "ext-grpc": "*",
-        "google/gax": "^0.36"
+        "google/gax": "^0.37"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.0",

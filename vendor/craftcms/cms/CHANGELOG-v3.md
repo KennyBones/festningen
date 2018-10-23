@@ -1,5 +1,141 @@
 # Release Notes for Craft CMS 3.x
 
+## 3.0.27.1 - 2018-10-12
+
+### Fixed
+- Fixed an error that occurred when deleting an entry from the Edit Entry page. ([#3372](https://github.com/craftcms/cms/issues/3372))
+- Fixed an error that could occur when changing a Channel section to Structure. ([#3373](https://github.com/craftcms/cms/issues/3373))
+- Fixed an error that occurred when saving Matrix content from console requests.
+
+## 3.0.27 - 2018-10-11
+
+### Added
+- Added `craft\helpers\MigrationHelper::findForeignKey()`.
+- Added the `cp.globals.edit` and `cp.globals.edit.content` template hooks to the Edit Global Set page. ([#3356](https://github.com/craftcms/cms/pull/3356))
+
+### Changed
+- It’s now possible to load a Create Entry page with a specific user preselected in the Author field, using a new `authorId` query string param. ([#3326](https://github.com/craftcms/cms/pull/3326))
+- Matrix fields that are set to manage blocks on a per-site basis will now duplicate Matrix blocks across all of the owner element’s supported sites when the element is first created. ([#3082](https://github.com/craftcms/cms/issues/3082))
+- Disabled Matrix blocks are no longer visible when sharing an entry draft or version. ([#3338](https://github.com/craftcms/cms/issues/3338))
+- Control Panel tabs that have errors now have alert icons.
+- The Debug Toolbar is no longer shown in Live Preview iframes.
+- The Plugin Store now requires browsers with ES6 support.
+- Updated jQuery Touch Events to 2.0.0.
+- Updated Garnish to 0.1.29.
+
+### Fixed
+- Fixed a bug where enabling the “Propagate entries across all enabled sites?” setting for an existing Channel section (or converting the section to a Structure) wouldn’t update entries that had been created for the non-primary site.
+- Fixed a bug where Craft wasn’t detecting and retrying queue jobs that had timed out.
+- Fixed a bug where `Craft::$app->locale` could return the wrong locale during Live Preview requests. ([#3336](https://github.com/craftcms/cms/issues/3336))
+- Fixed a SQL error that could occur when upgrading to Craft 3, if a foreign key had an unexpected name.
+- Fixed a bug where page titles in the Control Panel could be blank when showing validation errors for things that were missing their name or title. ([#3344](https://github.com/craftcms/cms/issues/3344))
+- Fixed an error that could occur if a component’s settings were stored as `null`. ([#3342](https://github.com/craftcms/cms/pull/3342))
+- Fixed a bug where details panes weren’t visible on browser windows sized between 999 and 1,223 pixels wide.
+- Fixed an error that occurred if a Quick Post widget contained a Matrix field that had Min Blocks set and only had one block type.
+- Fixed a bug where disabled Matrix blocks were getting validated as live. ([#3354](https://github.com/craftcms/cms/issues/3354))
+- Fixed a bug where the `EVENT_AFTER_ACTIVATE_USER` event wasn’t getting triggered on user registration when email verification isn’t required. ([craftcms/commerce-digital-products#18](https://github.com/craftcms/commerce-digital-products/issues/18))
+- Added garbage collection for offline storage of remote assets. ([#3335](https://github.com/craftcms/cms/pull/3335))
+- Fixed a bug where Twig could end up in a strange state if an error occurred when preparing to render an object template. ([#3364](https://github.com/craftcms/cms/issues/3364))
+
+### Security
+- The `svg()` Twig function no longer sanitizes SVGs or namespaces their IDs or class names by default when a file path (or alias) was passed in. ([#3337](https://github.com/craftcms/cms/issues/3337))
+
+## 3.0.26.1 - 2018-09-29
+
+### Changed
+- Changed the `yiisoft/yii2-queue` version requirement to `2.1.0`. ([#3332](https://github.com/craftcms/cms/issues/3332))
+
+## 3.0.26 - 2018-09-29
+
+### Changed
+- `ancestors`, `descendants`, `nextSibling`, `parent`, and `prevSibling` are now reserved field handles.
+- The `svg()` Twig function namespaces class names in addition to IDs now.
+- Changed the `yiisoft/yii2-queue` version requirement to `2.0.1`. ([#3332](https://github.com/craftcms/cms/issues/3332))
+
+### Fixed
+- Fixed a validation error that could occur when saving an entry as a new entry if the URI format didn’t contain a `{slug}` tag. ([#3320](https://github.com/craftcms/cms/issues/3320))
+- Fixed a SQL error that could occur if a deprecation error occurred when attempting to upgrade a Craft 2 project. ([#3324](https://github.com/craftcms/cms/issues/3324))
+
+## 3.0.25 - 2018-09-18
+
+### Added
+- Added `craft\log\FileTarget::$includeUserIp` which determines whether users’ IP addresses should be included in the logs (`false` by default). ([#3310](https://github.com/craftcms/cms/pull/3310))
+
+### Fixed
+- Fixed an error that could occur when installing or updating something within the Control Panel if `composer.json` required the `roave/security-advisories` package.
+- Fixed a SQL error that could occur when searching elements on PostgreSQL installs.
+- Fixed a bug where Craft would ignore the last segment of template paths that ended in `/0`. ([#3304](https://github.com/craftcms/cms/issues/3304))
+- Fixed a Twig Template Loading Error that would occur when testing email settings, if a custom email template was used and an error occurred when rendering it. ([#3309](https://github.com/craftcms/cms/issues/3309))
+
+## 3.0.24 - 2018-09-11
+
+### Added
+- Added the `extraAppLocales` config setting.
+
+### Changed
+- The `defaultCpLanguage` config setting no longer needs to be a language that Craft is translated into, as long as it is a valid locale ID.
+- Resave Elements jobs that are queued up after saving an entry type now include the section name in the job description. ([#3290](https://github.com/craftcms/cms/issues/3290))
+- Updated Garnish to 0.1.28.
+
+### Fixed
+- Fixed a SQL error that could occur when an element query’s `orderBy` parameter was set to `dateCreated` or `dateUpdated`.
+- Fixed an error that could occur when updating to v3.0.23+ if multiple Matrix fields existed with the same handle, but they had no content tables, somehow.
+- Fixed a bug where links in activation and forgot-password emails weren’t hyperlinked, leaving it up to the mail client to hopefully be smart about it. ([#3288](https://github.com/craftcms/cms/issues/3288))
+
+## 3.0.23.1 - 2018-09-04
+
+### Fixed
+- Fixed a bug where Matrix fields would get new content tables each time they were saved.
+
+## 3.0.23 - 2018-09-04
+
+### Changed
+- Browser-based form validation is now disabled for page forms. ([#3247](https://github.com/craftcms/cms/issues/3247))
+- `craft\base\Model::hasErrors()` now supports passing an attribute name with a `.*` suffix, which will return whether any errors exist for the given attribute or any nested model attributes.
+- Added `json` to the default `allowedFileExtensions` config setting value. ([#3254](https://github.com/craftcms/cms/issues/3254))
+- Exception call stacks now collapse internal Twig methods by default.
+- Twig exception call stacks now show all of the steps leading up to the error.
+- Live Preview now reloads the preview pane automatically after an asset is saved from the Image Editor. ([#3265](https://github.com/craftcms/cms/issues/3265))
+
+### Deprecated
+- Deprecated `craft\services\Matrix::getContentTableName()`. `craft\fields\Matrix::$contentTable` should be used instead.
+
+### Removed
+- Removed `craft\services\Matrix::getParentMatrixField()`.
+
+### Fixed
+- Fixed a bug where element selection modals could be initialized without a default source selected, if some of the sources were hidden for not being available on the currently-selected site. ([#3227](https://github.com/craftcms/cms/issues/3227))
+- Fixed a bug where edit pages for categories, entries, global sets, and users weren’t revealing which tab(s) had errors on it, if the errors occurred within a Matrix field. ([#3248](https://github.com/craftcms/cms/issues/3248))
+- Fixed a SQL error that occurred when saving a Matrix field with new sub-fields on PostgreSQL. ([#3252](https://github.com/craftcms/cms/issues/3252))
+- Fixed a bug where custom user fields weren’t showing up on the My Account page when running Craft Solo edition. ([#3228](https://github.com/craftcms/cms/issues/3228))
+- Fixed a bug where multiple Matrix fields could share the same content table. ([#3249]())
+- Fixed a “cache is corrupted” Twig error that could occur when editing or saving an element if it had an Assets field with an unresolvable subfolder path template. ([#3257](https://github.com/craftcms/cms/issues/3257))
+- Fixed a bug where the Dev Mode indicator strip wasn’t visible on Chrome/Windows when using a scaled display. ([#3259](https://github.com/craftcms/cms/issues/3259))
+- Fixed a SQL error that could occur when validating an attribute using `craft\validators\UniqueValidator`, if the target record’s `find()` method joined in another table.
+
+## 3.0.22 - 2018-08-28
+
+### Changed
+- The “Deleting stale template caches” job now ensures all expired template caches have been deleted before it begins processing the caches.
+- Text inputs’ `autocomplete` attributes now get set to `off` by default, and they will only not be added if explicitly set to `null`.
+- Improved the error response when Composer is unable to perform an update due to a dependency conflict.
+- Email fields in the Control Panel now have `type="email"`.
+- `craft\helpers\Db::parseParam()` now has a `$caseInnensitive` argument, which can be set to `true` to force case-insensitive conditions on PostgreSQL installs.
+- `craft\validators\UniqueValidator` now has a `$caseInsensitive` property, which can be set to `true` to cause the unique validation to be case-insensitive on PostgreSQL installs.
+- The CLI setup wizard now detects common database connection errors that occur with MAMP, and automatically retests with adjusted settings.
+- The CLI setup wizard now detects common database authentication errors, and lets the user retry the username and password settings, skipping the others.
+- Updated Garnish to 0.1.27.
+
+### Fixed
+- Fixed a bug where Craft wasn’t reverting `composer.json` to its original state if something went wrong when running a Composer update.
+- Fixed a bug where string casing functions in `craft\helpers\StringHelper` were adding extra hyphens to strings that came in as `Upper-Kebab-Case`.
+- Fixed a bug where unique validation for element URIs, usernames, and user email address was not case-insensitive on PostgreSQL installs.
+- Fixed a bug where element queries’ `uri` params, and user queries’ `firstName`, `lastName`, `username`, and `email` params, were not case-insensitive on PostgreSQL installs.
+- Fixed a bug where the CLI setup wizard was allowing empty database names.
+- Fixed a bug where it wasn’t possible to clear template caches if template caching was disabled by the `enableTemplateCaching` config setting. ([#3229](https://github.com/craftcms/cms/issues/3229))
+- Fixed a bug where element index toolbars weren’t staying fixed to the top of the content area when scrolling down the page. ([#3233](https://github.com/craftcms/cms/issues/3233))
+- Fixed an error that could occur when updating Craft if the system was reliant on the SSL certificate provided by the`composer/ca-bundle` package.
+
 ## 3.0.21 - 2018-08-21
 
 ### Added

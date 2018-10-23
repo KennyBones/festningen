@@ -1,14 +1,22 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/angell-co/Spoon/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/angell-co/Spoon/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/angell-co/Spoon/badges/build.png?b=master)](https://scrutinizer-ci.com/g/angell-co/Spoon/build-status/master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/angell-co/Spoon/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 # Spoon
 
 Enhance your Matrix fields with groups, tabs and more!
 
-![Icon](resources/img/banner.png)
+![Banner](resources/img/banner.png)
 
 Use Spoon to group Matrix blocks, hide blocks and / or fields, and organise your block layouts with tabs.
 
 Spoon never touches your content, it is simply a layer on top of the core Matrix field type, so if you ever don’t want it you can just take the blue pill and uninstall it.
 
 Or is it the red pill. Which is the real illusion?!
+
+**Now works with [Super Table](https://verbb.io/craft-plugins/super-table)!**
+
+Get inception heavy with either a Matrix inside a Super Table or go wild and nest that Super Table in _another_ Matrix for more fun.
+
+---
 
 **Note:** The license fee for this plugin is $59 via the Craft Plugin Store.
 

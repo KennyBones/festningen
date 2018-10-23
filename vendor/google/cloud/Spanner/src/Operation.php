@@ -195,6 +195,43 @@ class Operation
     }
 
     /**
+     * Execute a DML statement and return an affected row count.
+     *
+     * @param Session $session The session in which the update operation should be executed.
+     * @param Transaction $transaction The transaction in which the operation should be executed.
+     * @param string $sql The SQL string to execute.
+     * @param array $options Configuration options.
+     * @return int
+     * @throws \InvalidArgumentException If the SQL string isn't an update operation.
+     */
+    public function executeUpdate(
+        Session $session,
+        Transaction $transaction,
+        $sql,
+        array $options = []
+    ) {
+        $res = $this->execute($session, $sql, [
+            'transactionId' => $transaction->id()
+        ] + $options);
+
+        // Iterate through the result to ensure we have query statistics available.
+        iterator_to_array($res->rows());
+
+        $stats = $res->stats();
+        if (!$stats) {
+            throw new \InvalidArgumentException(
+                'Partitioned DML response missing stats, possible due to non-DML statement as input.'
+            );
+        }
+
+        $statsItem = isset($options['statsItem'])
+            ? $options['statsItem']
+            : 'rowCountExact';
+
+        return $stats[$statsItem];
+    }
+
+    /**
      * Lookup rows in a database.
      *
      * @param Session $session The session in which to read data.
@@ -367,14 +404,29 @@ class Operation
      * be called directly.
      *
      * @param string $databaseName The database name
-     * @param array $options [optional] Configuration options.
+     * @param array $options [optional] {
+     *     Configuration options.
+     *
+     *     @type array $labels Labels to be applied to each session created in
+     *           the pool. Label keys must be between 1 and 63 characters long
+     *           and must conform to the following regular expression:
+     *           `[a-z]([-a-z0-9]*[a-z0-9])?`. Label values must be between 0
+     *           and 63 characters long and must conform to the regular
+     *           expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 64
+     *           labels can be associated with a given session. See
+     *           https://goo.gl/xmQnxf for more information on and examples of
+     *           labels.
+     * }
      * @return Session
      */
     public function createSession($databaseName, array $options = [])
     {
-        $res = $this->connection->createSession($options + [
-            'database' => $databaseName
-        ]);
+        $res = $this->connection->createSession([
+            'database' => $databaseName,
+            'session' => [
+                'labels' => $this->pluck('labels', $options, false) ?: []
+            ]
+        ] + $options);
 
         return $this->session($res['name']);
     }

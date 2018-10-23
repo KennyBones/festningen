@@ -24,14 +24,17 @@ class InlinVariable
      */
     public function er($fileName, $remote = false): string
     {
-        $documentRoot = Inlin::getInstance()->getSettings()->publicRoot ?? $_SERVER['DOCUMENT_ROOT'];
-        $filePath = $this->_removeDoubleSlashes($documentRoot.'/'.$fileName);
-
         if ($remote) {
-            $content = @file_get_contents($fileName);
+            if (strpos($fileName, '//') === 0) {
+                $protocol = \Craft::$app->request->isSecureConnection ? 'https:' : 'http:';
+                $fileName = $protocol.$fileName;
+            }
 
-            return $content;
+            return @file_get_contents($fileName);            
         }
+
+        $documentRoot = \Yii::getAlias(Inlin::getInstance()->getSettings()->publicRoot ?? '@webroot');
+        $filePath = $this->_removeDoubleSlashes($documentRoot.'/'.$fileName);
 
         if ($fileName !== '' && file_exists($filePath)) {
             $content = @file_get_contents($filePath);

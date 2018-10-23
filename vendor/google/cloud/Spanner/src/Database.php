@@ -17,12 +17,13 @@
 
 namespace Google\Cloud\Spanner;
 
+use Google\ApiCore\ValidationException;
 use Google\Cloud\Core\Exception\AbortedException;
 use Google\Cloud\Core\Exception\NotFoundException;
 use Google\Cloud\Core\Iam\Iam;
-use Google\Cloud\Core\LongRunning\LROTrait;
 use Google\Cloud\Core\LongRunning\LongRunningConnectionInterface;
 use Google\Cloud\Core\LongRunning\LongRunningOperation;
+use Google\Cloud\Core\LongRunning\LROTrait;
 use Google\Cloud\Core\Retry;
 use Google\Cloud\Spanner\Admin\Database\V1\DatabaseAdminClient;
 use Google\Cloud\Spanner\Admin\Instance\V1\InstanceAdminClient;
@@ -32,7 +33,6 @@ use Google\Cloud\Spanner\Session\Session;
 use Google\Cloud\Spanner\Session\SessionPoolInterface;
 use Google\Cloud\Spanner\Transaction;
 use Google\Cloud\Spanner\V1\SpannerClient as GapicSpannerClient;
-use Google\ApiCore\ValidationException;
 use Google\Cloud\Spanner\V1\TypeCode;
 
 /**
@@ -309,8 +309,8 @@ class Database
             'statements' => [],
         ];
 
-        $databaseName = DatabaseAdminClient::parseName($this->name())['database'];
-        $statement = sprintf('CREATE DATABASE `%s`', $databaseName);
+        $databaseId = DatabaseAdminClient::parseName($this->name())['database'];
+        $statement = sprintf('CREATE DATABASE `%s`', $databaseId);
 
         $operation = $this->connection->createDatabase([
             'instance' => $this->instance->name(),
@@ -394,6 +394,11 @@ class Database
     /**
      * Drop the database.
      *
+     * Please note that after a database is dropped, all sessions attached to it
+     * will be invalid and unusable. Calls to this method will clear any session
+     * pool attached to this database class instance and delete any sessions
+     * attached to the database class instance.
+     *
      * **NOTE**: Requires `https://www.googleapis.com/auth/spanner.admin` scope.
      *
      * Example:
@@ -413,6 +418,15 @@ class Database
         $this->connection->dropDatabase($options + [
             'name' => $this->name
         ]);
+
+        if ($this->sessionPool) {
+            $this->sessionPool->clear();
+        }
+
+        if ($this->session) {
+            $this->session->delete($options);
+            $this->session = null;
+        }
     }
 
     /**
@@ -522,6 +536,8 @@ class Database
      *           up front. Instead, the transaction will be considered
      *           "single-use", and may be used for only a single operation.
      *           **Defaults to** `false`.
+     *     @type array $sessionOptions Session configuration and request options.
+     *           Session labels may be applied using the `labels` key.
      * }
      * @return Snapshot
      * @throws \BadMethodCallException If attempting to call this method within
@@ -540,7 +556,10 @@ class Database
 
         $options['transactionOptions'] = $this->configureSnapshotOptions($options);
 
-        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READ);
+        $session = $this->selectSession(
+            SessionPoolInterface::CONTEXT_READ,
+            $this->pluck('sessionOptions', $options, false) ?: []
+        );
 
         try {
             return $this->operation->snapshot($session, $options);
@@ -581,6 +600,8 @@ class Database
      *           up front. Instead, the transaction will be considered
      *           "single-use", and may be used for only a single operation.
      *           **Defaults to** `false`.
+     *     @type array $sessionOptions Session configuration and request options.
+     *           Session labels may be applied using the `labels` key.
      * }
      * @return Transaction
      * @throws \BadMethodCallException If attempting to call this method within
@@ -595,7 +616,10 @@ class Database
         // There isn't anything configurable here.
         $options['transactionOptions'] = $this->configureTransactionOptions();
 
-        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READWRITE);
+        $session = $this->selectSession(
+            SessionPoolInterface::CONTEXT_READWRITE,
+            $this->pluck('sessionOptions', $options, false) ?: []
+        );
 
         try {
             return $this->operation->transaction($session, $options);
@@ -633,6 +657,8 @@ class Database
      *
      * Example:
      * ```
+     * use Google\Cloud\Spanner\Timestamp;
+     *
      * $transaction = $database->runTransaction(function (Transaction $t) use ($username, $password) {
      *     $rows = $t->execute('SELECT * FROM Users WHERE Name = @name and PasswordHash = @password', [
      *         'parameters' => [
@@ -646,6 +672,7 @@ class Database
      *         // Do something here to grant the user access.
      *         // Maybe set a cookie?
      *
+     *         $user['lastLoginTime'] = new Timestamp(new \DateTime);
      *         $user['loginCount'] = $user['loginCount'] + 1;
      *         $t->update('Users', $user);
      *
@@ -674,6 +701,8 @@ class Database
      *           that in a single-use transaction, only a single operation may
      *           be executed, and rollback is not available. **Defaults to**
      *           `false`.
+     *     @type array $sessionOptions Session configuration and request options.
+     *           Session labels may be applied using the `labels` key.
      * }
      * @return mixed The return value of `$operation`.
      * @throws \RuntimeException If a transaction is not committed or rolled back.
@@ -693,7 +722,10 @@ class Database
         // There isn't anything configurable here.
         $options['transactionOptions'] = $this->configureTransactionOptions();
 
-        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READWRITE);
+        $session = $this->selectSession(
+            SessionPoolInterface::CONTEXT_READWRITE,
+            $this->pluck('sessionOptions', $options, false) ?: []
+        );
 
         $attempt = 0;
         $startTransactionFn = function ($session, $options) use (&$attempt) {
@@ -1307,13 +1339,21 @@ class Database
      *           chosen, any snapshot options will be disregarded. If `$begin`
      *           is false, transaction type MUST be `SessionPoolInterface::CONTEXT_READ`.
      *           **Defaults to** `SessionPoolInterface::CONTEXT_READ`.
+     *     @type array $sessionOptions Session configuration and request options.
+     *           Session labels may be applied using the `labels` key.
      * }
      * @codingStandardsIgnoreEnd
      * @return Result
      */
     public function execute($sql, array $options = [])
     {
-        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READ);
+        $session = $this->pluck('session', $options, false);
+        if (!$session) {
+            $session = $this->selectSession(
+                SessionPoolInterface::CONTEXT_READ,
+                $this->pluck('sessionOptions', $options, false) ?: []
+            );
+        }
 
         list($transactionOptions, $context) = $this->transactionSelector($options);
         $options['transaction'] = $transactionOptions;
@@ -1321,6 +1361,136 @@ class Database
 
         try {
             return $this->operation->execute($session, $sql, $options);
+        } finally {
+            $session->setExpiration();
+        }
+    }
+
+    /**
+     * Execute a partitioned DML update.
+     *
+     * Returns the lower bound of rows modified by the DML statement.
+     *
+     * **PLEASE NOTE** Most use cases for DML are better served by using
+     * {@see Google\Cloud\Spanner\Transaction::executeUpdate()}. Please read and
+     * understand the documentation for partitioned DML before implementing it
+     * in your application.
+     *
+     * Data Manipulation Language (DML) allows you to execute statements which
+     * modify the state of the database (i.e. inserting, updating or deleting
+     * rows).
+     *
+     * To execute a SELECT statement, use
+     * {@see Google\Cloud\Spanner\Database::execute()}.
+     *
+     * The method will block until the update is complete. Running a DML
+     * statement with this method does not offer exactly once semantics, and
+     * therefore the DML statement should be idempotent. The DML statement must
+     * be fully-partitionable. Specifically, the statement must be expressible
+     * as the union of many statements which each access only a single row of
+     * the table. Partitioned DML partitions the key space and runs the DML
+     * statement over each partition in parallel using separate, internal
+     * transactions that commit independently.
+     *
+     * Partitioned DML is good fit for large, database-wide, operations that are
+     * idempotent. Partitioned DML enables large-scale changes without running
+     * into transaction size limits or accidentally locking the entire table in
+     * one large transaction. Smaller scoped statements, such as an OLTP
+     * workload, should prefer using
+     * {@see Google\Cloud\Spanner\Transaction::executeUpdate()}.
+     *
+     * * The DML statement must be fully-partitionable. Specifically, the
+     *   statement must be expressible as the union of many statements which
+     *   each access only a single row of the table.
+     * * The statement is not applied atomically to all rows of the table.
+     *   Rather, the statement is applied atomically to partitions of the table,
+     *   in independent internal transactions. Secondary index rows are updated
+     *   atomically with the base table rows.
+     * * Partitioned DML does not guarantee exactly-once execution semantics
+     *   against a partition. The statement will be applied at least once to
+     *   each partition. It is strongly recommended that the DML statement
+     *   should be idempotent to avoid unexpected results. For instance, it is
+     *   potentially dangerous to run a statement such as
+     *   `UPDATE table SET column = column + 1` as it could be run multiple
+     *   times against some rows.
+     * * The partitions are committed automatically - there is no support for
+     *   Commit or Rollback. If the call returns an error, or if the client
+     *   issuing the DML statement dies, it is possible that some rows had the
+     *   statement executed on them successfully. It is also possible that the
+     *   statement was never executed against other rows.
+     * * If any error is encountered during the execution of the partitioned
+     *   DML operation (for instance, a UNIQUE INDEX violation, division by
+     *   zero, or a value that cannot be stored due to schema constraints), then
+     *   the operation is stopped at that point and an error is returned. It is
+     *   possible that at this point, some partitions have been committed (or
+     *   even committed multiple times), and other partitions have not been run
+     *   at all.
+     *
+     * Given the above, Partitioned DML is good fit for large, database-wide,
+     * operations that are idempotent, such as deleting old rows from a very
+     * large table.
+     *
+     * Please refer to the TransactionOptions documentation referenced below in
+     * order to fully understand the semantics and intended use case for
+     * partitioned DML updates.
+     *
+     * Example:
+     * ```
+     * use Google\Cloud\Spanner\Date;
+     *
+     * $deactivatedUserCount = $database->executePartitionedUpdate(
+     *     'UPDATE Users u SET u.activeSubscription = false, u.subscriptionEndDate = @date ' .
+     *     'WHERE TIMESTAMP_DIFF(CURRENT_TIMESTAMP(), u.lastBillDate, DAY) > 365',
+     *     [
+     *         'parameters' => [
+     *             'date' => new Date(new \DateTime)
+     *         ]
+     *     ]
+     * );
+     * ```
+     *
+     * @codingStandardsIgnoreStart
+     * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#google.spanner.v1.TransactionOptions TransactionOptions
+     * @see https://cloud.google.com/spanner/reference/rpc/google.spanner.v1#google.spanner.v1.ExecuteSqlRequest ExecuteSqlRequest
+     * @codingStandardsIgnoreEnd
+     *
+     * @param string $statement The DML statement to execute.
+     * @param array $options [optional] {
+     *     Configuration Options.
+     *
+     *     @type array $parameters A key/value array of Query Parameters, where
+     *           the key is represented in the statement prefixed by a `@`
+     *           symbol.
+     *     @type array $types A key/value array of Query Parameter types.
+     *           Generally, Google Cloud PHP can infer types. Explicit type
+     *           declarations are required in the case of struct parameters,
+     *           or when a null value exists as a parameter.
+     *           Accepted values for primitive types are defined as constants on
+     *           {@see Google\Cloud\Spanner\Database}, and are as follows:
+     *           `Database::TYPE_BOOL`, `Database::TYPE_INT64`,
+     *           `Database::TYPE_FLOAT64`, `Database::TYPE_TIMESTAMP`,
+     *           `Database::TYPE_DATE`, `Database::TYPE_STRING`,
+     *           `Database::TYPE_BYTES`. If the value is an array, use
+     *           {@see Google\Cloud\Spanner\ArrayType} to declare the array
+     *           parameter types. Likewise, for structs, use
+     *           {@see Google\Cloud\Spanner\StructType}.
+     * }
+     * @return int The number of rows modified.
+     */
+    public function executePartitionedUpdate($statement, array $options = [])
+    {
+        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READWRITE);
+
+        $transaction = $this->operation->transaction($session, [
+            'transactionOptions' => [
+                'partitionedDml' => []
+            ]
+        ]);
+
+        try {
+            return $this->operation->executeUpdate($session, $transaction, $statement, [
+                'statsItem' => 'rowCountLowerBound'
+            ] + $options);
         } finally {
             $session->setExpiration();
         }
@@ -1427,13 +1597,18 @@ class Database
      *           chosen, any snapshot options will be disregarded. If `$begin`
      *           is false, transaction type MUST be `SessionPoolInterface::CONTEXT_READ`.
      *           **Defaults to** `SessionPoolInterface::CONTEXT_READ`.
+     *     @type array $sessionOptions Session configuration and request options.
+     *           Session labels may be applied using the `labels` key.
      * }
      * @codingStandardsIgnoreEnd
      * @return Result
      */
     public function read($table, KeySet $keySet, array $columns, array $options = [])
     {
-        $session = $this->selectSession(SessionPoolInterface::CONTEXT_READ);
+        $session = $this->selectSession(
+            SessionPoolInterface::CONTEXT_READ,
+            $this->pluck('sessionOptions', $options, false) ?: []
+        );
 
         list($transactionOptions, $context) = $this->transactionSelector($options);
         $options['transaction'] = $transactionOptions;
@@ -1494,8 +1669,11 @@ class Database
     {
         try {
             $this->close();
-        } catch (\Exception $ex) {
-        }
+        //@codingStandardsIgnoreStart
+        //@codeCoverageIgnoreStart
+        } catch (\Exception $ex) {}
+        //@codeCoverageIgnoreEnd
+        //@codingStandardsIgnoreStart
     }
 
     /**
@@ -1574,6 +1752,7 @@ class Database
             'name' => $this->name,
             'instance' => $this->instance,
             'sessionPool' => $this->sessionPool,
+            'session' => $this->session,
         ];
     }
 
@@ -1584,9 +1763,10 @@ class Database
      *
      * @param string $context [optional] The session context. **Defaults to**
      *        `r` (READ).
+     * @param array $options [optional] Configuration options.
      * @return Session
      */
-    private function selectSession($context = SessionPoolInterface::CONTEXT_READ)
+    private function selectSession($context = SessionPoolInterface::CONTEXT_READ, array $options = [])
     {
         if ($this->session) {
             return $this->session;
@@ -1596,9 +1776,16 @@ class Database
             return $this->session = $this->sessionPool->acquire($context);
         }
 
-        return $this->session = $this->operation->createSession($this->name);
+        return $this->session = $this->operation->createSession($this->name, $options);
     }
 
+    /**
+     * Common method to run mutations within a single-use transaction.
+     *
+     * @param array $mutations A list of mutations to execute.
+     * @param array $options [optional] Configuration options.
+     * @return Timestamp The commit timestamp.
+     */
     private function commitInSingleUseTransaction(array $mutations, array $options = [])
     {
         $options['mutations'] = $mutations;
@@ -1625,8 +1812,10 @@ class Database
                 $instance,
                 $name
             );
+        //@codeCoverageIgnoreStart
         } catch (ValidationException $e) {
             return $name;
         }
+        //@codeCoverageIgnoreEnd
     }
 }

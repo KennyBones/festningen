@@ -92,6 +92,8 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
 
     public $columns = [];
 
+    public $contentTable;
+
     // Superseeded - but will throw an error when updating from Craft 2. These will exist in the field
     // settings, but not in this class - we just add them as 'dummy' properties for now...
     public $fieldLayout;
@@ -200,7 +202,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
                 $this->_blockTypes[] = $config;
             } else {
                 $blockType = new SuperTableBlockTypeModel();
-                $blockType->id = $key;
+                $blockType->id = is_numeric($key) ? $key : null;
                 $blockType->fieldId = $this->id;
 
                 $fields = [];
@@ -215,7 +217,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
 
                             $fields[] = Craft::$app->getFields()->createField([
                                 'type' => $fieldConfig['type'],
-                                'id' => $fieldId,
+                                'id' => is_numeric($fieldId) ? $fieldId : null,
                                 'name' => $fieldConfig['name'],
                                 'handle' => $fieldConfig['handle'],
                                 'instructions' => $fieldConfig['instructions'],
@@ -267,16 +269,6 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
         $fieldTypeInfo = $this->_getFieldOptionsForConfigurator();
 
         $blockTypes = $this->getBlockTypes();
-        $tableId = ($blockTypes) ? $blockTypes[0]->id : 'new';
-
-        $view = Craft::$app->getView();
-
-        $view->registerAssetBundle(SuperTableAsset::class);
-        $view->registerJs('new Craft.SuperTable.Configurator(' .
-            Json::encode($tableId, JSON_UNESCAPED_UNICODE) . ', ' .
-            Json::encode($fieldTypeInfo, JSON_UNESCAPED_UNICODE) . ', ' .
-            Json::encode(Craft::$app->getView()->getNamespace(), JSON_UNESCAPED_UNICODE) .
-        ');');
 
         // Look for any missing fields and convert to Plain Text
         foreach ($this->getBlockTypes() as $blockType) {
@@ -343,9 +335,37 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
             }
         }
 
+        $blockTypes = [];
+        $blockTypeFields = [];
+        $totalNewBlockTypes = 0;
+
+        foreach ($this->getBlockTypes() as $blockType) {
+            $blockTypeId = (string)($blockType->id ?? 'new' . ++$totalNewBlockTypes);
+            $blockTypes[$blockTypeId] = $blockType;
+
+            $blockTypeFields[$blockTypeId] = [];
+            $totalNewFields = 0;
+            foreach ($blockType->getFields() as $field) {
+                $fieldId = (string)($field->id ?? 'new' . ++$totalNewFields);
+                $blockTypeFields[$blockTypeId][$fieldId] = $field;
+            }
+        }
+
+        $tableId = ArrayHelper::firstKey($blockTypes) ?? 'new';
+
+        $view = Craft::$app->getView();
+        $view->registerAssetBundle(SuperTableAsset::class);
+        $view->registerJs('new Craft.SuperTable.Configurator(' .
+            Json::encode($tableId, JSON_UNESCAPED_UNICODE) . ', ' .
+            Json::encode($fieldTypeInfo, JSON_UNESCAPED_UNICODE) . ', ' .
+            Json::encode(Craft::$app->getView()->getNamespace(), JSON_UNESCAPED_UNICODE) .
+        ');');
+
         return Craft::$app->getView()->renderTemplate('super-table/settings', [
             'supertableField' => $this,
-            'fieldTypes' => $fieldTypeOptions
+            'fieldTypes' => $fieldTypeOptions,
+            'blockTypes' => $blockTypes,
+            'blockTypeFields' => $blockTypeFields,
         ]);
     }
 
@@ -452,7 +472,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
         $blockTypeInfo = $this->_getBlockTypeInfoForInput($element);
 
         $createDefaultBlocks = $this->minRows != 0 && count($blockTypeInfo) === 1;
-        $staticBlocks = ($createDefaultBlocks && $this->minRows == $this->maxRows) || $this->staticField;
+        $staticBlocks = ($createDefaultBlocks && $this->minRows == $this->maxRows);
 
         Craft::$app->getView()->registerAssetBundle(SuperTableAsset::class);
 
@@ -503,6 +523,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
             'blocks' => $value,
             'static' => false,
             'staticBlocks' => $staticBlocks,
+            'staticField' => $this->staticField,
             'supertableField' => $this,
         ]);
     }
@@ -802,7 +823,7 @@ class SuperTableField extends Field implements EagerLoadingFieldInterface
                 'fields' => $fieldLayoutFields,
                 'element' => $block,
                 'settings' => $settings,
-                'staticBlocks' => $this->staticField,
+                'staticField' => $this->staticField,
             ]));
 
             // Reset $_isFresh's

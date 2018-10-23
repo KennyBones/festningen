@@ -148,9 +148,81 @@ class Instance extends \Google\Protobuf\Internal\Message
      */
     private $authorized_network = '';
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type string $name
+     *           Required. Unique name of the resource in this scope including project and
+     *           location using the form:
+     *               `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+     *           Note: Redis instances are managed and addressed at regional level so
+     *           location_id here refers to a GCP region; however, users get to choose which
+     *           specific zone (or collection of zones for cross-zone instances) an instance
+     *           should be provisioned in. Refer to [location_id] and
+     *           [alternative_location_id] fields for more details.
+     *     @type string $display_name
+     *           An arbitrary and optional user-provided name for the instance.
+     *     @type array|\Google\Protobuf\Internal\MapField $labels
+     *           Resource labels to represent user provided metadata
+     *     @type string $location_id
+     *           Optional. The zone where the instance will be provisioned. If not provided,
+     *           the service will choose a zone for the instance. For STANDARD_HA tier,
+     *           instances will be created across two zones for protection against zonal
+     *           failures. if [alternative_location_id] is also provided, it must be
+     *           different from [location_id].
+     *     @type string $alternative_location_id
+     *           Optional. Only applicable to STANDARD_HA tier which protects the instance
+     *           against zonal failures by provisioning it across two zones. If provided, it
+     *           must be a different zone from the one provided in [location_id].
+     *     @type string $redis_version
+     *           Optional. The version of Redis software.
+     *           If not provided, latest supported version will be used.
+     *     @type string $reserved_ip_range
+     *           Optional. The CIDR range of internal addresses that are reserved for this
+     *           instance. If not provided, the service will choose an unused /29 block,
+     *           for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique
+     *           and non-overlapping with existing subnets in a network.
+     *     @type string $host
+     *           Output only. Hostname or IP address of the exposed redis endpoint used by
+     *           clients to connect to the service.
+     *     @type int $port
+     *           Output only. The port number of the exposed redis endpoint.
+     *     @type string $current_location_id
+     *           Output only. The current zone where the Redis endpoint is placed. In
+     *           single zone deployments, this will always be the same as [location_id]
+     *           provided by the user at creation time. In cross-zone instances (only
+     *           applicable in STANDARD_HA tier), this can be either [location_id] or
+     *           [alternative_location_id] and can change on a failover event.
+     *     @type \Google\Protobuf\Timestamp $create_time
+     *           Output only. The time the instance was created.
+     *     @type int $state
+     *           Output only. The current state of this instance.
+     *     @type string $status_message
+     *           Output only. Additional information about the current status of this
+     *           instance, if available.
+     *     @type array|\Google\Protobuf\Internal\MapField $redis_configs
+     *           Optional. Redis configuration parameters, according to
+     *           http://redis.io/topics/config. Currently, the only supported parameters
+     *           are:
+     *            * maxmemory-policy
+     *            * notify-keyspace-events
+     *     @type int $tier
+     *           Required. The service tier of the instance.
+     *     @type int $memory_size_gb
+     *           Required. Redis memory size in GB.
+     *     @type string $authorized_network
+     *           Optional. The full name of the Google Compute Engine
+     *           [network](/compute/docs/networks-and-firewalls#networks) to which the
+     *           instance is connected. If left unspecified, the `default` network
+     *           will be used.
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Google\Cloud\Redis\V1Beta1\CloudRedis::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

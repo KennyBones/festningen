@@ -13,13 +13,13 @@ namespace angellco\spoon\services;
 use angellco\spoon\Spoon;
 use angellco\spoon\models\BlockType;
 use angellco\spoon\records\BlockType as BlockTypeRecord;
+use angellco\spoon\errors\BlockTypeNotFoundException;
 
 use Craft;
 use craft\base\Component;
 use craft\records\FieldLayout as FieldLayoutRecord;
 use craft\records\FieldLayoutField as FieldLayoutFieldRecord;
 use craft\records\FieldLayoutTab as FieldLayoutTabRecord;
-use nystudio107\seomatic\models\jsonld\Integer;
 
 /**
  * BlockTypes Service
@@ -41,6 +41,10 @@ class BlockTypes extends Component
 
     private $_blockTypesByContext;
 
+    private $_superTablePlugin;
+
+    private $_superTableService;
+
 
     // Public Methods
     // =========================================================================
@@ -57,7 +61,7 @@ class BlockTypes extends Component
         $blockTypeRecord = BlockTypeRecord::findOne($id);
 
         if (!$blockTypeRecord) {
-            throw new Exception(Craft::t('No Spoon block type exists with the ID “{id}”', ['id' => $id]));
+            throw new BlockTypeNotFoundException(Craft::t('No Spoon block type exists with the ID “{id}”', ['id' => $id]));
         }
 
         return $this->_populateBlockTypeFromRecord($blockTypeRecord);
@@ -91,20 +95,20 @@ class BlockTypes extends Component
     /**
      * Returns a block type by its context.
      *
-     * @param      $context
-     * @param bool $groupBy Group by an optional model attribute to group by
-     * @param bool $ignoreSubContext Optionally ignore the sub context (id)
-     * @param bool $fieldId
+     * @param string       $context
+     * @param null|string  $groupBy Group by an optional model attribute to group by
+     * @param bool         $ignoreSubContext Optionally ignore the sub context (id)
+     * @param null|integer $fieldId Optinally filter by fieldId
      *
      * @return array
      */
-    public function getByContext($context, $groupBy = false, $ignoreSubContext = false, $fieldId = false)
+    public function getByContext($context, $groupBy = null, $ignoreSubContext = false, $fieldId = null)
     {
 
         if ($ignoreSubContext)
         {
 
-            if ($fieldId) {
+            if ($fieldId !== null) {
                 $condition = [
                     'fieldId' => $fieldId,
                     ['like', 'context', $context.'%', false]
@@ -117,14 +121,13 @@ class BlockTypes extends Component
 
             $blockTypeRecords = BlockTypeRecord::find()->where($condition)->all();
 
-        }
-        else
+        } else
         {
             $condition = [
                 'context' => $context
             ];
 
-            if ($fieldId)
+            if ($fieldId !== null)
             {
                 $condition['fieldId'] = $fieldId;
             }
@@ -142,13 +145,12 @@ class BlockTypes extends Component
                 $this->_blockTypesByContext[$context][$blockType->id] = $blockType;
             }
 
-        }
-        else
+        } else
         {
             return [];
         }
 
-        if ($groupBy)
+        if ($groupBy !== null)
         {
             $return = [];
 
@@ -157,8 +159,7 @@ class BlockTypes extends Component
                 $return[$blockType->$groupBy][] = $blockType;
             }
             return $return;
-        }
-        else
+        } else
         {
             return $this->_blockTypesByContext[$context];
         }
@@ -185,8 +186,7 @@ class BlockTypes extends Component
             {
                 throw new Exception(Craft::t('No Spoon Block Type exists with the ID “{id}”', ['id' => $blockType->id]));
             }
-        }
-        else
+        } else
         {
             $blockTypeRecord = new BlockTypeRecord();
         }
@@ -233,14 +233,13 @@ class BlockTypes extends Component
     /**
      * Deletes all the block types for a given context
      *
-     * @param bool $context
-     * @param bool $fieldId
+     * @param null|string  $context
+     * @param null|integer $fieldId
      *
      * @return bool
-     * @throws \Exception
      * @throws \yii\db\Exception
      */
-    public function deleteByContext($context = false, $fieldId = false)
+    public function deleteByContext($context = null, $fieldId = null)
     {
 
         if (!$context)
@@ -258,12 +257,12 @@ class BlockTypes extends Component
             }
 
             $affectedRows = Craft::$app->getDb()->createCommand()
-                ->delete('{{%spoon_blocktypes}}',$condition)
+                ->delete('{{%spoon_blocktypes}}', $condition)
                 ->execute();
 
             $transaction->commit();
 
-            return (bool) $affectedRows;
+            return (bool)$affectedRows;
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
@@ -324,8 +323,7 @@ class BlockTypes extends Component
             // spooned blocktype model
             $spoonedBlockType->fieldLayoutId = $layout->id;
 
-        }
-        else
+        } else
         {
             $spoonedBlockType->fieldLayoutId = null;
         }
@@ -347,7 +345,7 @@ class BlockTypes extends Component
      * for the given context and fieldId combination
      *
      * @param  string            $context required
-     * @param  int               $fieldId required
+     * @param  integer           $fieldId required
      * @return false|array
      */
     public function getFieldLayoutIds($context, $fieldId = false)
@@ -403,6 +401,49 @@ class BlockTypes extends Component
         // Use the fieldId to get the field and save the handle on to the model
         $matrixField = Craft::$app->fields->getFieldById($blockType->fieldId);
         $blockType->fieldHandle = $matrixField->handle;
+
+
+        // Super Table support
+        if (!$this->_superTablePlugin) {
+            $this->_superTablePlugin = \Craft::$app->plugins->getPluginByPackageName('verbb/super-table');
+        }
+        if ($this->_superTablePlugin) {
+
+            if (!$this->_superTableService) {
+                $this->_superTableService = new \verbb\supertable\services\SuperTableService();
+            }
+
+            // If the field is actually inside a SuperTable
+            if (strpos($matrixField->context, 'superTableBlockType') === 0) {
+                $parts = explode(':', $matrixField->context);
+                if (isset($parts[1])) {
+
+                    /** @var \verbb\supertable\models\SuperTableBlockTypeModel $superTableBlockType */
+                    $superTableBlockType = $this->_superTableService->getBlockTypeById($parts[1]);
+
+                    /** @var \verbb\supertable\fields\SuperTableField $superTableField */
+                    $superTableField = \Craft::$app->fields->getFieldById($superTableBlockType->fieldId);
+
+                    $blockType->fieldHandle = $superTableField->handle."-".$matrixField->handle;
+
+                    // If the context of _this_ field is inside a Matrix block ... then we need to do more inception
+                    if (strpos($superTableField->context, 'matrixBlockType') === 0) {
+                        $nestedParts = explode(':', $superTableField->context);
+                        if (isset($nestedParts[1])) {
+
+                            /** @var craft\models\MatrixBlockType $matrixBlockType */
+                            $matrixBlockType = \Craft::$app->matrix->getBlockTypeById($nestedParts[1]);
+
+                            /** @var craft\fields\Matrix $globalField */
+                            $globalField = \Craft::$app->fields->getFieldById($matrixBlockType->fieldId);
+
+                            $blockType->fieldHandle = $globalField->handle."-".$superTableField->handle."-".$matrixField->handle;
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Save the MatrixBlockTypeModel on to our model
         $blockType->matrixBlockType = $blockType->getBlockType();

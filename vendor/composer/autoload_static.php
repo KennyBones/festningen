@@ -160,6 +160,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Grpc\\Gcp\\' => 9,
             'Grpc\\' => 5,
             'Google\\Type\\' => 12,
             'Google\\Rpc\\' => 11,
@@ -196,6 +197,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'Google\\Cloud\\Bigtable\\' => 22,
             'Google\\Cloud\\BigQuery\\DataTransfer\\' => 35,
             'Google\\Cloud\\BigQuery\\' => 22,
+            'Google\\Cloud\\Asset\\' => 19,
             'Google\\Cloud\\' => 13,
             'Google\\Auth\\' => 12,
             'Google\\Api\\' => 11,
@@ -224,6 +226,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
             'GPBMetadata\\Google\\Cloud\\Dialogflow\\' => 36,
             'GPBMetadata\\Google\\Cloud\\Dataproc\\' => 34,
             'GPBMetadata\\Google\\Cloud\\Bigquery\\Datatransfer\\' => 47,
+            'GPBMetadata\\Google\\Cloud\\Asset\\' => 31,
             'GPBMetadata\\Google\\Bigtable\\' => 28,
             'GPBMetadata\\Google\\' => 19,
         ),
@@ -302,7 +305,7 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         ),
         'yii\\debug\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yiisoft/yii2-debug',
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-debug/src',
         ),
         'yii\\composer\\' => 
         array (
@@ -564,6 +567,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Grpc\\Gcp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/grpc-gcp/src',
+        ),
         'Grpc\\' => 
         array (
             0 => __DIR__ . '/..' . '/grpc/grpc/src/lib',
@@ -708,6 +715,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/google/cloud/BigQuery/src',
         ),
+        'Google\\Cloud\\Asset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud/Asset/src',
+        ),
         'Google\\Cloud\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/cloud/src',
@@ -821,6 +832,10 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
         array (
             0 => __DIR__ . '/..' . '/google/cloud/BigQueryDataTransfer/metadata',
         ),
+        'GPBMetadata\\Google\\Cloud\\Asset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/cloud/Asset/metadata',
+        ),
         'GPBMetadata\\Google\\Bigtable\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/cloud/Bigtable/metadata',
@@ -876,7 +891,8 @@ class ComposerStaticInit562fdc7e6cd10ad667d41b3b918ed867
     );
 
     public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
+        0 => __DIR__ . '/..' . '/google/grpc-gcp/src/generated',
+        1 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (

@@ -702,8 +702,10 @@ class UsersController extends Controller
         if (!$isNewUser) {
             if ($user->getIsCurrent()) {
                 $title = Craft::t('app', 'My Account');
+            } else if ($name = trim($user->getName())) {
+                $title = Craft::t('app', '{user}’s Account', ['user' => $name]);
             } else {
-                $title = Craft::t('app', '{user}’s Account', ['user' => $user->getName()]);
+                $title = Craft::t('app', 'Edit User');
             }
         } else {
             $title = Craft::t('app', 'Register a new user');
@@ -718,32 +720,29 @@ class UsersController extends Controller
             ]
         ];
 
-        // Only show custom fields if it's Craft Pro
-        if ($edition === Craft::Pro) {
-            foreach ($user->getFieldLayout()->getTabs() as $index => $tab) {
-                // Skip if the tab doesn't have any fields
-                if (empty($tab->getFields())) {
-                    continue;
-                }
+        foreach ($user->getFieldLayout()->getTabs() as $index => $tab) {
+            // Skip if the tab doesn't have any fields
+            if (empty($tab->getFields())) {
+                continue;
+            }
 
-                // Do any of the fields on this tab have errors?
-                $hasErrors = false;
+            // Do any of the fields on this tab have errors?
+            $hasErrors = false;
 
-                if ($user->hasErrors()) {
-                    foreach ($tab->getFields() as $field) {
-                        /** @var Field $field */
-                        if ($hasErrors = $user->hasErrors($field->handle)) {
-                            break;
-                        }
+            if ($user->hasErrors()) {
+                foreach ($tab->getFields() as $field) {
+                    /** @var Field $field */
+                    if ($hasErrors = $user->hasErrors($field->handle . '.*')) {
+                        break;
                     }
                 }
-
-                $tabs['profile' . $index] = [
-                    'label' => Craft::t('site', $tab->name),
-                    'url' => '#profile-' . $tab->getHtmlId(),
-                    'class' => $hasErrors ? 'error' : null
-                ];
             }
+
+            $tabs['profile' . $index] = [
+                'label' => Craft::t('site', $tab->name),
+                'url' => '#profile-' . $tab->getHtmlId(),
+                'class' => $hasErrors ? 'error' : null
+            ];
         }
 
         // Show the permission tab for the users that can change them on Craft Pro editions
@@ -996,9 +995,9 @@ class UsersController extends Controller
         $user->firstName = $request->getBodyParam('firstName', $user->firstName);
         $user->lastName = $request->getBodyParam('lastName', $user->lastName);
 
-        // If email verification is required, then new users will be saved in a pending state,
+        // New users should always be initially saved in a pending state,
         // even if an admin is doing this and opted to not send the verification email
-        if ($isNewUser && $requireEmailVerification) {
+        if ($isNewUser) {
             $user->pending = true;
         }
 
@@ -1061,6 +1060,12 @@ class UsersController extends Controller
             ]);
 
             return null;
+        }
+
+        // If this is a new user and email verification isn't required,
+        // go ahead and activate them now.
+        if ($isNewUser && !$requireEmailVerification) {
+            Craft::$app->getUsers()->activateUser($user);
         }
 
         // Save their preferences too

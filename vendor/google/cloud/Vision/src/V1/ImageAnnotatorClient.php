@@ -34,6 +34,7 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ArrayTrait;
 use Google\ApiCore\RetrySettings;
 use Google\Cloud\Vision\VisionHelpersTrait;
+use Google\Cloud\Vision\V1\Feature\Type;
 use Google\Cloud\Vision\V1\Gapic\ImageAnnotatorGapicClient;
 use InvalidArgumentException;
 
@@ -87,10 +88,10 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * Example:
      * ```
      * use Google\Cloud\Vision\V1\Feature;
-     * use Google\Cloud\Vision\V1\Feature_Type;
+     * use Google\Cloud\Vision\V1\Feature\Type;
      *
      * $imageResource = fopen('path/to/image.jpg', 'r');
-     * $features = [Feature_Type::FACE_DETECTION];
+     * $features = [Type::FACE_DETECTION];
      * $response = $imageAnnotatorClient->annotateImage($imageResource, $features);
      * ```
      *
@@ -133,8 +134,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->faceDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -154,7 +155,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::FACE_DETECTION,
+            Type::FACE_DETECTION,
             $optionalArgs
         );
     }
@@ -168,8 +169,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->landmarkDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -189,7 +190,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::LANDMARK_DETECTION,
+            Type::LANDMARK_DETECTION,
             $optionalArgs
         );
     }
@@ -203,8 +204,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->logoDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -224,7 +225,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::LOGO_DETECTION,
+            Type::LOGO_DETECTION,
             $optionalArgs
         );
     }
@@ -238,8 +239,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->labelDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -259,7 +260,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::LABEL_DETECTION,
+            Type::LABEL_DETECTION,
             $optionalArgs
         );
     }
@@ -273,8 +274,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->textDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -294,7 +295,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::TEXT_DETECTION,
+            Type::TEXT_DETECTION,
             $optionalArgs
         );
     }
@@ -308,8 +309,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->documentTextDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -329,7 +330,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::DOCUMENT_TEXT_DETECTION,
+            Type::DOCUMENT_TEXT_DETECTION,
             $optionalArgs
         );
     }
@@ -343,8 +344,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->safeSearchDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -364,7 +365,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::SAFE_SEARCH_DETECTION,
+            Type::SAFE_SEARCH_DETECTION,
             $optionalArgs
         );
     }
@@ -378,8 +379,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->imagePropertiesDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -399,7 +400,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::IMAGE_PROPERTIES,
+            Type::IMAGE_PROPERTIES,
             $optionalArgs
         );
     }
@@ -413,8 +414,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->cropHintsDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -434,7 +435,7 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::CROP_HINTS,
+            Type::CROP_HINTS,
             $optionalArgs
         );
     }
@@ -448,8 +449,8 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
      * $response = $imageAnnotatorClient->webDetection($imageContent);
      * ```
      *
-     * @param Image $image        An image annotation request.
-     * @param array $optionalArgs {
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
      *     Configuration Options.
      *
      *     @type ImageContext        $imageContext  Additional context that may accompany the image.
@@ -469,7 +470,42 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     {
         return $this->annotateSingleFeature(
             $image,
-            Feature_Type::WEB_DETECTION,
+            Type::WEB_DETECTION,
+            $optionalArgs
+        );
+    }
+
+    /**
+     * Run object localization for an image.
+     *
+     * Example:
+     * ```
+     * $imageContent = file_get_contents('path/to/image.jpg');
+     * $response = $imageAnnotatorClient->objectLocalization($imageContent);
+     * ```
+     *
+     * @param resource|string|Image $image The image to be processed.
+     * @param array $optionalArgs   {
+     *     Configuration Options.
+     *
+     *     @type ImageContext        $imageContext  Additional context that may accompany the image.
+     *     @type RetrySettings|array $retrySettings
+     *          Retry settings to use for this call. Can be a
+     *          {@see Google\ApiCore\RetrySettings} object, or an associative array
+     *          of retry settings parameters. See the documentation on
+     *          {@see Google\ApiCore\RetrySettings} for example usage.
+     * }
+     *
+     * @return AnnotateImageResponse
+     *
+     * @throws ApiException if the remote call fails
+     * @experimental
+     */
+    public function objectLocalization($image, $optionalArgs = [])
+    {
+        return $this->annotateSingleFeature(
+            $image,
+            Type::OBJECT_LOCALIZATION,
             $optionalArgs
         );
     }

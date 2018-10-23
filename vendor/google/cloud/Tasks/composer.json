@@ -19,11 +19,11 @@
             "id": "cloud-tasks",
             "path": "Tasks",
             "entry": null,
-            "target": "GoogleCloudPlatform/google-cloud-php-tasks.git"
+            "target": "googleapis/google-cloud-php-tasks.git"
         }
     },
     "require": {
-        "google/gax": "^0.36"
+        "google/gax": "^0.37"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.0",

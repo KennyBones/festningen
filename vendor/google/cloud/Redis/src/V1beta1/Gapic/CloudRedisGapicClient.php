@@ -71,18 +71,21 @@ use Google\Protobuf\FieldMask;
  * $cloudRedisClient = new CloudRedisClient();
  * try {
  *     $formattedParent = $cloudRedisClient->locationName('[PROJECT]', '[LOCATION]');
- *     // Iterate through all elements
- *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $cloudRedisClient->close();
@@ -139,6 +142,7 @@ class CloudRedisGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/cloud_redis_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/cloud_redis_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/cloud_redis_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -369,18 +373,21 @@ class CloudRedisGapicClient
      * $cloudRedisClient = new CloudRedisClient();
      * try {
      *     $formattedParent = $cloudRedisClient->locationName('[PROJECT]', '[LOCATION]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $cloudRedisClient->listInstances($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $cloudRedisClient->close();
@@ -498,7 +505,7 @@ class CloudRedisGapicClient
      * try {
      *     $formattedParent = $cloudRedisClient->locationName('[PROJECT]', '[LOCATION]');
      *     $instanceId = 'test_instance';
-     *     $tier = Instance_Tier::BASIC;
+     *     $tier = Tier::BASIC;
      *     $memorySizeGb = 1;
      *     $instance = new Instance();
      *     $instance->setTier($tier);
@@ -506,14 +513,17 @@ class CloudRedisGapicClient
      *     $operationResponse = $cloudRedisClient->createInstance($formattedParent, $instanceId, $instance);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       $result = $operationResponse->getResult();
-     *       // doSomethingWith($result)
+     *         $result = $operationResponse->getResult();
+     *         // doSomethingWith($result)
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $cloudRedisClient->createInstance($formattedParent, $instanceId, $instance);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -600,14 +610,17 @@ class CloudRedisGapicClient
      *     $operationResponse = $cloudRedisClient->updateInstance($updateMask, $instance);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       $result = $operationResponse->getResult();
-     *       // doSomethingWith($result)
+     *         $result = $operationResponse->getResult();
+     *         // doSomethingWith($result)
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $cloudRedisClient->updateInstance($updateMask, $instance);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -678,13 +691,16 @@ class CloudRedisGapicClient
      *     $operationResponse = $cloudRedisClient->deleteInstance($formattedName);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $cloudRedisClient->deleteInstance($formattedName);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work

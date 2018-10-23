@@ -17,7 +17,7 @@
         "squizlabs/php_codesniffer": "2.*",
         "phpdocumentor/reflection": "^3.0",
         "erusev/parsedown": "^1.6",
-        "google/gax": "^0.36",
+        "google/gax": "^0.37",
         "opis/closure": "^3"
     },
     "suggest": {
@@ -27,7 +27,7 @@
     "extra": {
         "component": {
             "id": "cloud-core",
-            "target": "GoogleCloudPlatform/google-cloud-php-core.git",
+            "target": "googleapis/google-cloud-php-core.git",
             "path": "Core",
             "entry": "src/ServiceBuilder.php"
         }

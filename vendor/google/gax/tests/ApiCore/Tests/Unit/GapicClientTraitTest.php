@@ -32,17 +32,19 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
+use Google\ApiCore\AgentHeader;
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\BidiStream;
+use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
@@ -50,8 +52,10 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use GPBMetadata\Google\Api\Auth;
-use GuzzleHttp\Promise\PromiseInterface;
+use Grpc\Gcp\ApiConfig;
+use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
@@ -63,12 +67,12 @@ class GapicClientTraitTest extends TestCase
     {
         // Reset the static gapicVersion field between tests
         $client = new GapicClientTraitStub();
-        $client->set('gapicVersion', null, true);
+        $client->set('gapicVersionFromFile', null, true);
     }
 
     public function testHeadersOverwriteBehavior()
     {
-        $headerDescriptor = new AgentHeaderDescriptor([
+        $header = AgentHeader::buildAgentHeader([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
             'gapicVersion' => '0.9.0',
@@ -96,7 +100,7 @@ class GapicClientTraitTest extends TestCase
                 ])
             );
         $client = new GapicClientTraitStub();
-        $client->set('agentHeaderDescriptor', $headerDescriptor);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', [
             'method' => $this->getMockBuilder(RetrySettings::class)
                 ->disableOriginalConstructor()
@@ -114,12 +118,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testStartOperationsCall()
     {
-        $agentHeaderDescriptor = $this->getMockBuilder(AgentHeaderDescriptor::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $agentHeaderDescriptor->expects($this->once())
-            ->method('getHeader')
-            ->will($this->returnValue([]));
+        $header = AgentHeader::buildAgentHeader([]);
         $retrySettings = $this->getMockBuilder(RetrySettings::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -143,7 +142,7 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
         $message = new MockRequest();
@@ -177,14 +176,14 @@ class GapicClientTraitTest extends TestCase
     public function testGetGapicVersionWithNoAvailableVersion()
     {
         $client = new GapicClientTraitStub();
-        $this->assertNull($client->call('getGapicVersion', [[]]));
+        $this->assertEquals('', $client->call('getGapicVersion', [[]]));
     }
 
     public function testGetGapicVersionWithLibVersion()
     {
         $version = '1.2.3-dev';
         $client = new GapicClientTraitStub();
-        $client->set('gapicVersion', $version, true);
+        $client->set('gapicVersionFromFile', $version, true);
         $options = ['libVersion' => $version];
         $this->assertEquals($version, $client->call('getGapicVersion', [
             $options
@@ -297,6 +296,7 @@ class GapicClientTraitTest extends TestCase
             [$serviceAddress, $transport, $transportConfig, $defaultTransportClass],
             [$serviceAddress, 'grpc', $transportConfig, GrpcTransport::class],
             [$serviceAddress, 'rest', $transportConfig, RestTransport::class],
+            [$serviceAddress, 'grpc-fallback', $transportConfig, GrpcFallbackTransport::class],
         ];
     }
 
@@ -360,7 +360,7 @@ class GapicClientTraitTest extends TestCase
         }
         $expectedProperties = [
             'serviceName' => 'test.interface.v1.api',
-            'agentHeaderDescriptor' => new AgentHeaderDescriptor([]),
+            'agentHeader' => AgentHeader::buildAgentHeader([]),
             'retrySettings' => $expectedRetrySettings,
         ];
         return [
@@ -374,6 +374,9 @@ class GapicClientTraitTest extends TestCase
      */
     public function testBuildClientOptions($options, $expectedUpdatedOptions)
     {
+        if (!extension_loaded('sysvshm')) {
+            $this->markTestSkipped('The sysvshm extension must be installed to execute this test.');
+        }
         $client = new GapicClientTraitStub();
         $updatedOptions = $client->call('buildClientOptions', [$options]);
         $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
@@ -381,20 +384,32 @@ class GapicClientTraitTest extends TestCase
 
     public function buildClientOptionsProvider()
     {
+        $apiConfig = new ApiConfig();
+        $apiConfig->mergeFromJsonString(
+            file_get_contents(__DIR__.'/testdata/test_service_grpc_config.json')
+        );
+        $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
+
         $defaultOptions = [
             'serviceAddress' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,
             'transport' => null,
             'transportConfig' => [
-                'grpc' => [],
+                'grpc' => [
+                    'stubOpts' => [
+                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                    ]
+                ],
                 'rest' => [
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
-                ]
+                ],
+                'grpc-fallback' => [],
             ],
             'credentials' => null,
             'credentialsConfig' => [],
@@ -404,12 +419,11 @@ class GapicClientTraitTest extends TestCase
         ];
 
         $restConfigOptions = $defaultOptions;
-        $restConfigOptions['transportConfig']['rest'] = [
-            'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+        $restConfigOptions['transportConfig']['rest'] += [
             'customRestConfig' => 'value'
         ];
         $grpcConfigOptions = $defaultOptions;
-        $grpcConfigOptions['transportConfig']['grpc'] = [
+        $grpcConfigOptions['transportConfig']['grpc'] += [
             'customGrpcConfig' => 'value'
         ];
         return [
@@ -447,12 +461,7 @@ class GapicClientTraitTest extends TestCase
 
     private function buildClientToTestModifyCallMethods()
     {
-        $agentHeaderDescriptor = $this->getMockBuilder(AgentHeaderDescriptor::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $agentHeaderDescriptor->expects($this->once())
-            ->method('getHeader')
-            ->will($this->returnValue([]));
+        $header = AgentHeader::buildAgentHeader([]);
         $retrySettings = $this->getMockBuilder(RetrySettings::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -478,7 +487,7 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStubExtension();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', [
             'simpleMethod' => $retrySettings,
             'longRunningMethod' => $retrySettings,
@@ -505,7 +514,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -529,7 +538,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -556,7 +565,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -583,7 +592,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyStreamingCallable' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -666,6 +675,7 @@ class GapicClientTraitStub
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,

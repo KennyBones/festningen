@@ -1,17 +1,17 @@
 {% set midnight = now|date_modify("+1 day")|date("Y-m-d") ~ ' 00:00' %}
 {% set cdnUrl = craft.config.cdnUrl ?? siteUrl %}
-{% set LP = craft.request.isLivePreview ?? false %}
+{% set LP = craft.app.request.isLivePreview ?? false %}
 
 <!doctype html>
 {% if craft.config.env == 'PROD' %}{% include '_admin/_mustasj_logo' %}{% endif %}
-<html class="no-js" lang="{{craft.locale}}">
+<html class="no-js" lang="{{craft.app.language}}">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
 		{% hook "seo" %}
 		{% include "_admin/_ekstraHead" %}
-		{% if craft.request.isLivePreview %}
+		{% if craft.app.request.isLivePreview %}
 		<!-- Åpne alle linker i nytt vindu hvis vi er i previewmodus -->
 		<script type="text/javascript">
 			var links = document.links;
@@ -81,8 +81,6 @@
 			    </li>
 			{% endmacro %}
 
-
-
 				<ul id="desktop_nav-ul">
 					{% for node in nav %}
 							{{ _self.addNodeToNavigation(node, loop.index) }}
@@ -132,7 +130,6 @@
 		</aside>
 
 		<script>
-
 			loadCSS("{{ craft.stamp.er('/dist/css/main.css', 'query') }}");
 			requirejs(["main"]);
 		</script>

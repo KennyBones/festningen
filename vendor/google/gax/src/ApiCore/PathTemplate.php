@@ -32,8 +32,9 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Jison\Segment;
-use Countable;
+use Google\ApiCore\ResourceTemplate\AbsoluteResourceTemplate;
+use Google\ApiCore\ResourceTemplate\RelativeResourceTemplate;
+use Google\ApiCore\ResourceTemplate\ResourceTemplateInterface;
 
 /**
  * Represents a path template.
@@ -43,26 +44,27 @@ use Countable;
  * where each binding can have a sub-path. A string representation can be parsed into an
  * instance of PathTemplate, which can then be used to perform matching and instantiation.
  */
-class PathTemplate implements Countable
+class PathTemplate implements ResourceTemplateInterface
 {
-    private $segments;
-    private $segmentCount;
+    private $resourceTemplate;
 
     /**
      * PathTemplate constructor.
      *
-     * @param string $data A path template string
-     * @throws ValidationException When $data cannot be parsed into a valid PathTemplate
+     * @param string $path A path template string
+     * @throws ValidationException When $path cannot be parsed into a valid PathTemplate
      */
-    public function __construct($data)
+    public function __construct($path)
     {
-        if (empty($data)) {
+        if (empty($path)) {
             throw new ValidationException('Cannot construct PathTemplate from empty string');
         }
 
-        $parser = new Parser();
-        $this->segments = $parser->parse($data);
-        $this->segmentCount = $parser->getSegmentCount();
+        if ($path[0] === '/') {
+            $this->resourceTemplate = new AbsoluteResourceTemplate($path);
+        } else {
+            $this->resourceTemplate = new RelativeResourceTemplate($path);
+        }
     }
 
     /**
@@ -70,15 +72,7 @@ class PathTemplate implements Countable
      */
     public function __toString()
     {
-        return self::format($this->segments);
-    }
-
-    /**
-     * @return int The number of segments in the path template
-     */
-    public function count()
-    {
-        return $this->segmentCount;
+        return $this->resourceTemplate->__toString();
     }
 
     /**
@@ -89,44 +83,20 @@ class PathTemplate implements Countable
      *    can't be parsed.
      * @return string A rendered representation of this path template.
      */
-    public function render($bindings)
+    public function render(array $bindings)
     {
-        $out = [];
-        $binding = false;
-        foreach ($this->segments as $segment) {
-            if ($segment->kind == Segment::BINDING) {
-                if (!array_key_exists($segment->literal, $bindings)) {
-                    throw new ValidationException(
-                        sprintf(
-                            'render error: value for key "%s" not '.
-                            'provided',
-                            $segment->literal
-                        )
-                    );
-                }
-                if ($bindings[$segment->literal]) {
-                    $out = array_merge(
-                        $out,
-                        (new self($bindings[$segment->literal]))->segments
-                    );
-                } else {
-                    $out[] = new Segment(Segment::TERMINAL, '');
-                }
+        return $this->resourceTemplate->render($bindings);
+    }
 
-                $binding = true;
-            } elseif ($segment->kind == Segment::END_BINDING) {
-                $binding = false;
-            } else {
-                if ($binding) {
-                    continue;
-                }
-                array_push($out, $segment);
-            }
-        }
-        $path = self::format($out);
-        $this->match($path);
-
-        return $path;
+    /**
+     * Check if $path matches a resource string.
+     *
+     * @param string $path A resource string.
+     * @return bool
+     */
+    public function matches($path)
+    {
+        return $this->resourceTemplate->matches($path);
     }
 
     /**
@@ -138,90 +108,6 @@ class PathTemplate implements Countable
      */
     public function match($path)
     {
-        $segments = $this->segments;
-        $pathList = explode('/', $path);
-        $currentVar = null;
-        $bindings = [];
-        $segmentCount = $this->segmentCount;
-        $pathIndex = 0;
-        foreach ($segments as $segment) {
-            if ($segment->kind == Segment::TERMINAL) {
-                if (':' == substr($segment->literal, 0, 1)) {
-                    $binding = $bindings[$currentVar];
-                    $bindingLength = strrpos($binding, $segment->literal);
-                    if ($bindingLength !== false
-                        && $bindingLength + strlen($segment->literal) == strlen($binding)
-                    ) {
-                        $bindings[$currentVar] = substr($binding, 0, $bindingLength);
-                    } else {
-                        $pathIndex += 1;
-                    }
-                    continue;
-                }
-                if ($pathIndex >= count($pathList)) {
-                    break;
-                }
-                $pathItem = $pathList[$pathIndex];
-                if ($segment->literal == '*') {
-                    $bindings[$currentVar] = $pathItem;
-                    $pathIndex += 1;
-                } elseif ($segment->literal == '**') {
-                    $length = count($pathList) - $segmentCount + 1;
-                    $segmentCount += count($pathList) - $segmentCount;
-                    $bindings[$currentVar] = implode(
-                        '/',
-                        array_slice($pathList, $pathIndex, $length)
-                    );
-                    $pathIndex += $length;
-                } elseif ($segment->literal != $pathItem) {
-                    throw new ValidationException(
-                        sprintf(
-                            'mismatched literal: "%s" != "%s"',
-                            $segment->literal,
-                            $pathItem
-                        )
-                    );
-                } else {
-                    $pathIndex += 1;
-                }
-            } elseif ($segment->kind == Segment::BINDING) {
-                $currentVar = $segment->literal;
-            }
-        }
-        if (($pathIndex != count($pathList)) || ($pathIndex != $segmentCount)) {
-            throw new ValidationException(
-                sprintf(
-                    'match error: could not render a path template '.
-                    'from %s',
-                    $path
-                )
-            );
-        }
-
-        return $bindings;
-    }
-
-    private static function format($segments)
-    {
-        $template = '';
-        $slash = true;
-        foreach ($segments as $segment) {
-            if ($segment->kind == Segment::TERMINAL) {
-                if ($slash && ':' !== substr($segment->literal, 0, 1)) {
-                    $template .= '/';
-                }
-                $template .= $segment->literal;
-            }
-            $slash = true;
-            if ($segment->kind == Segment::BINDING) {
-                $template .= sprintf('/{%s=', $segment->literal);
-                $slash = false;
-            }
-            if ($segment->kind == Segment::END_BINDING) {
-                $template .= sprintf('%s}', $segment->literal);
-            }
-        }
-        // Remove leading '/'
-        return substr($template, 1);
+        return $this->resourceTemplate->match($path);
     }
 }

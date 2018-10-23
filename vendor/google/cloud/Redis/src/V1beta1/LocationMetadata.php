@@ -28,9 +28,22 @@ class LocationMetadata extends \Google\Protobuf\Internal\Message
      */
     private $available_zones;
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type array|\Google\Protobuf\Internal\MapField $available_zones
+     *           Output only. The set of available zones in the location. The map is keyed
+     *           by the lowercase ID of each zone, as defined by GCE. These keys can be
+     *           specified in `location_id` or `alternative_location_id` fields when
+     *           creating a Redis instance.
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Google\Cloud\Redis\V1Beta1\CloudRedis::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

@@ -31,13 +31,15 @@ use Google\Cloud\Spanner\SpannerClient as ManualSpannerClient;
 use Google\Cloud\Spanner\V1\DeleteSessionRequest;
 use Google\Cloud\Spanner\V1\KeySet;
 use Google\Cloud\Spanner\V1\Mutation;
-use Google\Cloud\Spanner\V1\Mutation_Delete;
-use Google\Cloud\Spanner\V1\Mutation_Write;
+use Google\Cloud\Spanner\V1\Mutation\Delete;
+use Google\Cloud\Spanner\V1\Mutation\Write;
 use Google\Cloud\Spanner\V1\PartitionOptions;
+use Google\Cloud\Spanner\V1\Session;
 use Google\Cloud\Spanner\V1\SpannerClient;
 use Google\Cloud\Spanner\V1\TransactionOptions;
-use Google\Cloud\Spanner\V1\TransactionOptions_ReadOnly;
-use Google\Cloud\Spanner\V1\TransactionOptions_ReadWrite;
+use Google\Cloud\Spanner\V1\TransactionOptions\PartitionedDml;
+use Google\Cloud\Spanner\V1\TransactionOptions\ReadOnly;
+use Google\Cloud\Spanner\V1\TransactionOptions\ReadWrite;
 use Google\Cloud\Spanner\V1\TransactionSelector;
 use Google\Cloud\Spanner\V1\Type;
 use Google\Protobuf;
@@ -152,11 +154,17 @@ class Grpc implements ConnectionInterface
                 ? $config['authHttpHandler']
                 : null
         );
+
         $this->spannerClient = isset($config['gapicSpannerClient'])
             ? $config['gapicSpannerClient']
             : new SpannerClient($grpcConfig);
-        $this->instanceAdminClient = new InstanceAdminClient($grpcConfig);
-        $this->databaseAdminClient = new DatabaseAdminClient($grpcConfig);
+        $this->instanceAdminClient = isset($config['gapicSpannerInstanceAdminClient'])
+            ? $config['gapicSpannerInstanceAdminClient']
+            : new InstanceAdminClient($grpcConfig);
+        $this->databaseAdminClient = isset($config['gapicSpannerDatabaseAdminClient'])
+            ? $config['gapicSpannerDatabaseAdminClient']
+            : new DatabaseAdminClient($grpcConfig);
+
         $this->operationsClient = $this->instanceAdminClient->getOperationsClient();
         $this->longRunningGrpcClients = [
             $this->instanceAdminClient,
@@ -424,6 +432,12 @@ class Grpc implements ConnectionInterface
     public function createSession(array $args)
     {
         $databaseName = $this->pluck('database', $args);
+
+        $session = $this->pluck('session', $args, false);
+        if ($session) {
+            $args['session'] = $this->serializer->decodeMessage(new Session, $session);
+        }
+
         return $this->send([$this->spannerClient, 'createSession'], [
             $databaseName,
             $this->addResourcePrefixHeader($args, $databaseName)
@@ -490,6 +504,7 @@ class Grpc implements ConnectionInterface
         $args['transaction'] = $this->createTransactionSelector($args);
 
         $database = $this->pluck('database', $args);
+
         return $this->send([$this->spannerClient, 'executeStreamingSql'], [
             $this->pluck('session', $args),
             $this->pluck('sql', $args),
@@ -528,13 +543,16 @@ class Grpc implements ConnectionInterface
         $transactionOptions = $this->formatTransactionOptions($this->pluck('transactionOptions', $args));
         if (isset($transactionOptions['readOnly'])) {
             $readOnly = $this->serializer->decodeMessage(
-                new TransactionOptions_ReadOnly(),
+                new ReadOnly(),
                 $transactionOptions['readOnly']
             );
             $options->setReadOnly($readOnly);
-        } else {
-            $readWrite = new TransactionOptions_ReadWrite();
+        } elseif (isset($transactionOptions['readWrite'])) {
+            $readWrite = new ReadWrite();
             $options->setReadWrite($readWrite);
+        } elseif (isset($transactionOptions['partitionedDml'])) {
+            $pdml = new PartitionedDml();
+            $options->setPartitionedDml($pdml);
         }
 
         $database = $this->pluck('database', $args);
@@ -565,12 +583,12 @@ class Grpc implements ConnectionInterface
                         }
 
                         $operation = $this->serializer->decodeMessage(
-                            new Mutation_Delete,
+                            new Delete,
                             $data
                         );
                         break;
                     default:
-                        $operation = new Mutation_Write;
+                        $operation = new Write;
                         $operation->setTable($data['table']);
                         $operation->setColumns($data['columns']);
 
@@ -596,7 +614,7 @@ class Grpc implements ConnectionInterface
 
         if (isset($args['singleUseTransaction'])) {
             $readWrite = $this->serializer->decodeMessage(
-                new TransactionOptions_ReadWrite,
+                new ReadWrite,
                 []
             );
 

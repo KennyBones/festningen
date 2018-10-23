@@ -42,9 +42,31 @@ class ListInstancesRequest extends \Google\Protobuf\Internal\Message
      */
     private $page_token = '';
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type string $parent
+     *           Required. The resource name of the instance location using the form:
+     *               `projects/{project_id}/locations/{location_id}`
+     *           where `location_id` refers to a GCP region
+     *     @type int $page_size
+     *           The maximum number of items to return.
+     *           If not specified, a default value of 1000 will be used by the service.
+     *           Regardless of the page_size value, the response may include a partial list
+     *           and a caller should only rely on response's
+     *           [next_page_token][CloudRedis.ListInstancesResponse.next_page_token]
+     *           to determine if there are more instances left to be queried.
+     *     @type string $page_token
+     *           The next_page_token value returned from a previous List request,
+     *           if any.
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Google\Cloud\Redis\V1Beta1\CloudRedis::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

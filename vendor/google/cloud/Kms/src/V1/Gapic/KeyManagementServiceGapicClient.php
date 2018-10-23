@@ -41,6 +41,10 @@ use Google\Cloud\Iam\V1\Policy;
 use Google\Cloud\Iam\V1\SetIamPolicyRequest;
 use Google\Cloud\Iam\V1\TestIamPermissionsRequest;
 use Google\Cloud\Iam\V1\TestIamPermissionsResponse;
+use Google\Cloud\Kms\V1\AsymmetricDecryptRequest;
+use Google\Cloud\Kms\V1\AsymmetricDecryptResponse;
+use Google\Cloud\Kms\V1\AsymmetricSignRequest;
+use Google\Cloud\Kms\V1\AsymmetricSignResponse;
 use Google\Cloud\Kms\V1\CreateCryptoKeyRequest;
 use Google\Cloud\Kms\V1\CreateCryptoKeyVersionRequest;
 use Google\Cloud\Kms\V1\CreateKeyRingRequest;
@@ -49,11 +53,13 @@ use Google\Cloud\Kms\V1\CryptoKeyVersion;
 use Google\Cloud\Kms\V1\DecryptRequest;
 use Google\Cloud\Kms\V1\DecryptResponse;
 use Google\Cloud\Kms\V1\DestroyCryptoKeyVersionRequest;
+use Google\Cloud\Kms\V1\Digest;
 use Google\Cloud\Kms\V1\EncryptRequest;
 use Google\Cloud\Kms\V1\EncryptResponse;
 use Google\Cloud\Kms\V1\GetCryptoKeyRequest;
 use Google\Cloud\Kms\V1\GetCryptoKeyVersionRequest;
 use Google\Cloud\Kms\V1\GetKeyRingRequest;
+use Google\Cloud\Kms\V1\GetPublicKeyRequest;
 use Google\Cloud\Kms\V1\KeyRing;
 use Google\Cloud\Kms\V1\ListCryptoKeyVersionsRequest;
 use Google\Cloud\Kms\V1\ListCryptoKeyVersionsResponse;
@@ -61,6 +67,7 @@ use Google\Cloud\Kms\V1\ListCryptoKeysRequest;
 use Google\Cloud\Kms\V1\ListCryptoKeysResponse;
 use Google\Cloud\Kms\V1\ListKeyRingsRequest;
 use Google\Cloud\Kms\V1\ListKeyRingsResponse;
+use Google\Cloud\Kms\V1\PublicKey;
 use Google\Cloud\Kms\V1\RestoreCryptoKeyVersionRequest;
 use Google\Cloud\Kms\V1\UpdateCryptoKeyPrimaryVersionRequest;
 use Google\Cloud\Kms\V1\UpdateCryptoKeyRequest;
@@ -77,6 +84,9 @@ use Google\Protobuf\FieldMask;
  * * [CryptoKey][google.cloud.kms.v1.CryptoKey]
  * * [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
  *
+ * If you are using manual gRPC libraries, see
+ * [Using gRPC with Cloud KMS](https://cloud.google.com/kms/docs/grpc).
+ *
  * This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
@@ -84,18 +94,21 @@ use Google\Protobuf\FieldMask;
  * $keyManagementServiceClient = new KeyManagementServiceClient();
  * try {
  *     $formattedParent = $keyManagementServiceClient->locationName('[PROJECT]', '[LOCATION]');
- *     // Iterate through all elements
- *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $keyManagementServiceClient->close();
@@ -153,6 +166,7 @@ class KeyManagementServiceGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/key_management_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/key_management_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/key_management_service_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -441,18 +455,21 @@ class KeyManagementServiceGapicClient
      * $keyManagementServiceClient = new KeyManagementServiceClient();
      * try {
      *     $formattedParent = $keyManagementServiceClient->locationName('[PROJECT]', '[LOCATION]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $keyManagementServiceClient->listKeyRings($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $keyManagementServiceClient->close();
@@ -519,18 +536,21 @@ class KeyManagementServiceGapicClient
      * $keyManagementServiceClient = new KeyManagementServiceClient();
      * try {
      *     $formattedParent = $keyManagementServiceClient->keyRingName('[PROJECT]', '[LOCATION]', '[KEY_RING]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $keyManagementServiceClient->listCryptoKeys($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $keyManagementServiceClient->listCryptoKeys($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $keyManagementServiceClient->listCryptoKeys($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $keyManagementServiceClient->close();
@@ -551,6 +571,9 @@ class KeyManagementServiceGapicClient
      *          If no page token is specified (the default), the first page
      *          of values will be returned. Any page token used here must have
      *          been generated by a previous call to the API.
+     *     @type int $versionView
+     *          The fields of the primary version to include in the response.
+     *          For allowed values, use constants defined on {@see \Google\Cloud\Kms\V1\CryptoKeyVersion_CryptoKeyVersionView}
      *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
@@ -572,6 +595,9 @@ class KeyManagementServiceGapicClient
         }
         if (isset($optionalArgs['pageToken'])) {
             $request->setPageToken($optionalArgs['pageToken']);
+        }
+        if (isset($optionalArgs['versionView'])) {
+            $request->setVersionView($optionalArgs['versionView']);
         }
 
         $requestParams = new RequestParamsHeaderDescriptor([
@@ -597,18 +623,21 @@ class KeyManagementServiceGapicClient
      * $keyManagementServiceClient = new KeyManagementServiceClient();
      * try {
      *     $formattedParent = $keyManagementServiceClient->cryptoKeyName('[PROJECT]', '[LOCATION]', '[KEY_RING]', '[CRYPTO_KEY]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $keyManagementServiceClient->listCryptoKeyVersions($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $keyManagementServiceClient->listCryptoKeyVersions($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $keyManagementServiceClient->listCryptoKeyVersions($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $keyManagementServiceClient->close();
@@ -629,6 +658,9 @@ class KeyManagementServiceGapicClient
      *          If no page token is specified (the default), the first page
      *          of values will be returned. Any page token used here must have
      *          been generated by a previous call to the API.
+     *     @type int $view
+     *          The fields to include in the response.
+     *          For allowed values, use constants defined on {@see \Google\Cloud\Kms\V1\CryptoKeyVersion_CryptoKeyVersionView}
      *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
@@ -650,6 +682,9 @@ class KeyManagementServiceGapicClient
         }
         if (isset($optionalArgs['pageToken'])) {
             $request->setPageToken($optionalArgs['pageToken']);
+        }
+        if (isset($optionalArgs['view'])) {
+            $request->setView($optionalArgs['view']);
         }
 
         $requestParams = new RequestParamsHeaderDescriptor([
@@ -879,7 +914,9 @@ class KeyManagementServiceGapicClient
     /**
      * Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a [KeyRing][google.cloud.kms.v1.KeyRing].
      *
-     * [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] is required.
+     * [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] and
+     * [CryptoKey.version_template.algorithm][google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm]
+     * are required.
      *
      * Sample code:
      * ```
@@ -1118,6 +1155,8 @@ class KeyManagementServiceGapicClient
 
     /**
      * Encrypts data, so that it can only be recovered by a call to [Decrypt][google.cloud.kms.v1.KeyManagementService.Decrypt].
+     * The [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
+     * [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].
      *
      * Sample code:
      * ```
@@ -1136,14 +1175,27 @@ class KeyManagementServiceGapicClient
      *
      * If a [CryptoKey][google.cloud.kms.v1.CryptoKey] is specified, the server will use its
      * [primary version][google.cloud.kms.v1.CryptoKey.primary].
-     * @param string $plaintext    Required. The data to encrypt. Must be no larger than 64KiB.
-     * @param array  $optionalArgs {
-     *                             Optional.
+     * @param string $plaintext Required. The data to encrypt. Must be no larger than 64KiB.
+     *
+     * The maximum size depends on the key version's
+     * [protection_level][google.cloud.kms.v1.CryptoKeyVersionTemplate.protection_level]. For
+     * [SOFTWARE][google.cloud.kms.v1.ProtectionLevel.SOFTWARE] keys, the plaintext must be no larger
+     * than 64KiB. For [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined length of the
+     * plaintext and additional_authenticated_data fields must be no larger than
+     * 8KiB.
+     * @param array $optionalArgs {
+     *                            Optional.
      *
      *     @type string $additionalAuthenticatedData
      *          Optional data that, if specified, must also be provided during decryption
-     *          through [DecryptRequest.additional_authenticated_data][google.cloud.kms.v1.DecryptRequest.additional_authenticated_data].  Must be no
-     *          larger than 64KiB.
+     *          through [DecryptRequest.additional_authenticated_data][google.cloud.kms.v1.DecryptRequest.additional_authenticated_data].
+     *
+     *          The maximum size depends on the key version's
+     *          [protection_level][google.cloud.kms.v1.CryptoKeyVersionTemplate.protection_level]. For
+     *          [SOFTWARE][google.cloud.kms.v1.ProtectionLevel.SOFTWARE] keys, the AAD must be no larger than
+     *          64KiB. For [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined length of the
+     *          plaintext and additional_authenticated_data fields must be no larger than
+     *          8KiB.
      *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
@@ -1181,7 +1233,8 @@ class KeyManagementServiceGapicClient
     }
 
     /**
-     * Decrypts data that was protected by [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt].
+     * Decrypts data that was protected by [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt]. The [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
+     * must be [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].
      *
      * Sample code:
      * ```
@@ -1243,6 +1296,8 @@ class KeyManagementServiceGapicClient
 
     /**
      * Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that will be used in [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt].
+     *
+     * Returns an error if called on an asymmetric key.
      *
      * Sample code:
      * ```
@@ -1357,7 +1412,7 @@ class KeyManagementServiceGapicClient
 
     /**
      * Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
-     * [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED],
+     * [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]
      * state.
      *
      * Upon restoration of the CryptoKeyVersion, [state][google.cloud.kms.v1.CryptoKeyVersion.state]
@@ -1406,6 +1461,174 @@ class KeyManagementServiceGapicClient
         return $this->startCall(
             'RestoreCryptoKeyVersion',
             CryptoKeyVersion::class,
+            $optionalArgs,
+            $request
+        )->wait();
+    }
+
+    /**
+     * Returns the public key for the given [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]. The
+     * [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
+     * [ASYMMETRIC_SIGN][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_SIGN] or
+     * [ASYMMETRIC_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_DECRYPT].
+     *
+     * Sample code:
+     * ```
+     * $keyManagementServiceClient = new KeyManagementServiceClient();
+     * try {
+     *     $formattedName = $keyManagementServiceClient->cryptoKeyVersionName('[PROJECT]', '[LOCATION]', '[KEY_RING]', '[CRYPTO_KEY]', '[CRYPTO_KEY_VERSION]');
+     *     $response = $keyManagementServiceClient->getPublicKey($formattedName);
+     * } finally {
+     *     $keyManagementServiceClient->close();
+     * }
+     * ```
+     *
+     * @param string $name         The [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] public key to
+     *                             get.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type RetrySettings|array $retrySettings
+     *          Retry settings to use for this call. Can be a
+     *          {@see Google\ApiCore\RetrySettings} object, or an associative array
+     *          of retry settings parameters. See the documentation on
+     *          {@see Google\ApiCore\RetrySettings} for example usage.
+     * }
+     *
+     * @return \Google\Cloud\Kms\V1\PublicKey
+     *
+     * @throws ApiException if the remote call fails
+     * @experimental
+     */
+    public function getPublicKey($name, array $optionalArgs = [])
+    {
+        $request = new GetPublicKeyRequest();
+        $request->setName($name);
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
+        return $this->startCall(
+            'GetPublicKey',
+            PublicKey::class,
+            $optionalArgs,
+            $request
+        )->wait();
+    }
+
+    /**
+     * Decrypts data that was encrypted with a public key retrieved from
+     * [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey] corresponding to a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with
+     * [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] ASYMMETRIC_DECRYPT.
+     *
+     * Sample code:
+     * ```
+     * $keyManagementServiceClient = new KeyManagementServiceClient();
+     * try {
+     *     $formattedName = $keyManagementServiceClient->cryptoKeyVersionName('[PROJECT]', '[LOCATION]', '[KEY_RING]', '[CRYPTO_KEY]', '[CRYPTO_KEY_VERSION]');
+     *     $ciphertext = '';
+     *     $response = $keyManagementServiceClient->asymmetricDecrypt($formattedName, $ciphertext);
+     * } finally {
+     *     $keyManagementServiceClient->close();
+     * }
+     * ```
+     *
+     * @param string $name         Required. The resource name of the [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for
+     *                             decryption.
+     * @param string $ciphertext   Required. The data encrypted with the named [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s public
+     *                             key using OAEP.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type RetrySettings|array $retrySettings
+     *          Retry settings to use for this call. Can be a
+     *          {@see Google\ApiCore\RetrySettings} object, or an associative array
+     *          of retry settings parameters. See the documentation on
+     *          {@see Google\ApiCore\RetrySettings} for example usage.
+     * }
+     *
+     * @return \Google\Cloud\Kms\V1\AsymmetricDecryptResponse
+     *
+     * @throws ApiException if the remote call fails
+     * @experimental
+     */
+    public function asymmetricDecrypt($name, $ciphertext, array $optionalArgs = [])
+    {
+        $request = new AsymmetricDecryptRequest();
+        $request->setName($name);
+        $request->setCiphertext($ciphertext);
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
+        return $this->startCall(
+            'AsymmetricDecrypt',
+            AsymmetricDecryptResponse::class,
+            $optionalArgs,
+            $request
+        )->wait();
+    }
+
+    /**
+     * Signs data using a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
+     * ASYMMETRIC_SIGN, producing a signature that can be verified with the public
+     * key retrieved from [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey].
+     *
+     * Sample code:
+     * ```
+     * $keyManagementServiceClient = new KeyManagementServiceClient();
+     * try {
+     *     $formattedName = $keyManagementServiceClient->cryptoKeyVersionName('[PROJECT]', '[LOCATION]', '[KEY_RING]', '[CRYPTO_KEY]', '[CRYPTO_KEY_VERSION]');
+     *     $digest = new Digest();
+     *     $response = $keyManagementServiceClient->asymmetricSign($formattedName, $digest);
+     * } finally {
+     *     $keyManagementServiceClient->close();
+     * }
+     * ```
+     *
+     * @param string $name         Required. The resource name of the [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for signing.
+     * @param Digest $digest       Required. The digest of the data to sign. The digest must be produced with
+     *                             the same digest algorithm as specified by the key version's
+     *                             [algorithm][google.cloud.kms.v1.CryptoKeyVersion.algorithm].
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type RetrySettings|array $retrySettings
+     *          Retry settings to use for this call. Can be a
+     *          {@see Google\ApiCore\RetrySettings} object, or an associative array
+     *          of retry settings parameters. See the documentation on
+     *          {@see Google\ApiCore\RetrySettings} for example usage.
+     * }
+     *
+     * @return \Google\Cloud\Kms\V1\AsymmetricSignResponse
+     *
+     * @throws ApiException if the remote call fails
+     * @experimental
+     */
+    public function asymmetricSign($name, $digest, array $optionalArgs = [])
+    {
+        $request = new AsymmetricSignRequest();
+        $request->setName($name);
+        $request->setDigest($digest);
+
+        $requestParams = new RequestParamsHeaderDescriptor([
+          'name' => $request->getName(),
+        ]);
+        $optionalArgs['headers'] = isset($optionalArgs['headers'])
+            ? array_merge($requestParams->getHeader(), $optionalArgs['headers'])
+            : $requestParams->getHeader();
+
+        return $this->startCall(
+            'AsymmetricSign',
+            AsymmetricSignResponse::class,
             $optionalArgs,
             $request
         )->wait();

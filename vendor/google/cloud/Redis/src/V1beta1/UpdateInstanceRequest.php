@@ -35,9 +35,28 @@ class UpdateInstanceRequest extends \Google\Protobuf\Internal\Message
      */
     private $instance = null;
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type \Google\Protobuf\FieldMask $update_mask
+     *           Required. Mask of fields to update. At least one path must be supplied in
+     *           this field. The elements of the repeated paths field may only include these
+     *           fields from [Instance][CloudRedis.Instance]:
+     *           * `display_name`
+     *           * `labels`
+     *           * `memory_size_gb`
+     *           * `redis_config`
+     *     @type \Google\Cloud\Redis\V1beta1\Instance $instance
+     *           Required. Update description.
+     *           Only fields specified in update_mask are updated.
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Google\Cloud\Redis\V1Beta1\CloudRedis::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

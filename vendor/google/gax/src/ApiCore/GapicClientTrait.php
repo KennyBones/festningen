@@ -34,17 +34,21 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
+use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
+use Google\ApiCore\Middleware\FixedHeaderMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedMiddleware;
-use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
+use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
+use Grpc\Gcp\ApiConfig;
+use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
@@ -59,10 +63,10 @@ trait GapicClientTrait
     private $transport;
     private $credentialsWrapper;
 
-    private static $gapicVersion;
+    private static $gapicVersionFromFile;
     private $retrySettings;
     private $serviceName;
-    private $agentHeaderDescriptor;
+    private $agentHeader;
     private $descriptors;
     private $transportCallMethods = [
         Call::UNARY_CALL => 'startUnaryCall',
@@ -108,25 +112,22 @@ trait GapicClientTrait
 
     private static function getGapicVersion(array $options)
     {
-        if (!self::$gapicVersion) {
-            self::$gapicVersion = isset($options['libVersion'])
-                ? $options['libVersion']
-                : self::getVersionFileContents();
+        if (isset($options['libVersion'])) {
+            return $options['libVersion'];
+        } else {
+            if (!isset(self::$gapicVersionFromFile)) {
+                self::$gapicVersionFromFile = AgentHeader::readGapicVersionFromFile(__CLASS__);
+            }
+            return self::$gapicVersionFromFile;
         }
-
-        return self::$gapicVersion;
     }
 
-    private static function getVersionFileContents()
+    private static function initGrpcGcpConfig($hostName, $confPath)
     {
-        $clientFile = (new \ReflectionClass(__CLASS__))->getFileName();
-        $versionFile = substr(
-            $clientFile,
-            0,
-            strrpos($clientFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
-        ) . DIRECTORY_SEPARATOR . 'VERSION';
-
-        return @file_get_contents($versionFile) ?: null;
+        $apiConfig = new ApiConfig();
+        $apiConfig->mergeFromJsonString(file_get_contents($confPath));
+        $config = new Config($hostName, $apiConfig);
+        return $config;
     }
 
     /**
@@ -160,6 +161,7 @@ trait GapicClientTrait
         $defaultOptions['transportConfig'] += [
             'grpc' => [],
             'rest' => [],
+            'grpc-fallback' => [],
         ];
 
         // Merge defaults into $options starting from top level
@@ -170,8 +172,32 @@ trait GapicClientTrait
         $options['transportConfig'] += $defaultOptions['transportConfig'];
         $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
         $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
+        $options['transportConfig']['grpc-fallback'] += $defaultOptions['transportConfig']['grpc-fallback'];
 
         $this->modifyClientOptions($options);
+
+        if (extension_loaded('sysvshm')
+                && isset($options['gcpApiConfigPath'])
+                && file_exists($options['gcpApiConfigPath'])
+                && isset($options['serviceAddress'])) {
+            $grpcGcpConfig = self::initGrpcGcpConfig(
+                $options['serviceAddress'],
+                $options['gcpApiConfigPath']
+            );
+
+            if (array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
+                $options['transportConfig']['grpc']['stubOpts'] += [
+                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                ];
+            } else {
+                $options['transportConfig']['grpc'] += [
+                    'stubOpts' => [
+                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                    ]
+                ];
+            }
+        }
+
         return $options;
     }
 
@@ -205,8 +231,8 @@ trait GapicClientTrait
      *           For a full list of supporting configuration options, see
      *           \Google\ApiCore\CredentialsWrapper::build.
      *     @type string|TransportInterface $transport
-     *           The transport used for executing network requests. May be either the string `rest`
-     *           or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
+     *           The transport used for executing network requests. May be either the string `rest`,
+     *           `grpc`, or 'grpc-fallback'. Defaults to `grpc` if gRPC support is detected on the system.
      *           *Advanced usage*: Additionally, it is possible to pass in an already instantiated
      *           TransportInterface object. Note that when this objects is provided, any settings in
      *           $transportConfig, and any $serviceAddress setting, will be ignored.
@@ -216,7 +242,8 @@ trait GapicClientTrait
      *           example:
      *           $transportConfig = [
      *               'grpc' => [...],
-     *               'rest' => [...]
+     *               'rest' => [...],
+     *               'grpc-fallback' => [...],
      *           ];
      *           See the GrpcTransport::build and RestTransport::build
      *           methods for the supported options.
@@ -264,7 +291,7 @@ trait GapicClientTrait
             $clientConfig,
             $options['disableRetries']
         );
-        $this->agentHeaderDescriptor = new AgentHeaderDescriptor(
+        $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
                 'libName',
                 'libVersion',
@@ -334,6 +361,8 @@ trait GapicClientTrait
         switch ($transport) {
             case 'grpc':
                 return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
+            case 'grpc-fallback':
+                return GrpcFallbackTransport::build($serviceAddress, $configForSpecifiedTransport);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
@@ -345,7 +374,7 @@ trait GapicClientTrait
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .
-                    "Supported values: ['grpc', 'rest']"
+                    "Supported values: ['grpc', 'rest', 'grpc-fallback']"
                 );
         }
     }
@@ -448,7 +477,7 @@ trait GapicClientTrait
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new AgentHeaderMiddleware($callStack, $this->agentHeaderDescriptor);
+        $callStack = new FixedHeaderMiddleware($callStack, $this->agentHeader, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',

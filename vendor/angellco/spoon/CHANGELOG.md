@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+
+
+## 3.2.4 - 2018-10-12
+
+### Changed
+- Highlighted the tab if a field inside it has an error ([#27](https://github.com/angell-co/Spoon/issues/27)).
+- Improved the asset bundle structure and minified all of the resources ([#21](https://github.com/angell-co/Spoon/issues/21)).
+
+
+## 3.2.3 - 2018-09-21
+
+### Fixed
+- Fixed typing issues introduced in 3.2.2
+
+
+## 3.2.2 - 2018-09-21
+
+### Fixed
+- Fixed a bunch of bugs and spacing issues picked up by Scrutinizer
+- Corrected the core craftcms/cms requirement in composer.json
+
+
+## 3.2.1 - 2018-09-13
+
+### Added
+- Added support for static translations ([#22](https://github.com/angell-co/Spoon/issues/22)).
+
+### Fixed
+- Fixed an issue where the Settings model wasn’t referencing the correct array validator class and was throwing an error when using the Schematic plugin ([#26](https://github.com/angell-co/Spoon/pull/26) and [#14](https://github.com/angell-co/Spoon/pull/14)).
+
+
+## 3.2.0 - 2018-09-04
+
+### Added
+- Added support for Super Table allowing you to use Spoon on Matrix fields that are inside Super Table fields, both `Super Table > Matrix` and `Matrix > Super Table > Matrix`. Initially this is only for the global context which means you can only change these nested Matrix fields in the Spoon settings page and those changes apply everywhere.  
+
+
+## 3.1.0 - 2018-08-29
+
+### Added
+- Now the global settings page shows you the parent field if the Matrix field is contained in a Super Table block
+
+### Fixed
+- Fixed an issue with the settings model rules not being declared properly ([#14](https://github.com/angell-co/Spoon/pull/14))
+- Fixed an issue where sometimes the loader js wasn’t getting run ([#13](https://github.com/angell-co/Spoon/issues/13))
+- Fixed an issue where no fields would show if the Matrix field being spooned was inside another Matrix field some how, tested inside Super Table ([#7](https://github.com/angell-co/Spoon/issues/7))
+
+
 ## 3.0.1 - 2018-07-18
 
 ### Changed

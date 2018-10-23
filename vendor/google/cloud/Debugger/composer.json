@@ -6,7 +6,7 @@
     "require": {
         "google/cloud-core": "^1.23",
         "google/cloud-logging": "^1.4",
-        "google/gax": "^0.36",
+        "google/gax": "^0.37",
         "psr/log": "^1.0"
     },
     "require-dev": {
@@ -24,7 +24,7 @@
     "extra": {
         "component": {
             "id": "cloud-debugger",
-            "target": "GoogleCloudPlatform/google-cloud-php-debugger.git",
+            "target": "googleapis/google-cloud-php-debugger.git",
             "path": "Debugger",
             "entry": "src/DebuggerClient.php"
         }

@@ -10,8 +10,8 @@
 
 namespace angellco\spoon\services;
 
-use angellco\spoon\assetbundles\Spoon\SpoonConfigurator;
-use angellco\spoon\assetbundles\Spoon\SpoonFieldManipulator;
+use angellco\spoon\assetbundles\ConfiguratorAsset;
+use angellco\spoon\assetbundles\FieldManipulatorAsset;
 use angellco\spoon\Spoon;
 
 use Craft;
@@ -37,7 +37,7 @@ class Loader extends Component
     {
 
         // Check the conditions are right to run
-        if ( Craft::$app->request->isCpRequest && !Craft::$app->getUser()->getIsGuest() && !Craft::$app->request->getAcceptsJson() )
+        if (Craft::$app->request->isCpRequest && !Craft::$app->request->getAcceptsJson())
         {
 
             $segments = Craft::$app->request->getSegments();
@@ -46,7 +46,7 @@ class Loader extends Component
              * Work out the context for the block type groups configuration
              */
             // Entry types
-            if ( count($segments) == 5
+            if (count($segments) == 5
                 && $segments[0] == 'settings'
                 && $segments[1] == 'sections'
                 && $segments[3] == 'entrytypes'
@@ -57,7 +57,7 @@ class Loader extends Component
             }
 
             // Category groups
-            if ( count($segments) == 3
+            if (count($segments) == 3
                 && $segments[0] == 'settings'
                 && $segments[1] == 'categories'
                 && $segments[2] != 'new'
@@ -67,7 +67,7 @@ class Loader extends Component
             }
 
             // Global sets
-            if ( count($segments) == 3
+            if (count($segments) == 3
                 && $segments[0] == 'settings'
                 && $segments[1] == 'globals'
                 && $segments[2] != 'new'
@@ -77,7 +77,7 @@ class Loader extends Component
             }
 
             // Users
-            if ( count($segments) == 2
+            if (count($segments) == 2
                 && $segments[0] == 'settings'
                 && $segments[1] == 'users'
             )
@@ -92,7 +92,7 @@ class Loader extends Component
             $context = 'global';
 
             // Entry types
-            if ( count($segments) >= 3 && $segments[0] == 'entries' )
+            if (count($segments) >= 3 && $segments[0] == 'entries')
             {
 
                 if ($segments[2] == 'new')
@@ -100,10 +100,9 @@ class Loader extends Component
                     $section = Craft::$app->sections->getSectionByHandle($segments[1]);
                     $sectionEntryTypes = $section->getEntryTypes();
                     $entryType = reset($sectionEntryTypes);
-                }
-                else
+                } else
                 {
-                    $entryId = explode('-',$segments[2])[0];
+                    $entryId = (integer)explode('-', $segments[2])[0];
                     $entry = Craft::$app->entries->getEntryById($entryId);
 
                     if ($entry)
@@ -118,7 +117,7 @@ class Loader extends Component
 
             }
             // Category groups
-            else if ( count($segments) >= 3 && $segments[0] == 'categories' )
+            else if (count($segments) >= 3 && $segments[0] == 'categories')
             {
                 $group = Craft::$app->categories->getGroupByHandle($segments[1]);
                 if ($group)
@@ -127,7 +126,7 @@ class Loader extends Component
                 }
             }
             // Global sets
-            else if ( count($segments) >= 2 && $segments[0] == 'globals' )
+            else if (count($segments) >= 2 && $segments[0] == 'globals')
             {
                 $set = Craft::$app->globals->getSetByHandle(end($segments));
                 if ($set)
@@ -136,7 +135,7 @@ class Loader extends Component
                 }
             }
             // Users
-            else if ( (count($segments) == 1 && $segments[0] == 'myaccount') || (count($segments) == 2 && $segments[0] == 'users') )
+            else if ((count($segments) == 1 && $segments[0] == 'myaccount') || (count($segments) == 2 && $segments[0] == 'users'))
             {
                 $context = 'users';
             }
@@ -156,7 +155,7 @@ class Loader extends Component
 
         $view = Craft::$app->getView();
 
-        $view->registerAssetBundle(SpoonConfigurator::class);
+        $view->registerAssetBundle(ConfiguratorAsset::class);
 
         $settings = [
             'matrixFieldIds' => Spoon::$plugin->fields->getMatrixFieldIds(),
@@ -187,7 +186,23 @@ class Loader extends Component
 
             $view = Craft::$app->getView();
 
-            $view->registerAssetBundle(SpoonFieldManipulator::class);
+            $view->registerAssetBundle(FieldManipulatorAsset::class);
+
+            $translations = [];
+
+            foreach ($spoonedBlockTypes as $spoonedBlockTypesInContext) {
+                foreach ($spoonedBlockTypesInContext as $spoonedBlockType) {
+                    $translations[] = $spoonedBlockType->groupName;
+                    $translations[] = $spoonedBlockType->matrixBlockType->name;
+
+                    foreach ($spoonedBlockType->fieldLayoutModel['tabs'] as $tab) {
+                        $translations[] = $tab->name;
+                    }
+
+                }
+            }
+
+            $view->registerTranslations('site', $translations);
 
             $settings = [
                 'blockTypes' => $spoonedBlockTypes,
