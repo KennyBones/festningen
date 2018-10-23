@@ -1,7 +1,7 @@
 {# her bruker vi teknikker for dns-prefetch  #}
 {% include "_admin/_dns-prefetch" %}
 
-{% if not craft.request.isLivePreview %}<style>body { opacity: 0; }</style>{% endif %}
+{% if not craft.app.request.isLivePreview %}<style>body { opacity: 0; }</style>{% endif %}
 
 <link rel="stylesheet" type="text/css" href="{{ craft.stamp.er('/dist/css/initial.css', 'query') }}">
 
@@ -35,7 +35,8 @@ define("Swiper", ["swiper"], function(swiper) {
 
 {% include "_admin/_favicon" %}
 
-{% if (craft.config.devMode or currentUser.admin ) and not craft.request.isLivePreview %}
+
+{% if (craft.app.config.general.devMode or currentUser.admin ) and not craft.app.request.isLivePreview %}
 	{# Denne må være over main.js, kan tryne om ikke #}
 	<script>
 		var ENV = '{{craft.config.env}}',

@@ -7,7 +7,7 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	{% set img = entry.toppbilde.first | default(false) %}
+	{% set img = entry.bilde.first | default(false) %}
 	{% set bilde = craft.imager.transformImage(img, [
 		{ width: 320, height: 200 },
 		{ width: 840, height: 400 },
@@ -27,7 +27,7 @@
 
 	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('lft desc') if entry.postDate < now %}
 
-		{% set img = blokk.toppbilde | length ? blokk.toppbilde.first %}
+		{% set img = blokk.bilde | length ? blokk.bilde.first %}
 
 		{% set bilde = craft.imager.transformImage(img, [
 			{ width: 700, height: 380 },

@@ -6,7 +6,7 @@
 
 	{# {% endminify %}{% endcache %} #}
 
-	{% set img = entry.bilde.first | default(false) %}
+	{% set img = entry.bilde.one() | default(false) %}
 	{% set bilde = craft.imager.transformImage(img, [
 		{ width: 320, height: 300 },
 		{ width: 840, height: 500 },
@@ -47,7 +47,7 @@
 	{% if entry.visHvaSkjer %}
 		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('lft desc') if entry.postDate < now %}
 
-			{% set img = blokk.toppbilde | length ? blokk.toppbilde.first %}
+			{% set img = blokk.bilde | length ? blokk.bilde.first %}
 			{% set bilde = craft.imager.transformImage(img, [
 				{ width: 700, height: 380 },
 				], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
@@ -100,7 +100,7 @@
 			<h3>Våre menyer</h3>
 			<table>
 				<tbody>
-					{% for meny in entry.vareMenyer.menyer %}
+					{% for meny in entry.vareMenyer.menyer.all() %}
 						<tr>
 							<td>{{meny.title}}</td>
 							<td>{{meny.notis}}</td>
@@ -112,7 +112,7 @@
 		</article>
 	</section>
 
-	{% for blokk in entry.blokkSpoon %}
+	{% for blokk in entry.blokkSpoon.all() %}
 		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
 

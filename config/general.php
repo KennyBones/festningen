@@ -24,4 +24,6 @@ return [
 
     // Dev Mode (see https://craftcms.com/support/dev-mode)
     'devMode' => false,
+
+    'securityKey' => 'V2lYno5IKPXYmhrKAdxq6V_AAkWvAds6',
 ];

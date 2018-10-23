@@ -1,12 +1,12 @@
 {% macro designblocks(blokk) %}
-{% set LP = craft.request.isLivePreview ?? false %}
+{% set LP = craft.app.request.isLivePreview ?? false %}
     {# contents of the macro here #}
 
 
     {% if  blokk.type == 'svartBoks' %}
 
       <section class="row designblock black-block num-{{blokk.svartBoks | length}} {% if  blokk.getNext() | length and blokk.getNext().type == 'menyer' %} menytopp{% endif %}">
-        {% for boks in blokk.svartBoks %}
+        {% for boks in blokk.svartBoks.all() %}
           <article class="fargeblokk">
             {{boks.boks}}
           </article>
@@ -20,7 +20,7 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
-              {% for slide in blokk.bilder %}
+              {% for slide in blokk.bilder.all() %}
                 {% set bilde = craft.imager.transformImage(slide.bilde[0], [
                   { width: 640, height: 360 },
               		{ width: 1024, height: 576 },
@@ -47,7 +47,7 @@
     {% elseif blokk.type == 'topp' %}
     {# Topp #}
       <div class="block-topp">
-        {% set img = blokk.bilde.first | default(false) %}
+        {% set img = blokk.bilde.one() | default(false) %}
         {% set bilde = craft.imager.transformImage(img, [
           { width: 320, height: 200 },
           { width: 840, height: 400 },
@@ -69,7 +69,7 @@
 
         <aside class="fakta-block">
           <ul>
-            {% for linje in blokk.faktaboks %}
+            {% for linje in blokk.faktaboks.all() %}
               <li>
                 <strong>{{linje.tittel}}</strong>
                 <p>{{linje.tekst}}</p>
@@ -93,7 +93,7 @@
 
         <aside class="fakta-block mobile">
           <ul>
-            {% for linje in blokk.faktaboks %}
+            {% for linje in blokk.faktaboks.all() %}
               <li>
                 <strong>{{linje.tittel}}</strong>
                 <p>{{linje.tekst}}</p>
@@ -108,7 +108,7 @@
 
       {# Tekstblokk øverst, ingen bilde #}
       {% if blokk.bilde | length %}
-        {% set img = blokk.bilde | length ? blokk.bilde.first %}
+        {% set img = blokk.bilde | length ? blokk.bilde.one() %}
       	{% set bilde_stor = craft.imager.transformImage(img.url, [
           { width: 320, height: 400 },
       		{ width: 840, height: 570 },

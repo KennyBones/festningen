@@ -14,7 +14,7 @@
 		], { ratio:"16/9" }) %}
 
 
-		{% for blokk in entry.blokkSpoon %}
+		{% for blokk in entry.blokkSpoon.all() %}
 			<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
 
 				{% switch blokk.type.handle %}
