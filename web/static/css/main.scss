@@ -1814,8 +1814,10 @@ aside.printThis {
 
 // RESTAURANT MENYER
 
-.menu-beskrivelse p{
+.menu-beskrivelse {
+  margin-bottom: 4em;
   font-size: $basesize;
+  margin-top: -2em;
 }
 
 .menu-item--row {
