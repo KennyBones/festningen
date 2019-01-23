@@ -1,0 +1,190 @@
+{% extends "_layout" %}
+{% set bodyClass = "index" %}
+
+{% block content %}
+	{# {% cache until midnight %}{% minify %} #}
+
+	{# {% endminify %}{% endcache %} #}
+
+	{% set img = entry.bilde.one() | default(false) %}
+	{% set bilde = craft.imager.transformImage(img, [
+		{ width: 320, height: 300 },
+		{ width: 840, height: 500 },
+		{ width: 1360, height: 600 },
+		], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
+	<section class="row pageTop designblock">
+		<img class="lazyload" src="{{ craft.imager.base64Pixel(16, 9) }}" data-srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" alt="{{img.title | default("")}}">
+
+		<div class="designblock tekst">
+			<h1>{{entry.tittel}}</h1>
+			<p>{{entry.rikTekst}}</p>
+		</div>
+
+	</section>
+
+	{% set apningstiderOgBooking = entry.apningstiderOgBooking %}
+
+	<section class="row designblock apningstider">
+
+		<article class="designblock first">
+			<h2>{{apningstiderOgBooking[0].tittel}}</h2>
+			{{craft.inlin.er(apningstiderOgBooking[0].ikon[0].url, true) | raw }}
+			{{apningstider.rikTekst}}
+			{{apningstiderOgBooking[0].rikTekst}}
+			<span class="knapp">{{apningstiderOgBooking[0].knapp}}</span>
+		</article>
+
+		<article class="designblock second">
+			<h2>{{apningstiderOgBooking[1].tittel}}</h2>
+			{{craft.inlin.er(apningstiderOgBooking[1].ikon[0].url, true) | raw }}
+			{{apningstiderOgBooking[1].rikTekst}}
+			<span class="knapp">{{apningstiderOgBooking[1].knapp}}</span>
+		</article>
+
+	</section>
+
+	{% if entry.visHvaSkjer %}
+		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('lft desc') if entry.postDate < now %}
+
+			{% set img = blokk.bilde | length ? blokk.bilde.first %}
+			{% set bilde = craft.imager.transformImage(img, [
+				{ width: 700, height: 380 },
+				], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
+
+			<section class="row designblock parent hvaSkjer">
+				{# Bildeposisjon høyre eller venstre #}
+				<section class="row designblock enkel">
+						<article class="designblock tekst black">
+							<h2>{{blokk.title}}</h2>
+							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
+							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
+
+							{{blokk.rikTekst|striptags|slice(0,100)}}
+
+							<aside class="hvaskjer-buttons">
+								<ul>
+										<li><strong>Tidspunkt:</strong>
+											<p>{{blokk.tidspunkt}}</p>
+										</li>
+										<li>
+											<strong>Lokasjon:</strong>
+											<p>{{blokk.lokasjon}}</p>
+										</li>
+										<li>
+											<strong>Billetter:</strong>
+											<p><a href="{{blokk.renTekst}}" target="_blank">Klikk her</a></p>
+										</li>
+								</ul>
+							</aside>
+						</article>
+
+						<article class="designblock bilde">
+							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						</article>
+
+					</section>
+			</section>
+
+		{% endfor %}
+	{% endif %}
+
+
+	<section class="row designblock enkel menyer">
+		<article class="tekst">
+			{{entry.vareMenyer.tekst}}
+		</article>
+
+		<article class="fargeblokk">
+			{{craft.inlin.er(entry.vareMenyer.ikon[0].url, true) | raw }}
+			<h3>Våre menyer</h3>
+			<table>
+				<tbody>
+					{% for meny in entry.vareMenyer.menyer.all() %}
+						<tr>
+							<td>{{meny.title}}</td>
+							<td>{{meny.notis}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<a href="/restaurant">{% if locale == "en" %} Read more {% else %} Les mer{% endif %}</a>
+		</article>
+	</section>
+
+	{% for blokk in entry.blokkSpoon.all() %}
+		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
+
+
+
+			{% switch blokk.type.handle %}
+					{% case 'menyer' %}
+						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% default %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+				{% endswitch %}
+
+		</section>
+	{% endfor %}
+
+	{# BOOKING #}
+	<section class="row booking designblock">
+		<div id="booking-map">
+			<script>
+				var map_lat = Number('{{ entry.booking.kart.lat }}');
+				var map_lng = Number('{{ entry.booking.kart.lng }}');
+			</script>
+			<img src="/static/img/map.png">
+		</div>
+		<aside id="kontaktskjema" class="designblock">
+			<h2>{{entry.booking.tittel}}</h2>
+			<div class="booking-icon">{{craft.inlin.er(entry.booking.ikon[0].url, true) | raw }}</div>
+			{{entry.booking.tekst}}
+
+			{% macro errorList(errors) %}
+			    {% if errors %}
+			        <ul class="errors">
+			            {% for error in errors %}
+			                <li>{{ error }}</li>
+			            {% endfor %}
+			        </ul>
+			    {% endif %}
+			{% endmacro %}
+
+			{% from _self import errorList %}
+
+			<form id="contact-form" method="post" action="" accept-charset="UTF-8">
+			    {{ csrfInput() }}
+			    <input type="hidden" name="action" value="contact-form/send">
+
+			    <label class="heading" for="from-name">Navn</label>
+			    <input class="field" id="from-name" type="text" name="fromName" value="{{ message.fromName ?? '' }}">
+			    {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+
+			    <label class="heading" for="from-email">E-post</label>
+			    <input class="field" id="from-email" type="email" name="fromEmail" value="{{ message.fromEmail ?? '' }}">
+			    {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+
+					<label class="heading" for="subject">Hva henvendelsen gjelder</label>
+			    <input class="field" id="subject" type="text" name="subject" value="{{ message.subject ?? '' }}">
+			    {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+
+			    <label class="heading" for="message">Melding</label>
+			    <textarea class="field" rows="10" cols="40" id="message" name="message">{{ message.message ?? '' }}</textarea>
+			    {{ message is defined and message ? errorList(message.getErrors('message')) }}
+
+			    <div class="submit"><input type="submit" value="Send"></div>
+
+					<div class="form-response">
+						{{craft.inlin.er('/static/svg/symbols/mailsending.svg') | raw }}
+						<span></span>
+					</div>
+			</form>
+
+		</aside>
+	</section>
+
+{% endblock %}

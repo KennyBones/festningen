@@ -45,9 +45,11 @@ body {
     margin: 0;
 
     @media #{$tablet} {
-      background-position: 70px 60%;
-      background-size: 660px;
-      height: 72px;
+      background-position: 42px 70%;
+      background-size: 180px;
+      height: 92px;
+      width: 266px;
+      z-index: 1;
   	}
 
 
@@ -147,7 +149,7 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
-  line-height: 2.5em;
+  line-height: 4.5em;
   text-align: center;
   display: none;
 
@@ -172,16 +174,16 @@ body {
       padding-right: 40px;
       margin: 0;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 16px;
 
       @media #{$tablet} {
-        padding: 16px;
+        padding: 17px;
         padding-right: 20px;
         padding-left: 20px;
     	}
 
       @media #{$desktop} {
-    		font-size: 15px;
+    		font-size: 19px;
     	}
 
 
@@ -683,14 +685,14 @@ $padding: 70px;
       padding: 20px;
     }
 
-    &.left table, &.left table .table--heading.title  { text-align: left; }
-    &.center table, &.center table .table--heading.title { text-align: center; }
-    &.right table, &.right table .table--heading.title { text-align: right; }
+    &.left, &.left .table--heading.title  { text-align: left; }
+    &.center, &.center .table--heading.title { text-align: center; }
+    &.right, &.right .table--heading.title { text-align: right; }
 
     @media #{$tablet} {
-      &.left table, &.left table .table--heading.title  { text-align: left; }
-      &.center table, &.center table .table--heading.title { text-align: left; }
-      &.right table, &.right table .table--heading.title { text-align: left; }
+      &.left, &.left .table--heading.title  { text-align: left; }
+      &.center, &.center .table--heading.title { text-align: left; }
+      &.right, &.right .table--heading.title { text-align: left; }
     }
 
   }
