@@ -18,7 +18,7 @@ body {
 
 #topHeader {
   background: $color_pr2;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -36,7 +36,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 522px;
-    height: 92px;
+    height: 60px;
     width: 100%;
     display: block;
     z-index: 0;
@@ -47,8 +47,8 @@ body {
       position: relative;
       background-color: transparent;
       background-image: url('/static/svg/symbols/logo-bg.svg');
-      background-size: 180px;
-      height: 92px;
+      background-size: 170px;
+      height: 88px;
       width: 100%;
       z-index: 1;
   	}
@@ -59,7 +59,7 @@ body {
       left: 0;
       background-position: 91px 50%;
       padding-top: 0;
-
+      width: 266px;
     }
 
 
@@ -159,7 +159,7 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
-  line-height: 4.5em;
+  line-height: 5.5em;
   text-align: center;
   display: none;
 
@@ -218,10 +218,6 @@ body {
           right: 0;
           bottom: 0;
           font-size: 30px;
-
-          @media #{$tablet} {
-            bottom: 5px;
-          }
         }
       }
     }
@@ -230,7 +226,7 @@ body {
       max-height: 0;
       opacity: 0;
       left: 0;
-      top: -72px;
+      top: -77px;
       margin: 0;
       padding: 0;
       width: 100%;
@@ -243,6 +239,7 @@ body {
       @media #{$tablet} {
         position: absolute;
         background: #FFFFFF;
+        top: 77px;
 
         li a {
           font-size: 13px;
@@ -281,7 +278,7 @@ body {
 
 			ul.nav__level2 {
         max-height: 1000px;
-        top: 72px;
+        top: 77px;
         opacity: 1;
         visibility: visible;
         z-index: 1;
@@ -392,6 +389,7 @@ $padding: 70px;
   }
 
   &.nospacing {border-bottom: 0;}
+  &.nospacing .black-block {border-bottom: 0;}
 
   a { font-weight: bold; }
 
@@ -724,7 +722,7 @@ $padding: 70px;
   margin-top: 55px;
 
   @media #{$tablet} {
-    margin-top: 72px;
+    margin-top: 100px;
   }
 
   img { max-width: 100%; }
@@ -1278,6 +1276,7 @@ aside.printThis {
   font-size: 0;
   display: block;
   overflow: hidden;
+  margin-top: $padding;
 
   @media #{$tablet} {
     display: flex;
@@ -1573,7 +1572,7 @@ aside.printThis {
     margin-top: 55px;
 
     @media #{$tablet} {
-      margin-top: 72px;
+      margin-top: 100px;
     }
 
   }
@@ -1895,7 +1894,7 @@ aside.printThis {
     border-bottom: 0;
 
     @media #{$tablet} {
-      margin-top: 72px;
+      margin-top: 100px;
     }
 
   }
@@ -1905,7 +1904,7 @@ aside.printThis {
   margin-bottom: $padding / 2;
 
   @media #{$tablet} {
-    margin-bottom: 72px;
+    margin-bottom: 100px;
   }
 }
 
