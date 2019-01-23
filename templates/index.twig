@@ -44,6 +44,46 @@
 
 	</section>
 
+	<section class="row designblock enkel menyer">
+		<article class="tekst">
+			{{entry.vareMenyer.tekst}}
+		</article>
+
+		<article class="fargeblokk">
+			{{craft.inlin.er(entry.vareMenyer.ikon[0].url, true) | raw }}
+			<h3>Våre menyer</h3>
+			<table>
+				<tbody>
+					{% for meny in entry.vareMenyer.menyer.all() %}
+						<tr>
+							<td>{{meny.title}}</td>
+							<td>{{meny.notis}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<a href="/restaurant">{% if locale == "en" %} Read more {% else %} Les mer{% endif %}</a>
+		</article>
+	</section>
+
+	{% for blokk in entry.blokkSpoon.all() %}
+		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
+
+
+
+			{% switch blokk.type.handle %}
+					{% case 'menyer' %}
+						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+
+					{% default %}
+						{% import '_admin/_designblocks' as designBlokkmacro %}
+						{{ designBlokkmacro.designblocks(blokk) }}
+				{% endswitch %}
+
+		</section>
+	{% endfor %}
+
 	{% if entry.visHvaSkjer %}
 		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('lft desc') if entry.postDate < now %}
 
@@ -88,47 +128,7 @@
 
 		{% endfor %}
 	{% endif %}
-
-
-	<section class="row designblock enkel menyer">
-		<article class="tekst">
-			{{entry.vareMenyer.tekst}}
-		</article>
-
-		<article class="fargeblokk">
-			{{craft.inlin.er(entry.vareMenyer.ikon[0].url, true) | raw }}
-			<h3>Våre menyer</h3>
-			<table>
-				<tbody>
-					{% for meny in entry.vareMenyer.menyer.all() %}
-						<tr>
-							<td>{{meny.title}}</td>
-							<td>{{meny.notis}}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			<a href="/restaurant">{% if locale == "en" %} Read more {% else %} Les mer{% endif %}</a>
-		</article>
-	</section>
-
-	{% for blokk in entry.blokkSpoon.all() %}
-		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
-
-
-
-			{% switch blokk.type.handle %}
-					{% case 'menyer' %}
-						{% import '_admin/_restaurantmeny' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk) }}
-
-					{% default %}
-						{% import '_admin/_designblocks' as designBlokkmacro %}
-						{{ designBlokkmacro.designblocks(blokk) }}
-				{% endswitch %}
-
-		</section>
-	{% endfor %}
+	
 
 	{# BOOKING #}
 	<section class="row booking designblock">

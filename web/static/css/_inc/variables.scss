@@ -117,6 +117,7 @@ h1, .h1 {
 
 h2, .h2 {
   font-size: 20px;
+  line-height: 1.4em;
 
 	@media #{$tablet} {
 		font-size: $h3;

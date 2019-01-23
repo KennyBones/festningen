@@ -29,28 +29,38 @@ body {
   }
 
 
-  .logo {
+  .logo { // HEADER LOGO
     position: absolute;
     background: $color_pr2;
-    background-image: url('/static/svg/symbols/logo-bg.svg');
+    background-image: url('/static/svg/symbols/logo-bg-gray.svg');
     background-repeat: no-repeat;
-    background-position: 91px 50%;
-    background-size: 322px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    background-position: center center;
+    background-size: 522px;
+    height: 92px;
     width: 100%;
-    height: 55px;
+    display: block;
     z-index: 0;
     margin: 0;
+    padding-top: 20px;
 
     @media #{$tablet} {
-      background-position: 42px 70%;
+      position: relative;
+      background-color: transparent;
+      background-image: url('/static/svg/symbols/logo-bg.svg');
       background-size: 180px;
       height: 92px;
-      width: 266px;
+      width: 100%;
       z-index: 1;
   	}
+
+    @media only screen and (min-width: 1270px) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-position: 91px 50%;
+      padding-top: 0;
+
+    }
 
 
   }
@@ -176,14 +186,19 @@ body {
       font-weight: bold;
       font-size: 16px;
 
+
       @media #{$tablet} {
-        padding: 17px;
         padding-right: 20px;
         padding-left: 20px;
+        font-size: 14px;
     	}
 
       @media #{$desktop} {
-    		font-size: 19px;
+    		font-size: 16px;
+    	}
+
+      @media #{$desktop-huge} {
+    		font-size: 18px;
     	}
 
 
@@ -1027,7 +1042,8 @@ aside.printThis {
       }
 
       @media #{$desktop} {
-        padding: $padding;
+        padding: 65px;
+        padding-top: 40px;
         font-size: $basesize;
       }
 
@@ -1048,10 +1064,13 @@ aside.printThis {
 
       .knapp {
 
-        p { margin: 0; }
+        p { margin: 0;
+          margin-left: 10px;
+          margin-right: 10px;
+          display: inline-block;
+        }
 
         @media #{$desktop} {
-          position: absolute;
           bottom: $mellomrom;
           left: 0;
           right: 0;
