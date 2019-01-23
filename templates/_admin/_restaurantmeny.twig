@@ -32,6 +32,10 @@
           <span class="pris">{{enkeltmeny.pris}}</span>
         {% endif %}
 
+        {% if enkeltmeny.rikTekst %}
+          <div class="menu-beskrivelse">{{enkeltmeny.rikTekst}}</div>
+        {% endif %}
+
         {% if currentUser %}
           <aside class="printThis">
             <div class="printThis--wrapper">

@@ -1816,6 +1816,12 @@ aside.printThis {
 
 // RESTAURANT MENYER
 
+.menu-beskrivelse {
+  margin-bottom: 4em;
+  font-size: $basesize;
+  margin-top: -2em;
+}
+
 .menu-item--row {
     box-sizing: border-box;
     display: -webkit-box;
