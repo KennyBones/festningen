@@ -28,9 +28,9 @@
         {{craft.inlin.er(enkeltmeny.ikon[0].url, true) | raw }}
         <h2>{{enkeltmeny.title}}</h2>
 
-        {% set enkeltmenyEgenPris = false %}
+        {% set enkeltmenyEgenPris = 'false' %}
         {% if enkeltmeny.egenPris %}
-          {% set enkeltmenyEgenPris = true %}
+          {% set enkeltmenyEgenPris = 'true' %}
           <span class="pris">{{enkeltmeny.pris}}</span>
         {% endif %}
 
@@ -66,7 +66,7 @@
                   {{rett.title}}
                 </div>
               </div>
-              {% if enkeltmenyEgenPris %}
+              {% if enkeltmenyEgenPris == 'false' %}
                 <div class="menu-item--cell-wrapper table--heading price">
                   <div class="menu-item--cell">
                     {{rett.rett[0].pris}}
