@@ -24,11 +24,6 @@ body {
   width: 100%;
   z-index: 1;
 
-  @media #{$tablet} {
-    position: fixed;
-  }
-
-
   .logo { // HEADER LOGO
     position: absolute;
     background: $color_pr2;
