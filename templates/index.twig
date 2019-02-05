@@ -2,9 +2,7 @@
 {% set bodyClass = "index" %}
 
 {% block content %}
-	{# {% cache until midnight %}{% minify %} #}
-
-	{# {% endminify %}{% endcache %} #}
+	{% cache until midnight %}{% endcache %}
 
 	{% set img = entry.bilde.one() | default(false) %}
 	{% set bilde = craft.imager.transformImage(img, [
