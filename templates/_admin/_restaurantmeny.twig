@@ -104,8 +104,16 @@
 
           </article>
           <hr>
-
         {% endfor %}
+
+        {% for blokk in enkeltmeny.blokkSpoon.all() %}
+          {% switch blokk.type.handle %}
+              {% case 'svartBoks' %}
+                {% import '_admin/_designblocks' as designBlokkmacro %}
+                {{ designBlokkmacro.designblocks(blokk) }}
+            {% endswitch %}
+        {% endfor %}
+
       </article>
     {% endfor %}
   </section>
