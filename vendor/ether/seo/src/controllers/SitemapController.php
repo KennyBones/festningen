@@ -3,8 +3,8 @@
 namespace ether\seo\controllers;
 
 use craft\web\Controller;
-use ether\seo\resources\SeoFieldSettingsAssets;
 use ether\seo\Seo;
+use ether\seo\web\assets\SeoSettingsAsset;
 use yii\web\HttpException;
 
 class SitemapController extends Controller
@@ -22,7 +22,7 @@ class SitemapController extends Controller
 
 		$namespace = 'data';
 
-		$this->view->registerAssetBundle(SeoFieldSettingsAssets::class);
+		$this->view->registerAssetBundle(SeoSettingsAsset::class);
 		$this->view->registerJs(
 			"new SeoSettings('{$namespace}', 'sitemap');"
 		);

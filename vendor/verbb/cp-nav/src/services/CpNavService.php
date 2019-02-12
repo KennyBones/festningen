@@ -43,10 +43,12 @@ class CpNavService extends Component
 
             // If we're passing in a layoutId param, we're likely on the CP Nav settings page
             // so we want to force the particular layout we're on to the selected one
+            $editing = false;
             $layoutId = Craft::$app->getRequest()->getParam('layoutId');
 
             if ($layoutId) {
                 $layout = CpNav::$plugin->layoutService->getById($layoutId);
+                $editing = true;
             }
 
             // Its pretty annoying, but each load of the CP, we need to check if the stored
@@ -60,7 +62,7 @@ class CpNavService extends Component
                 $manualNavs = CpNav::$plugin->navigationService->getAllManual($layout->id, 'handle');
 
                 // Something has changed - either added or deleted. Re-generate the menu
-                if (count($nav) != count($manualNavs)) {
+                if ((count($nav) != count($manualNavs)) && !$editing) {
                     $this->regenerateNav($layout->id, $manualNavs, $nav);
 
                     // We've either deleted/removed an element = fetch again
@@ -126,20 +128,24 @@ class CpNavService extends Component
      */
     public function setupDefaults($layoutId = 1)
     {
-        if (!CpNav::$plugin->layoutService->getById($layoutId)) {
-            CpNav::$plugin->layoutService->setDefaultLayout($layoutId);
+        $layoutService = CpNav::$plugin->layoutService;
+        $navigationService = CpNav::$plugin->navigationService;
+
+        if (!$layoutService->getById($layoutId)) {
+            $layoutService->setDefaultLayout($layoutId);
         }
 
         // Populate navs with 'stock' navigation
-        $defaultNavs = new Cp();
+        $navService = new Cp();
+        $defaultNavs = $navService->nav();
 
-        foreach ($defaultNavs->nav() as $nav) {
+        foreach ($defaultNavs as $nav) {
             $key = strtolower($nav['label']);
 
-            if (!CpNav::$plugin->navigationService->getByHandle($layoutId, $key)) {
+            if (!$navigationService->getByHandle($layoutId, $key)) {
 
                 // Handleball off to the main menu regeneration function - no need to duplicate code
-                $this->regenerateNav($layoutId, [], $defaultNavs->nav());
+                $this->regenerateNav($layoutId, [], $defaultNavs);
             }
         }
     }

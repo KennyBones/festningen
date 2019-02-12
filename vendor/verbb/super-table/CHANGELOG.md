@@ -1,5 +1,132 @@
 # Changelog
 
+## 2.1.7 - 2019-02-10
+
+### Fixed
+- Fix migration issue with Matrix-nested content tables when upgrading from Craft 2 > 3.
+- Min rows description typo. (thanks @alexjcollins).
+- Fix sprout import incompatibility.
+
+## 2.1.6 - 2019-01-31
+
+### Added
+- Added two events to let other js know when nested Matrix blocks are added. (thanks @joshangell).
+
+### Fixed
+- Improve checks around missing content tables during migration.
+- Fix migration causing missing fields to be saved as a missing field.
+
+## 2.1.5.3 - 2019-01-22
+
+### Fixed
+- Fix existing table-checking in content table check
+
+## 2.1.5.2 - 2019-01-22
+
+### Fixed
+- Fix table cleanup in migration when correct table already exists
+
+## 2.1.5.1 - 2019-01-22
+
+### Fixed
+- Update migration checks when updating from older version of Super Table.
+- Check content tables clarity when all done/all okay.
+
+## 2.1.5 - 2019-01-22
+
+### Fixed
+- Fix migration having to run twice to complete required steps in some cases.
+- Added controller action `actions/super-table/plugin/fix-content-tables` to aid in debugging content table issues.
+- Added controller action `actions/super-table/plugin/check-content-tables` to aid in debugging content table issues.
+- Add a bunch of debugging to assist with content table migrations.
+
+## 2.1.4.4 - 2019-01-22
+
+### Fixed
+- Fix more migration issues...
+
+## 2.1.4.3 - 2019-01-22
+
+### Fixed
+- Remove old content table migration potentially causing issues.
+
+## 2.1.4.2 - 2019-01-21
+
+### Fixed
+- Fix content table migration to cater for Neo.
+- Fix inclusion of `_cleanUpTable()` in migration (not needed).
+
+## 2.1.4.1 - 2019-01-20
+
+### Fixed
+- Fix migration issue in 2.1.4.
+
+## 2.1.4 - 2019-01-20
+
+### Fixed
+- Fix any disconnected content tables for any Super Table field.
+
+## 2.1.3 - 2019-01-19
+
+### Fixed
+- Prevent content field exception during migrations.
+
+## 2.1.2 - 2019-01-19
+
+### Fixed
+- Ditch (incorrect) project config migration.
+
+## 2.1.1 - 2019-01-19
+
+### Added
+- Added support for Craft 3.1 soft deletes.
+- Added support for Craft 3.1 project config.
+
+### Changed
+- Clarify width field setting label for new fields.
+- Tweak/improve minor field setting translations.
+
+### Fixed
+- Fixed a bug where a Super Table fields’ block types and content table could be deleted even if something set `$isValid` to `false` on the `beforeDelete` event.
+- Fixed issue with Matrix + Super Table field combinations losing their fields, or content tables (thanks @brandonkelly).
+- Fixed dragging issues with nested Matrix field when using Matrix Layout.
+
+## 2.1.0 - 2019-01-16
+
+### Fixed
+- Fix for ST + Matrix field combination throwing errors during migration for Craft 3.1.x.
+- Fixed an error that could occur when duplicating an element with a Super Table field with “Manage blocks on a per-site basis” disabled.
+- Fixed an error that occurred when querying for Super Table blocks if both the `with` and `indexBy` parameters were set.
+- Fixed a bug where Super Table blocks wouldn’t retain their content translations when an entry was duplicated from the Edit Entry page.
+- Fix settings dropdown/table fields not working on some cases.
+- Remove plugin settings page (It's not supposed to be there).
+
+## 2.0.14 - 2018-11-12
+
+### Fixed
+- Fix CP section turning up.
+
+## 2.0.13 - 2018-11-11
+
+### Fixed
+- Fix lack of styles when editing an entry version.
+
+## 2.0.12 - 2018-11-10
+
+### Changed
+- Update styles to be inline with Craft 3.
+- Use `duplicateElement()` to clone Super Table blocks after making them localized.
+
+### Fixed
+- Fix error when viewing previous versions of elements that contained a Super Table field.
+
+## 2.0.11 - 2018-10-24
+
+### Fixed
+- Fixed Dashboard error (thanks @brandonkelly).
+- Fix error when throwing an error for field handles (ironic hey?).
+- Drop indexes before renaming instead of after. Otherwise this causes errors on mariadb. (thanks @born05).
+
 ## 2.0.10 - 2018-09-26
 
 ### Fixed

@@ -28,12 +28,12 @@ namespace Google\Cloud\Monitoring\V3\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Monitoring\V3\CreateNotificationChannelRequest;
 use Google\Cloud\Monitoring\V3\DeleteNotificationChannelRequest;
 use Google\Cloud\Monitoring\V3\GetNotificationChannelDescriptorRequest;
@@ -146,7 +146,7 @@ class NotificationChannelServiceGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -155,7 +155,7 @@ class NotificationChannelServiceGapicClient
 
     private static function getNotificationChannelNameTemplate()
     {
-        if (self::$notificationChannelNameTemplate == null) {
+        if (null == self::$notificationChannelNameTemplate) {
             self::$notificationChannelNameTemplate = new PathTemplate('projects/{project}/notificationChannels/{notification_channel}');
         }
 
@@ -164,7 +164,7 @@ class NotificationChannelServiceGapicClient
 
     private static function getNotificationChannelDescriptorNameTemplate()
     {
-        if (self::$notificationChannelDescriptorNameTemplate == null) {
+        if (null == self::$notificationChannelDescriptorNameTemplate) {
             self::$notificationChannelDescriptorNameTemplate = new PathTemplate('projects/{project}/notificationChannelDescriptors/{channel_descriptor}');
         }
 
@@ -173,7 +173,7 @@ class NotificationChannelServiceGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'notificationChannel' => self::getNotificationChannelNameTemplate(),
@@ -611,7 +611,7 @@ class NotificationChannelServiceGapicClient
 
     /**
      * Creates a new notification channel, representing a single notification
-     * endpoint such as an email address, SMS number, or pagerduty service.
+     * endpoint such as an email address, SMS number, or PagerDuty service.
      *
      * Sample code:
      * ```

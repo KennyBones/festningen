@@ -2,7 +2,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright 2017 Google Inc.
+// Copyright 2017 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 //
 namespace Google\Cloud\PubSub\V1;
 
@@ -36,14 +37,15 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
 
     /**
      * Creates a subscription to a given topic. See the
-     * <a href="/pubsub/docs/admin#resource_names"> resource name rules</a>.
+     * <a href="https://cloud.google.com/pubsub/docs/admin#resource_names">
+     * resource name rules</a>.
      * If the subscription already exists, returns `ALREADY_EXISTS`.
      * If the corresponding topic doesn't exist, returns `NOT_FOUND`.
      *
      * If the name is not provided in the request, the server will assign a random
      * name for this subscription on the same project as the topic, conforming
      * to the
-     * [resource name format](https://cloud.google.com/pubsub/docs/overview#names).
+     * [resource name format](https://cloud.google.com/pubsub/docs/admin#resource_names).
      * The generated name is populated in the returned Subscription object.
      * Note that for REST API requests, you must specify a name in the request.
      * @param \Google\Cloud\PubSub\V1\Subscription $argument input argument
@@ -158,8 +160,7 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Pulls messages from the server. Returns an empty list if there are no
-     * messages available in the backlog. The server may return `UNAVAILABLE` if
+     * Pulls messages from the server. The server may return `UNAVAILABLE` if
      * there are too many concurrent pull requests pending for the given
      * subscription.
      * @param \Google\Cloud\PubSub\V1\PullRequest $argument input argument
@@ -211,8 +212,12 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Gets the configuration details of a snapshot.<br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * Gets the configuration details of a snapshot. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow you to manage message acknowledgments in bulk. That
+     * is, you can set the acknowledgment state of messages in an existing
+     * subscription to the state captured by a snapshot.<br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
      * use. It is not subject to any SLA or deprecation policy.
      * @param \Google\Cloud\PubSub\V1\GetSnapshotRequest $argument input argument
@@ -228,8 +233,13 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Lists the existing snapshots.<br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * Lists the existing snapshots. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow
+     * you to manage message acknowledgments in bulk. That is, you can set the
+     * acknowledgment state of messages in an existing subscription to the state
+     * captured by a snapshot.<br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
      * use. It is not subject to any SLA or deprecation policy.
      * @param \Google\Cloud\PubSub\V1\ListSnapshotsRequest $argument input argument
@@ -245,10 +255,16 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Creates a snapshot from the requested subscription.<br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * Creates a snapshot from the requested subscription. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow
+     * you to manage message acknowledgments in bulk. That is, you can set the
+     * acknowledgment state of messages in an existing subscription to the state
+     * captured by a snapshot.
+     * <br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
-     * use. It is not subject to any SLA or deprecation policy.
+     * use. It is not subject to any SLA or deprecation policy.<br><br>
      * If the snapshot already exists, returns `ALREADY_EXISTS`.
      * If the requested subscription doesn't exist, returns `NOT_FOUND`.
      * If the backlog in the subscription is too old -- and the resulting snapshot
@@ -256,10 +272,10 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
      * See also the `Snapshot.expire_time` field. If the name is not provided in
      * the request, the server will assign a random
      * name for this snapshot on the same project as the subscription, conforming
-     * to the [resource name format](https://cloud.google.com/pubsub/docs/overview#names).
-     * The generated
-     * name is populated in the returned Snapshot object. Note that for REST API
-     * requests, you must specify a name in the request.
+     * to the
+     * [resource name format](https://cloud.google.com/pubsub/docs/admin#resource_names).
+     * The generated name is populated in the returned Snapshot object. Note that
+     * for REST API requests, you must specify a name in the request.
      * @param \Google\Cloud\PubSub\V1\CreateSnapshotRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
@@ -273,8 +289,13 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Updates an existing snapshot.<br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * Updates an existing snapshot. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow
+     * you to manage message acknowledgments in bulk. That is, you can set the
+     * acknowledgment state of messages in an existing subscription to the state
+     * captured by a snapshot.<br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
      * use. It is not subject to any SLA or deprecation policy.
      * Note that certain properties of a snapshot are not modifiable.
@@ -291,8 +312,13 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
     }
 
     /**
-     * Removes an existing snapshot. <br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * Removes an existing snapshot. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow
+     * you to manage message acknowledgments in bulk. That is, you can set the
+     * acknowledgment state of messages in an existing subscription to the state
+     * captured by a snapshot.<br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
      * use. It is not subject to any SLA or deprecation policy.
      * When the snapshot is deleted, all messages retained in the snapshot
@@ -313,8 +339,14 @@ class SubscriberGrpcClient extends \Grpc\BaseStub {
 
     /**
      * Seeks an existing subscription to a point in time or to a given snapshot,
-     * whichever is provided in the request.<br><br>
-     * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+     * whichever is provided in the request. Snapshots are used in
+     * <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+     * operations, which allow
+     * you to manage message acknowledgments in bulk. That is, you can set the
+     * acknowledgment state of messages in an existing subscription to the state
+     * captured by a snapshot. Note that both the subscription and the snapshot
+     * must be on the same topic.<br><br>
+     * <b>BETA:</b> This feature is part of a beta release. This API might be
      * changed in backward-incompatible ways and is not recommended for production
      * use. It is not subject to any SLA or deprecation policy.
      * @param \Google\Cloud\PubSub\V1\SeekRequest $argument input argument

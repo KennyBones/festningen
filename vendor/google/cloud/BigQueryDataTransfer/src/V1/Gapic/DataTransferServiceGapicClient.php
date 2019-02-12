@@ -28,13 +28,13 @@ namespace Google\Cloud\BigQuery\DataTransfer\V1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\BigQuery\DataTransfer\V1\CheckValidCredsRequest;
 use Google\Cloud\BigQuery\DataTransfer\V1\CheckValidCredsResponse;
 use Google\Cloud\BigQuery\DataTransfer\V1\CreateTransferConfigRequest;
@@ -144,7 +144,7 @@ class DataTransferServiceGapicClient
 
     private static function getProjectDataSourceNameTemplate()
     {
-        if (self::$projectDataSourceNameTemplate == null) {
+        if (null == self::$projectDataSourceNameTemplate) {
             self::$projectDataSourceNameTemplate = new PathTemplate('projects/{project}/dataSources/{data_source}');
         }
 
@@ -153,7 +153,7 @@ class DataTransferServiceGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -162,7 +162,7 @@ class DataTransferServiceGapicClient
 
     private static function getProjectTransferConfigNameTemplate()
     {
-        if (self::$projectTransferConfigNameTemplate == null) {
+        if (null == self::$projectTransferConfigNameTemplate) {
             self::$projectTransferConfigNameTemplate = new PathTemplate('projects/{project}/transferConfigs/{transfer_config}');
         }
 
@@ -171,7 +171,7 @@ class DataTransferServiceGapicClient
 
     private static function getProjectRunNameTemplate()
     {
-        if (self::$projectRunNameTemplate == null) {
+        if (null == self::$projectRunNameTemplate) {
             self::$projectRunNameTemplate = new PathTemplate('projects/{project}/transferConfigs/{transfer_config}/runs/{run}');
         }
 
@@ -180,7 +180,7 @@ class DataTransferServiceGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'projectDataSource' => self::getProjectDataSourceNameTemplate(),
                 'project' => self::getProjectNameTemplate(),

@@ -28,12 +28,12 @@ namespace Google\Cloud\ErrorReporting\V1beta1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\ErrorReporting\V1beta1\DeleteEventsRequest;
 use Google\Cloud\ErrorReporting\V1beta1\DeleteEventsResponse;
 use Google\Cloud\ErrorReporting\V1beta1\ListEventsRequest;
@@ -139,7 +139,7 @@ class ErrorStatsServiceGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -148,7 +148,7 @@ class ErrorStatsServiceGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
             ];

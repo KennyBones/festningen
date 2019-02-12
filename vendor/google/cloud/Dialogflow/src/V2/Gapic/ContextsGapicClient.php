@@ -28,12 +28,12 @@ namespace Google\Cloud\Dialogflow\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Dialogflow\V2\Context;
 use Google\Cloud\Dialogflow\V2\CreateContextRequest;
 use Google\Cloud\Dialogflow\V2\DeleteAllContextsRequest;
@@ -71,18 +71,21 @@ use Google\Protobuf\GPBEmpty;
  * $contextsClient = new ContextsClient();
  * try {
  *     $formattedParent = $contextsClient->sessionName('[PROJECT]', '[SESSION]');
- *     // Iterate through all elements
- *     $pagedResponse = $contextsClient->listContexts($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $contextsClient->listContexts($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $contextsClient->listContexts($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $contextsClient->close();
@@ -137,6 +140,7 @@ class ContextsGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/contexts_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/contexts_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/contexts_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -150,7 +154,7 @@ class ContextsGapicClient
 
     private static function getSessionNameTemplate()
     {
-        if (self::$sessionNameTemplate == null) {
+        if (null == self::$sessionNameTemplate) {
             self::$sessionNameTemplate = new PathTemplate('projects/{project}/agent/sessions/{session}');
         }
 
@@ -159,7 +163,7 @@ class ContextsGapicClient
 
     private static function getContextNameTemplate()
     {
-        if (self::$contextNameTemplate == null) {
+        if (null == self::$contextNameTemplate) {
             self::$contextNameTemplate = new PathTemplate('projects/{project}/agent/sessions/{session}/contexts/{context}');
         }
 
@@ -168,7 +172,7 @@ class ContextsGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'session' => self::getSessionNameTemplate(),
                 'context' => self::getContextNameTemplate(),
@@ -324,18 +328,21 @@ class ContextsGapicClient
      * $contextsClient = new ContextsClient();
      * try {
      *     $formattedParent = $contextsClient->sessionName('[PROJECT]', '[SESSION]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $contextsClient->listContexts($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $contextsClient->listContexts($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $contextsClient->listContexts($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $contextsClient->close();

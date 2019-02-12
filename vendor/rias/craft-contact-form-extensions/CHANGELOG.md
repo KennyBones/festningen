@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2019-02-05
+### Added
+- Added support for Craft 3.1 env vars (thanks @benface)
+
+## 1.0.13 - 2019-01-18
+### Fixed
+- Fixed an issue with project config in 3.1
+
+## 1.0.12 - 2018-12-03
+### Fixed
+- Contact Form Extensions now checks if the submission was marked as spam before handling anything itself. This might solve issues with other plugins that mark it first.
+
+### Added
+- Added a `craft.contactForms.submissions` variable to display submissions in your templates (thanks @Floriswijgergangs)
+
 ## 1.0.11 - 2018-09-26
 ### Fixed
 - Confirmation email sender shoul be the system admin, thanks @Pinchcliffe

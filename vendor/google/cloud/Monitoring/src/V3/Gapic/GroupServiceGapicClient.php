@@ -28,12 +28,12 @@ namespace Google\Cloud\Monitoring\V3\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Monitoring\V3\CreateGroupRequest;
 use Google\Cloud\Monitoring\V3\DeleteGroupRequest;
 use Google\Cloud\Monitoring\V3\GetGroupRequest;
@@ -153,7 +153,7 @@ class GroupServiceGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -162,7 +162,7 @@ class GroupServiceGapicClient
 
     private static function getGroupNameTemplate()
     {
-        if (self::$groupNameTemplate == null) {
+        if (null == self::$groupNameTemplate) {
             self::$groupNameTemplate = new PathTemplate('projects/{project}/groups/{group}');
         }
 
@@ -171,7 +171,7 @@ class GroupServiceGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'group' => self::getGroupNameTemplate(),

@@ -15,6 +15,7 @@ use craft\models\CategoryGroup;
 use craft\models\CraftIdToken;
 use craft\models\Section;
 use ether\seo\fields\SeoField;
+use ether\seo\models\data\SeoData;
 use ether\seo\models\Settings;
 use ether\seo\records\SitemapRecord;
 use ether\seo\Seo;

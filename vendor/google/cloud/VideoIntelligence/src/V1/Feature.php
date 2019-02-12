@@ -7,7 +7,7 @@ namespace Google\Cloud\VideoIntelligence\V1;
 /**
  * Video annotation feature.
  *
- * Protobuf enum <code>Google\Cloud\Videointelligence\V1\Feature</code>
+ * Protobuf type <code>google.cloud.videointelligence.v1.Feature</code>
  */
 class Feature
 {
@@ -41,5 +41,11 @@ class Feature
      * Generated from protobuf enum <code>FACE_DETECTION = 4;</code>
      */
     const FACE_DETECTION = 4;
+    /**
+     * Speech transcription.
+     *
+     * Generated from protobuf enum <code>SPEECH_TRANSCRIPTION = 6;</code>
+     */
+    const SPEECH_TRANSCRIPTION = 6;
 }
 

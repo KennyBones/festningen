@@ -5,13 +5,14 @@ namespace ether\seo\fields;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\elements\Category;
 use craft\elements\Entry;
 use craft\helpers\Json;
 use craft\models\Section;
 use ether\seo\models\data\SeoData;
-use ether\seo\resources\SeoFieldAssets;
-use ether\seo\resources\SeoFieldSettingsAssets;
 use ether\seo\Seo;
+use ether\seo\web\assets\SeoFieldAsset;
+use ether\seo\web\assets\SeoFieldSettingsAsset;
 use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
@@ -27,6 +28,10 @@ class SeoField extends Field implements PreviewableFieldInterface
 	public static $defaultFieldSettings = [
 		'titleSuffix' => null,
 		'suffixAsPrefix' => false,
+
+		'title' => [],
+		'description' => '',
+
 		'socialImage' => null,
 		'hideSocial' => false,
 		'robots' => [],
@@ -35,11 +40,23 @@ class SeoField extends Field implements PreviewableFieldInterface
 	// Instance
 	// -------------------------------------------------------------------------
 
-	/** @var string */
+	/**
+	 * @var string
+	 * @deprecated
+	 */
 	public $titleSuffix;
 
-	/** @var bool */
+	/**
+	 * @var bool
+	 * @deprecated
+	 */
 	public $suffixAsPrefix;
+
+	/** @var array */
+	public $title;
+
+	/** @var string */
+	public $description;
 
 	/** @var mixed */
 	public $socialImage;
@@ -109,9 +126,11 @@ class SeoField extends Field implements PreviewableFieldInterface
 		$hasPreview = false;
 		$section = null;
 		$isEntry = false;
+		$isCalendar = false;
 		$isHome = false;
 		$isNew = $element->getId() === null;
 		$isSingle = false;
+		$previewAction = null;
 
 		switch (get_class($element)) {
 			case 'craft\\elements\\Entry':
@@ -120,6 +139,30 @@ class SeoField extends Field implements PreviewableFieldInterface
 					$isEntry = true;
 					$section = $element->getSection();
 				} catch (InvalidConfigException $e) {}
+				$previewAction = $craft->getSecurity()->hashData(
+					'entries/preview-entry'
+				);
+				break;
+			case 'craft\\elements\\Category':
+				$previewAction = $craft->getSecurity()->hashData(
+					'categories/preview-category'
+				);
+				break;
+			case 'craft\\commerce\\elements\\Product':
+				$previewAction = $craft->getSecurity()->hashData(
+					'commerce/products-preview/preview-product'
+				);
+				break;
+			case 'Solspace\\Calendar\\Elements\\Event':
+				/** @var $element \Solspace\Calendar\Elements\Event */
+				$isCalendar = true;
+				$previewAction = $craft->getSecurity()->hashData(
+					'calendar/events/preview'
+				);
+				$hasPreview = \Solspace\Calendar\Calendar::getInstance()->calendars->isEventTemplateValid(
+					$element->getCalendar(),
+					$element->siteId
+				);
 				break;
 			default:
 				/** @var ElementInterface $element */
@@ -129,13 +172,15 @@ class SeoField extends Field implements PreviewableFieldInterface
 			$hasPreview = $craft->sections->isSectionTemplateValid(
 				$section,
 				$element->siteId
-			);
+			) && $previewAction !== null;
 
 			$isSingle = $section->type === Section::TYPE_SINGLE;
 		}
 
 		// URL & Title Suffix
 		// ---------------------------------------------------------------------
+
+		$titleTemplate = $settings['title'] ?? $settingsGlobal['title'];
 
 		$url = $element->getUrl();
 
@@ -145,24 +190,15 @@ class SeoField extends Field implements PreviewableFieldInterface
 		if ($element->slug)
 			$url = str_replace($element->slug, '', $url);
 
-		$titleSuffix = $settings['titleSuffix'] ?: $settingsGlobal['titleSuffix'];
-		$suffixAsPrefix = $settings['suffixAsPrefix'];
-
-		if ($hasPreview && $isEntry && $value->title === null && $isSingle)
-		{
-			if ($suffixAsPrefix)
-				$titleSuffix = $titleSuffix . ' ' . $element->title;
-			else
-				$titleSuffix = $element->title . ' ' . $titleSuffix;
-		}
-
 		// Social URL
 		// ---------------------------------------------------------------------
+
+		$socialPreviewUrl = null;
 
 		if ($craft->sites->currentSite->baseUrl) {
 			preg_match(
 				"((http?s?:\/\/)?(www.)?(.*)\/)",
-				$craft->sites->currentSite->baseUrl,
+				\Craft::parseEnv($craft->sites->currentSite->baseUrl),
 				$socialPreviewUrl
 			);
 			$socialPreviewUrl = $socialPreviewUrl[3];
@@ -182,13 +218,28 @@ class SeoField extends Field implements PreviewableFieldInterface
 			? $settings['hideSocial']
 			: false;
 
+		$renderData = [
+			'elementType' => get_class($element),
+			'elementId' => $element->id,
+			'siteId' => $element->siteId,
+			'seoHandle' => $this->handle,
+		];
+
+		if ($element instanceof Category)
+			$renderData['groupId'] = $element->groupId;
+		elseif ($isCalendar)
+			$renderData['calendarId'] = $element->calendarId;
+		else
+			$renderData['typeId'] = $element->typeId;
+
 		$seoOptions = Json::encode(compact(
 			'hasPreview',
+			'previewAction',
 			'isNew',
-			'suffixAsPrefix'
+			'renderData'
 		));
 
-		$craft->view->registerAssetBundle(SeoFieldAssets::class);
+		$craft->view->registerAssetBundle(SeoFieldAsset::class);
 		$craft->view->registerJs(
 			"new SeoField('{$namespaceId}', {$seoOptions})"
 		);
@@ -199,7 +250,7 @@ class SeoField extends Field implements PreviewableFieldInterface
 				'id' => $this->id,
 				'name' => $this->handle,
 				'value' => $value,
-				'titleSuffix' => $titleSuffix,
+				'titleTemplate' => $titleTemplate,
 				'hasPreview' => $hasPreview,
 				'url' => $url,
 				'isPro' => true,
@@ -223,9 +274,13 @@ class SeoField extends Field implements PreviewableFieldInterface
 	 */
 	public function getSettingsHtml ()
 	{
-		\Craft::$app->view->registerAssetBundle(SeoFieldSettingsAssets::class);
+		$view = \Craft::$app->view;
+		$namespace = $view->namespaceInputId('');
 
-		return \Craft::$app->view->renderTemplate(
+		$view->registerAssetBundle(SeoFieldSettingsAsset::class);
+		$view->registerJs('new SeoFieldSettings("' . $namespace . '");');
+
+		return $view->renderTemplate(
 			'seo/_seo/settings',
 			array_merge(
 				[

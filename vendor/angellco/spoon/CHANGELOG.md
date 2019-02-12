@@ -8,6 +8,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## Unreleased
 
 
+## 3.2.7 - 2019-01-28
+
+### Fixed
+- Fixed an issue with Super Table when upgrading to Craft 3.1 ([#44](https://github.com/angell-co/Spoon/issues/44))
+
+
+## 3.2.6 - 2019-01-21
+
+### Fixed
+- Fixed another issue when upgrading to Craft 3.1 ([#43](https://github.com/angell-co/Spoon/issues/43))
+
+
+## 3.2.5 - 2019-01-16
+
+### Fixed
+- Fixed a bunch of issues when upgrading to Craft 3.1 ([#43](https://github.com/angell-co/Spoon/issues/43) & [#40](https://github.com/angell-co/Spoon/issues/40))
+- Fixed a layout issue where the tabs would overlap with the disabled block icon ([#42](https://github.com/angell-co/Spoon/issues/42)).
+- Stopped tracking node_modules ([#35](https://github.com/angell-co/Spoon/issues/35)).
+
+
 ## 3.2.4 - 2018-10-12
 
 ### Changed

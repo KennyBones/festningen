@@ -45,6 +45,13 @@ class Service extends Component
             $field->blockTypes = $this->processSuperTable($field);
         }
 
+        // Most fields are supported, but Neo is an exception
+        if (get_class($field) == 'benf\neo\Field') {
+            FieldManager::error('Neo fields are currently unsupported.');
+
+            return false;
+        }
+
         // Send off to Craft's native fieldSave service for heavy lifting.
         if (!Craft::$app->fields->saveField($field)) {
             FieldManager::error('Could not clone {name} - {errors}.', ['name' => $field->name, 'errors' => print_r($field->getErrors(), true)]);
@@ -97,10 +104,6 @@ class Service extends Component
             }
         }
 
-        // var_dump($field);
-
-        // exit();
-
         if ($errors) {
             foreach ($errors as $error) {
                 FieldManager::error('Could not clone {errorName} in {name} group - {errors}.', [
@@ -108,8 +111,6 @@ class Service extends Component
                     'name'      => $originGroup->name,
                     'errors'    => print_r($group->getErrors(), true),
                 ]);
-
-                // var_dump($error->getErrors());
 
                 $group->addError($error->name, 'Could not clone group.');
             }
@@ -153,6 +154,7 @@ class Service extends Component
         // Strip out all the IDs from the origin field
         foreach ($blockTypes as $blockType) {
             $blockType->id = null;
+            $blockType->fieldLayoutId = null;
 
             foreach ($blockType->fields as $blockField) {
                 $blockField->id = null;
@@ -208,6 +210,7 @@ class Service extends Component
         // Strip out all the IDs from the origin field
         foreach ($blockTypes as $blockType) {
             $blockType->id = null;
+            $blockType->fieldLayoutId = null;
 
             foreach ($blockType->fields as $blockField) {
                 $blockField->id = null;

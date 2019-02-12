@@ -29,13 +29,13 @@ namespace Google\Cloud\Bigtable\V2\Gapic;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Bigtable\V2\CheckAndMutateRowRequest;
 use Google\Cloud\Bigtable\V2\CheckAndMutateRowResponse;
 use Google\Cloud\Bigtable\V2\MutateRowRequest;
@@ -140,7 +140,7 @@ class BigtableGapicClient
 
     private static function getTableNameTemplate()
     {
-        if (self::$tableNameTemplate == null) {
+        if (null == self::$tableNameTemplate) {
             self::$tableNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/tables/{table}');
         }
 
@@ -149,7 +149,7 @@ class BigtableGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'table' => self::getTableNameTemplate(),
             ];

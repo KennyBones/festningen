@@ -28,7 +28,6 @@ namespace Google\Cloud\Bigtable\Admin\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -37,6 +36,7 @@ use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Bigtable\Admin\V2\AppProfile;
 use Google\Cloud\Bigtable\Admin\V2\Cluster;
 use Google\Cloud\Bigtable\Admin\V2\CreateAppProfileRequest;
@@ -191,7 +191,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -200,7 +200,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getInstanceNameTemplate()
     {
-        if (self::$instanceNameTemplate == null) {
+        if (null == self::$instanceNameTemplate) {
             self::$instanceNameTemplate = new PathTemplate('projects/{project}/instances/{instance}');
         }
 
@@ -209,7 +209,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getAppProfileNameTemplate()
     {
-        if (self::$appProfileNameTemplate == null) {
+        if (null == self::$appProfileNameTemplate) {
             self::$appProfileNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/appProfiles/{app_profile}');
         }
 
@@ -218,7 +218,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getClusterNameTemplate()
     {
-        if (self::$clusterNameTemplate == null) {
+        if (null == self::$clusterNameTemplate) {
             self::$clusterNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/clusters/{cluster}');
         }
 
@@ -227,7 +227,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getLocationNameTemplate()
     {
-        if (self::$locationNameTemplate == null) {
+        if (null == self::$locationNameTemplate) {
             self::$locationNameTemplate = new PathTemplate('projects/{project}/locations/{location}');
         }
 
@@ -236,7 +236,7 @@ class BigtableInstanceAdminGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'instance' => self::getInstanceNameTemplate(),

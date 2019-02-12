@@ -28,12 +28,12 @@ namespace Google\Cloud\Logging\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Logging\V2\CreateExclusionRequest;
 use Google\Cloud\Logging\V2\CreateSinkRequest;
 use Google\Cloud\Logging\V2\DeleteExclusionRequest;
@@ -52,8 +52,8 @@ use Google\Protobuf\FieldMask;
 use Google\Protobuf\GPBEmpty;
 
 /**
- * Service Description: Service for configuring sinks used to export log entries outside of
- * Stackdriver Logging.
+ * Service Description: Service for configuring sinks used to export log entries out of
+ * Logging.
  *
  * This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
@@ -150,7 +150,7 @@ class ConfigServiceV2GapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -159,7 +159,7 @@ class ConfigServiceV2GapicClient
 
     private static function getSinkNameTemplate()
     {
-        if (self::$sinkNameTemplate == null) {
+        if (null == self::$sinkNameTemplate) {
             self::$sinkNameTemplate = new PathTemplate('projects/{project}/sinks/{sink}');
         }
 
@@ -168,7 +168,7 @@ class ConfigServiceV2GapicClient
 
     private static function getExclusionNameTemplate()
     {
-        if (self::$exclusionNameTemplate == null) {
+        if (null == self::$exclusionNameTemplate) {
             self::$exclusionNameTemplate = new PathTemplate('projects/{project}/exclusions/{exclusion}');
         }
 
@@ -177,7 +177,7 @@ class ConfigServiceV2GapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'sink' => self::getSinkNameTemplate(),
@@ -504,7 +504,7 @@ class ConfigServiceV2GapicClient
      *          Optional. Determines the kind of IAM identity returned as `writer_identity`
      *          in the new sink.  If this value is omitted or set to false, and if the
      *          sink's parent is a project, then the value returned as `writer_identity` is
-     *          the same group or service account used by Stackdriver Logging before the
+     *          the same group or service account used by Logging before the
      *          addition of writer identities to this API. The sink's destination must be
      *          in the same project as the sink itself.
      *
@@ -598,7 +598,7 @@ class ConfigServiceV2GapicClient
      *          empty updateMask will be an error.
      *
      *          For a detailed `FieldMask` definition, see
-     *          https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+     *          https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
      *
      *          Example: `updateMask=filter`.
      *     @type RetrySettings|array $retrySettings

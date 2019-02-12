@@ -17,7 +17,6 @@
 
 namespace Google\Cloud\Firestore;
 
-use Google\Cloud\Core\ArrayTrait;
 use Google\Cloud\Core\Blob;
 use Google\Cloud\Core\ClientTrait;
 use Google\Cloud\Core\Exception\AbortedException;
@@ -55,7 +54,7 @@ class FirestoreClient
     use SnapshotTrait;
     use ValidateTrait;
 
-    const VERSION = '0.15.3';
+    const VERSION = '1.0.0';
 
     const DEFAULT_DATABASE = '(default)';
 

@@ -28,7 +28,6 @@ namespace Google\Cloud\Monitoring\V3\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
@@ -36,6 +35,7 @@ use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
 use Google\Api\MetricDescriptor;
 use Google\Api\MonitoredResourceDescriptor;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Monitoring\V3\Aggregation;
 use Google\Cloud\Monitoring\V3\CreateMetricDescriptorRequest;
 use Google\Cloud\Monitoring\V3\CreateTimeSeriesRequest;
@@ -151,7 +151,7 @@ class MetricServiceGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -160,7 +160,7 @@ class MetricServiceGapicClient
 
     private static function getMetricDescriptorNameTemplate()
     {
-        if (self::$metricDescriptorNameTemplate == null) {
+        if (null == self::$metricDescriptorNameTemplate) {
             self::$metricDescriptorNameTemplate = new PathTemplate('projects/{project}/metricDescriptors/{metric_descriptor=**}');
         }
 
@@ -169,7 +169,7 @@ class MetricServiceGapicClient
 
     private static function getMonitoredResourceDescriptorNameTemplate()
     {
-        if (self::$monitoredResourceDescriptorNameTemplate == null) {
+        if (null == self::$monitoredResourceDescriptorNameTemplate) {
             self::$monitoredResourceDescriptorNameTemplate = new PathTemplate('projects/{project}/monitoredResourceDescriptors/{monitored_resource_descriptor}');
         }
 
@@ -178,7 +178,7 @@ class MetricServiceGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'metricDescriptor' => self::getMetricDescriptorNameTemplate(),

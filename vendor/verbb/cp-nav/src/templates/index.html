@@ -28,6 +28,10 @@
 
 {% set content %}
 
+    <div class="cp-nav-notice">
+        {{ 'CP Nav: Editing {name}' | t('cp-nav', { name: layout.name }) }}
+    </div>
+
     {% if craft.app.getEditionName() != 'Personal' %}
         {{ forms.selectField({
             first: true,

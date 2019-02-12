@@ -80,7 +80,7 @@ class ContactFormExtensions extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        if (!Craft::$app->plugins->isPluginInstalled('contact-form')) {
+        if (!Craft::$app->plugins->isPluginInstalled('contact-form') && !Craft::$app->request->getIsConsoleRequest()) {
             Craft::$app->session->setNotice(Craft::t('contact-form-extensions', 'The Contact Form plugin is not installed or activated, Contact Form Extensions does not work without it.'));
         }
 
@@ -105,6 +105,10 @@ class ContactFormExtensions extends Plugin
         });
 
         Event::on(Mailer::class, Mailer::EVENT_BEFORE_SEND, function (SendEvent $e) {
+            if ($e->isSpam) {
+                return;
+            }
+
             if ($this->settings->recaptcha) {
                 $recaptcha = $this->contactFormExtensionsService->recaptcha;
                 $captchaResponse = Craft::$app->request->getParam('g-recaptcha-response');
@@ -119,7 +123,7 @@ class ContactFormExtensions extends Plugin
 
             $submission = $e->submission;
             if ($this->settings->enableDatabase) {
-                $submission = $this->contactFormExtensionsService->saveSubmission($submission);
+                $this->contactFormExtensionsService->saveSubmission($submission);
             }
 
             if ($this->settings->enableTemplateOverwrite) {

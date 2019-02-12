@@ -28,11 +28,11 @@ namespace Google\Cloud\TextToSpeech\V1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\TextToSpeech\V1\AudioConfig;
 use Google\Cloud\TextToSpeech\V1\ListVoicesRequest;
 use Google\Cloud\TextToSpeech\V1\ListVoicesResponse;
@@ -50,7 +50,6 @@ use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
  * ```
  * $textToSpeechClient = new TextToSpeechClient();
  * try {
- *
  *     $response = $textToSpeechClient->listVoices();
  * } finally {
  *     $textToSpeechClient->close();
@@ -97,6 +96,7 @@ class TextToSpeechGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/text_to_speech_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/text_to_speech_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/text_to_speech_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -167,14 +167,12 @@ class TextToSpeechGapicClient
     }
 
     /**
-     * Returns a list of [Voice][google.cloud.texttospeech.v1.Voice]
-     * supported for synthesis.
+     * Returns a list of Voice supported for synthesis.
      *
      * Sample code:
      * ```
      * $textToSpeechClient = new TextToSpeechClient();
      * try {
-     *
      *     $response = $textToSpeechClient->listVoices();
      * } finally {
      *     $textToSpeechClient->close();

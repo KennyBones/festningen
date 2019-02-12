@@ -9,15 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * A message data and its attributes. The message payload must not be empty;
- * it must contain either a non-empty data field, or at least one attribute.
+ * A message that is published by publishers and consumed by subscribers. The
+ * message must contain either a non-empty data field or at least one attribute.
+ * Note that client libraries represent this object differently
+ * depending on the language. See the corresponding
+ * <a href="https://cloud.google.com/pubsub/docs/reference/libraries">client
+ * library documentation</a> for more information. See
+ * <a href="https://cloud.google.com/pubsub/quotas">Quotas and limits</a>
+ * for more information about message limits.
  *
  * Generated from protobuf message <code>google.pubsub.v1.PubsubMessage</code>
  */
 class PubsubMessage extends \Google\Protobuf\Internal\Message
 {
     /**
-     * The message payload.
+     * The message data field. If this field is empty, the message must contain
+     * at least one attribute.
      *
      * Generated from protobuf field <code>bytes data = 1;</code>
      */
@@ -53,7 +60,8 @@ class PubsubMessage extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $data
-     *           The message payload.
+     *           The message data field. If this field is empty, the message must contain
+     *           at least one attribute.
      *     @type array|\Google\Protobuf\Internal\MapField $attributes
      *           Optional attributes for this message.
      *     @type string $message_id
@@ -73,7 +81,8 @@ class PubsubMessage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * The message payload.
+     * The message data field. If this field is empty, the message must contain
+     * at least one attribute.
      *
      * Generated from protobuf field <code>bytes data = 1;</code>
      * @return string
@@ -84,7 +93,8 @@ class PubsubMessage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * The message payload.
+     * The message data field. If this field is empty, the message must contain
+     * at least one attribute.
      *
      * Generated from protobuf field <code>bytes data = 1;</code>
      * @param string $var

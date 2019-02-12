@@ -29,12 +29,12 @@ namespace Google\Cloud\Dialogflow\V2\Gapic;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Dialogflow\V2\DetectIntentRequest;
 use Google\Cloud\Dialogflow\V2\DetectIntentResponse;
 use Google\Cloud\Dialogflow\V2\QueryInput;
@@ -109,6 +109,7 @@ class SessionsGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/sessions_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/sessions_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/sessions_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -122,7 +123,7 @@ class SessionsGapicClient
 
     private static function getSessionNameTemplate()
     {
-        if (self::$sessionNameTemplate == null) {
+        if (null == self::$sessionNameTemplate) {
             self::$sessionNameTemplate = new PathTemplate('projects/{project}/agent/sessions/{session}');
         }
 
@@ -131,7 +132,7 @@ class SessionsGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'session' => self::getSessionNameTemplate(),
             ];
@@ -343,19 +344,22 @@ class SessionsGapicClient
      *     $request = new StreamingDetectIntentRequest();
      *     $request->setSession($session);
      *     $request->setQueryInput($queryInput);
-     *     $requests = [$request];
-     *
      *     // Write all requests to the server, then read all responses until the
      *     // stream is complete
+     *     $requests = [$request];
      *     $stream = $sessionsClient->streamingDetectIntent();
      *     $stream->writeAll($requests);
      *     foreach ($stream->closeWriteAndReadAll() as $element) {
      *         // doSomethingWith($element);
      *     }
      *
-     *     // OR write requests individually, making read() calls if
+     *
+     *     // Alternatively:
+     *
+     *     // Write requests individually, making read() calls if
      *     // required. Call closeWrite() once writes are complete, and read the
      *     // remaining responses from the server.
+     *     $requests = [$request];
      *     $stream = $sessionsClient->streamingDetectIntent();
      *     foreach ($requests as $request) {
      *         $stream->write($request);

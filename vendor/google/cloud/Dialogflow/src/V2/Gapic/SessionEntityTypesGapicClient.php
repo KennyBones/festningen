@@ -28,12 +28,12 @@ namespace Google\Cloud\Dialogflow\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Dialogflow\V2\CreateSessionEntityTypeRequest;
 use Google\Cloud\Dialogflow\V2\DeleteSessionEntityTypeRequest;
 use Google\Cloud\Dialogflow\V2\GetSessionEntityTypeRequest;
@@ -65,18 +65,21 @@ use Google\Protobuf\GPBEmpty;
  * $sessionEntityTypesClient = new SessionEntityTypesClient();
  * try {
  *     $formattedParent = $sessionEntityTypesClient->sessionName('[PROJECT]', '[SESSION]');
- *     // Iterate through all elements
- *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $sessionEntityTypesClient->close();
@@ -131,6 +134,7 @@ class SessionEntityTypesGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/session_entity_types_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/session_entity_types_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/session_entity_types_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -144,7 +148,7 @@ class SessionEntityTypesGapicClient
 
     private static function getSessionNameTemplate()
     {
-        if (self::$sessionNameTemplate == null) {
+        if (null == self::$sessionNameTemplate) {
             self::$sessionNameTemplate = new PathTemplate('projects/{project}/agent/sessions/{session}');
         }
 
@@ -153,7 +157,7 @@ class SessionEntityTypesGapicClient
 
     private static function getSessionEntityTypeNameTemplate()
     {
-        if (self::$sessionEntityTypeNameTemplate == null) {
+        if (null == self::$sessionEntityTypeNameTemplate) {
             self::$sessionEntityTypeNameTemplate = new PathTemplate('projects/{project}/agent/sessions/{session}/entityTypes/{entity_type}');
         }
 
@@ -162,7 +166,7 @@ class SessionEntityTypesGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'session' => self::getSessionNameTemplate(),
                 'sessionEntityType' => self::getSessionEntityTypeNameTemplate(),
@@ -318,18 +322,21 @@ class SessionEntityTypesGapicClient
      * $sessionEntityTypesClient = new SessionEntityTypesClient();
      * try {
      *     $formattedParent = $sessionEntityTypesClient->sessionName('[PROJECT]', '[SESSION]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $sessionEntityTypesClient->listSessionEntityTypes($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $sessionEntityTypesClient->close();

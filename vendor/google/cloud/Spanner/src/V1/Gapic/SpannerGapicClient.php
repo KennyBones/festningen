@@ -29,12 +29,12 @@ namespace Google\Cloud\Spanner\V1\Gapic;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Spanner\V1\BeginTransactionRequest;
 use Google\Cloud\Spanner\V1\CommitRequest;
 use Google\Cloud\Spanner\V1\CommitResponse;
@@ -143,7 +143,7 @@ class SpannerGapicClient
 
     private static function getDatabaseNameTemplate()
     {
-        if (self::$databaseNameTemplate == null) {
+        if (null == self::$databaseNameTemplate) {
             self::$databaseNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/databases/{database}');
         }
 
@@ -152,7 +152,7 @@ class SpannerGapicClient
 
     private static function getSessionNameTemplate()
     {
-        if (self::$sessionNameTemplate == null) {
+        if (null == self::$sessionNameTemplate) {
             self::$sessionNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/databases/{database}/sessions/{session}');
         }
 
@@ -161,7 +161,7 @@ class SpannerGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'database' => self::getDatabaseNameTemplate(),
                 'session' => self::getSessionNameTemplate(),

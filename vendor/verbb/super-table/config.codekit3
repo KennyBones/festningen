@@ -7,13 +7,12 @@
 		"uuidString": "ECE3F09A-2816-43C6-9715-3F4A30BD28C5"
 		}
 	],
-"creatorBuild": "28795",
+"creatorBuild": "28905",
 "files": {
-	"/.github/ISSUE_TEMPLATE": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/.github/ISSUE_TEMPLATE",
+	"/.github": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/.github",
 		"oF": 0
 		},
 	"/.gitignore": {
@@ -48,6 +47,12 @@
 		"oF": 0,
 		"oO": 0,
 		"oS": 1
+		},
+	"/docs": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/docs",
+		"oF": 0
 		},
 	"/LICENSE.md": {
 		"cB": 0,
@@ -91,24 +96,28 @@
 		"oAP": "/build/src/assetbundles",
 		"oF": 0
 		},
+	"/src/base": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/src/base",
+		"oF": 0
+		},
+	"/src/controllers": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/src/controllers",
+		"oF": 0
+		},
 	"/src/elements": {
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "/build/src/elements",
 		"oF": 0
 		},
-	"/src/errors/SuperTableBlockNotFoundException.php": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/errors/SuperTableBlockNotFoundException.php",
-		"oF": 0
-		},
-	"/src/errors/SuperTableBlockTypeNotFoundException.php": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/errors/SuperTableBlockTypeNotFoundException.php",
+	"/src/errors": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/src/errors",
 		"oF": 0
 		},
 	"/src/fields": {
@@ -127,25 +136,10 @@
 		"plM": 3758088159,
 		"prP": 0
 		},
-	"/src/integrations/schematic/converters/fields/SuperTableSchematic.php": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/integrations/schematic/converters/fields/SuperTableSchematic.php",
-		"oF": 0
-		},
-	"/src/integrations/schematic/converters/models/SuperTableBlockTypeSchematic.php": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/integrations/schematic/converters/models/SuperTableBlockTypeSchematic.php",
-		"oF": 0
-		},
-	"/src/integrations/sproutimport/importers/fields/SuperTableImporter.php": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/integrations/sproutimport/importers/fields/SuperTableImporter.php",
+	"/src/integrations": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/src/integrations",
 		"oF": 0
 		},
 	"/src/migrations": {
@@ -166,31 +160,10 @@
 		"oAP": "/build/src/records",
 		"oF": 0
 		},
-	"/src/resources/dist/css/super-table.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "/src/resources/dist/css/super-table-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"/src/resources/dist/js/super-table.js": {
-		"ft": 64,
-		"ma": 1,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "/src/resources/dist/js/super-table.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 0
-		},
-	"/src/resources/dist/js/super-table.js.map": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "/src/resources/dist/js/super-table.js.map",
+	"/src/resources/dist": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/src/resources/dist",
 		"oF": 0
 		},
 	"/src/resources/src/js/_configurator.js": {
@@ -2318,7 +2291,7 @@
 		],
 	"overrideExternalServerCSS": 0,
 	"previewPathAddition": "",
-	"skippedFoldersString": "log, _logs, logs, _cache, cache, /storage/framework/sessions, node_modules, /src/models, /src/tasks, /src/elements, /src/helpers, /src/migrations, /src/data, /src/templates, /src/records, /src/controllers, /src/assetbundles, /src/base, /src/fields, /src/services, /src/variables",
+	"skippedFoldersString": "log, _logs, logs, _cache, cache, /storage/framework/sessions, node_modules, /src/models, /src/tasks, /src/elements, /src/helpers, /src/migrations, /src/data, /src/templates, /src/records, /src/controllers, /src/assetbundles, /src/base, /src/fields, /src/services, /src/variables, /.github, /docs, /src/integrations, /src/errors, /src/resources/dist",
 	"sourceFolderName": "source",
 	"susyVersion": 3,
 	"tsAllowSyntheticDefaultImports": 0,
@@ -2382,7 +2355,7 @@
 			"flagValue": -1
 			},
 		"comments": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"comparisons": {

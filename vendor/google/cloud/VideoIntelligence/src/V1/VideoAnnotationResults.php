@@ -62,6 +62,12 @@ class VideoAnnotationResults extends \Google\Protobuf\Internal\Message
      */
     private $explicit_annotation = null;
     /**
+     * Speech transcription.
+     *
+     * Generated from protobuf field <code>repeated .google.cloud.videointelligence.v1.SpeechTranscription speech_transcriptions = 11;</code>
+     */
+    private $speech_transcriptions;
+    /**
      * If set, indicates an error. Note that for a single `AnnotateVideoRequest`
      * some videos may succeed and some may fail.
      *
@@ -69,9 +75,40 @@ class VideoAnnotationResults extends \Google\Protobuf\Internal\Message
      */
     private $error = null;
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type string $input_uri
+     *           Video file location in
+     *           [Google Cloud Storage](https://cloud.google.com/storage/).
+     *     @type \Google\Cloud\VideoIntelligence\V1\LabelAnnotation[]|\Google\Protobuf\Internal\RepeatedField $segment_label_annotations
+     *           Label annotations on video level or user specified segment level.
+     *           There is exactly one element for each unique label.
+     *     @type \Google\Cloud\VideoIntelligence\V1\LabelAnnotation[]|\Google\Protobuf\Internal\RepeatedField $shot_label_annotations
+     *           Label annotations on shot level.
+     *           There is exactly one element for each unique label.
+     *     @type \Google\Cloud\VideoIntelligence\V1\LabelAnnotation[]|\Google\Protobuf\Internal\RepeatedField $frame_label_annotations
+     *           Label annotations on frame level.
+     *           There is exactly one element for each unique label.
+     *     @type \Google\Cloud\VideoIntelligence\V1\FaceAnnotation[]|\Google\Protobuf\Internal\RepeatedField $face_annotations
+     *           Face annotations. There is exactly one element for each unique face.
+     *     @type \Google\Cloud\VideoIntelligence\V1\VideoSegment[]|\Google\Protobuf\Internal\RepeatedField $shot_annotations
+     *           Shot annotations. Each shot is represented as a video segment.
+     *     @type \Google\Cloud\VideoIntelligence\V1\ExplicitContentAnnotation $explicit_annotation
+     *           Explicit content annotation.
+     *     @type \Google\Cloud\VideoIntelligence\V1\SpeechTranscription[]|\Google\Protobuf\Internal\RepeatedField $speech_transcriptions
+     *           Speech transcription.
+     *     @type \Google\Rpc\Status $error
+     *           If set, indicates an error. Note that for a single `AnnotateVideoRequest`
+     *           some videos may succeed and some may fail.
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Google\Cloud\Videointelligence\V1\VideoIntelligence::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**
@@ -260,6 +297,32 @@ class VideoAnnotationResults extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Cloud\VideoIntelligence\V1\ExplicitContentAnnotation::class);
         $this->explicit_annotation = $var;
+
+        return $this;
+    }
+
+    /**
+     * Speech transcription.
+     *
+     * Generated from protobuf field <code>repeated .google.cloud.videointelligence.v1.SpeechTranscription speech_transcriptions = 11;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getSpeechTranscriptions()
+    {
+        return $this->speech_transcriptions;
+    }
+
+    /**
+     * Speech transcription.
+     *
+     * Generated from protobuf field <code>repeated .google.cloud.videointelligence.v1.SpeechTranscription speech_transcriptions = 11;</code>
+     * @param \Google\Cloud\VideoIntelligence\V1\SpeechTranscription[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setSpeechTranscriptions($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Cloud\VideoIntelligence\V1\SpeechTranscription::class);
+        $this->speech_transcriptions = $arr;
 
         return $this;
     }

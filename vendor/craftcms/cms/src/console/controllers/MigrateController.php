@@ -59,6 +59,11 @@ class MigrateController extends BaseMigrateController
     public $plugin;
 
     /**
+     * @var bool Exclude pending content migrations.
+     */
+    public $noContent;
+
+    /**
      * @var MigrationManager|null The migration manager that will be used in this request
      */
     private $_migrator;
@@ -100,6 +105,10 @@ class MigrateController extends BaseMigrateController
         // Global options
         $options[] = 'type';
         $options[] = 'plugin';
+
+        if ($actionID === 'all') {
+            $options[] = 'noContent';
+        }
 
         return $options;
     }
@@ -216,7 +225,7 @@ class MigrateController extends BaseMigrateController
         $db = Craft::$app->getDb();
 
         // Get the handles in need of an update
-        $handles = $updatesService->getPendingMigrationHandles(true);
+        $handles = $updatesService->getPendingMigrationHandles(!$this->noContent);
 
         // Anything to update?
         if (!empty($handles)) {
@@ -279,7 +288,19 @@ class MigrateController extends BaseMigrateController
     }
 
     /**
-     * @inheritdoc
+     * Upgrades the application by applying new migrations.
+     *
+     * For example,
+     *
+     * ```
+     * craft migrate     # apply all new migrations
+     * craft migrate 3   # apply the first 3 new migrations
+     * ```
+     *
+     * @param int $limit the number of new migrations to be applied. If 0, it means
+     * applying all available new migrations.
+     *
+     * @return int the status of the action execution. 0 means normal, other values mean abnormal.
      */
     public function actionUp($limit = 0)
     {
@@ -380,5 +401,13 @@ class MigrateController extends BaseMigrateController
     protected function removeMigrationHistory($version)
     {
         $this->getMigrator()->removeMigrationHistory($version);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function truncateDatabase()
+    {
+        $this->getMigrator()->truncateHistory();
     }
 }

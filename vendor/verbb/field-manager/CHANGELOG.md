@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.0.5 - 2019-02-10
+
+### Fixed
+- Neo fields no longer clone (not supported yet).
+- Fix Matrix/Super Table blocktypes not creating new field layouts.
+
+## 2.0.4 - 2018-10-24
+
+### Fixed
+- Fix errors thrown when creating a new field
+
+## 2.0.3 - 2018-02-25
+
+### Fixed
+- Fix Super Table parsing causing errors
+- Updated field modal with the latest changes from Craft base. Helps with translation/site and field changes.
+
 ## 2.0.2 - 2018-02-25
 
 ### Changed

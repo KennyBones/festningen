@@ -12,7 +12,7 @@ class SuperTableImporter extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return SuperTableField::class;
     }
@@ -23,7 +23,7 @@ class SuperTableImporter extends FieldImporter
     public function getMockData()
     {
         $fieldId = $this->model->id;
-        $blocks = SuperTable::$plugin->service->getBlockTypesByFieldId($fieldId);
+        $blocks = SuperTable::$plugin->getService()->getBlockTypesByFieldId($fieldId);
 
         $values = [];
 

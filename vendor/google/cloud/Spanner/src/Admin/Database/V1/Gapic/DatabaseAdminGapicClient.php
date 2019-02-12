@@ -28,7 +28,6 @@ namespace Google\Cloud\Spanner\Admin\Database\V1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -36,6 +35,7 @@ use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Iam\V1\GetIamPolicyRequest;
 use Google\Cloud\Iam\V1\Policy;
 use Google\Cloud\Iam\V1\SetIamPolicyRequest;
@@ -155,7 +155,7 @@ class DatabaseAdminGapicClient
 
     private static function getInstanceNameTemplate()
     {
-        if (self::$instanceNameTemplate == null) {
+        if (null == self::$instanceNameTemplate) {
             self::$instanceNameTemplate = new PathTemplate('projects/{project}/instances/{instance}');
         }
 
@@ -164,7 +164,7 @@ class DatabaseAdminGapicClient
 
     private static function getDatabaseNameTemplate()
     {
-        if (self::$databaseNameTemplate == null) {
+        if (null == self::$databaseNameTemplate) {
             self::$databaseNameTemplate = new PathTemplate('projects/{project}/instances/{instance}/databases/{database}');
         }
 
@@ -173,7 +173,7 @@ class DatabaseAdminGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'instance' => self::getInstanceNameTemplate(),
                 'database' => self::getDatabaseNameTemplate(),

@@ -10,7 +10,7 @@ use Google\Protobuf\Internal\GPBUtil;
 
 /**
  * Request for the `ListSnapshots` method.<br><br>
- * <b>ALPHA:</b> This feature is part of an alpha release. This API might be
+ * <b>BETA:</b> This feature is part of a beta release. This API might be
  * changed in backward-incompatible ways and is not recommended for production
  * use. It is not subject to any SLA or deprecation policy.
  *
@@ -19,8 +19,8 @@ use Google\Protobuf\Internal\GPBUtil;
 class ListSnapshotsRequest extends \Google\Protobuf\Internal\Message
 {
     /**
-     * The name of the cloud project that snapshots belong to.
-     * Format is `projects/{project}`.
+     * The name of the project in which to list snapshots.
+     * Format is `projects/{project-id}`.
      *
      * Generated from protobuf field <code>string project = 1;</code>
      */
@@ -47,8 +47,8 @@ class ListSnapshotsRequest extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $project
-     *           The name of the cloud project that snapshots belong to.
-     *           Format is `projects/{project}`.
+     *           The name of the project in which to list snapshots.
+     *           Format is `projects/{project-id}`.
      *     @type int $page_size
      *           Maximum number of snapshots to return.
      *     @type string $page_token
@@ -63,8 +63,8 @@ class ListSnapshotsRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * The name of the cloud project that snapshots belong to.
-     * Format is `projects/{project}`.
+     * The name of the project in which to list snapshots.
+     * Format is `projects/{project-id}`.
      *
      * Generated from protobuf field <code>string project = 1;</code>
      * @return string
@@ -75,8 +75,8 @@ class ListSnapshotsRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * The name of the cloud project that snapshots belong to.
-     * Format is `projects/{project}`.
+     * The name of the project in which to list snapshots.
+     * Format is `projects/{project-id}`.
      *
      * Generated from protobuf field <code>string project = 1;</code>
      * @param string $var

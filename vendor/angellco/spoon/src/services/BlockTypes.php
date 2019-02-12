@@ -17,6 +17,7 @@ use angellco\spoon\errors\BlockTypeNotFoundException;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\Db;
 use craft\records\FieldLayout as FieldLayoutRecord;
 use craft\records\FieldLayoutField as FieldLayoutFieldRecord;
 use craft\records\FieldLayoutTab as FieldLayoutTabRecord;
@@ -393,13 +394,15 @@ class BlockTypes extends Component
             'context'
         ]));
 
-        if (!$blockTypeRecord)
-        {
+        if (!$blockTypeRecord) {
             return null;
         }
 
         // Use the fieldId to get the field and save the handle on to the model
         $matrixField = Craft::$app->fields->getFieldById($blockType->fieldId);
+        if (!$matrixField) {
+            return null;
+        }
         $blockType->fieldHandle = $matrixField->handle;
 
 
@@ -418,8 +421,10 @@ class BlockTypes extends Component
                 $parts = explode(':', $matrixField->context);
                 if (isset($parts[1])) {
 
+                    $superTableBlockTypeId = Db::idByUid('{{%supertableblocktypes}}', $parts[1]);
+
                     /** @var \verbb\supertable\models\SuperTableBlockTypeModel $superTableBlockType */
-                    $superTableBlockType = $this->_superTableService->getBlockTypeById($parts[1]);
+                    $superTableBlockType = $this->_superTableService->getBlockTypeById($superTableBlockTypeId);
 
                     /** @var \verbb\supertable\fields\SuperTableField $superTableField */
                     $superTableField = \Craft::$app->fields->getFieldById($superTableBlockType->fieldId);
@@ -431,8 +436,10 @@ class BlockTypes extends Component
                         $nestedParts = explode(':', $superTableField->context);
                         if (isset($nestedParts[1])) {
 
+                            $matrixBlockTypeId = Db::idByUid('{{%matrixblocktypes}}', $nestedParts[1]);
+
                             /** @var craft\models\MatrixBlockType $matrixBlockType */
-                            $matrixBlockType = \Craft::$app->matrix->getBlockTypeById($nestedParts[1]);
+                            $matrixBlockType = \Craft::$app->matrix->getBlockTypeById($matrixBlockTypeId);
 
                             /** @var craft\fields\Matrix $globalField */
                             $globalField = \Craft::$app->fields->getFieldById($matrixBlockType->fieldId);

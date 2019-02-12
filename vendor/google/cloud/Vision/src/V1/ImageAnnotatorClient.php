@@ -511,6 +511,60 @@ class ImageAnnotatorClient extends ImageAnnotatorGapicClient
     }
 
     /**
+     * Run product search for an image.
+     *
+     * Example:
+     * ```
+     * use Google\Cloud\Vision\V1\ProductSearchClient;
+     * use Google\Cloud\Vision\V1\ProductSearchParams;
+     *
+     * $imageContent = file_get_contents('path/to/image.jpg');
+     * $productSetName = ProductSearchClient::productSetName('PROJECT_ID', 'LOC_ID', 'PRODUCT_SET_ID');
+     * $productSearchParams = (new ProductSearchParams)
+     *     ->setProductSet($productSetName);
+     * $response = $imageAnnotatorClient->productSearch(
+     *     $imageContent,
+     *     $productSearchParams
+     * );
+     * ```
+     *
+     * @param resource|string|Image $image The image to be processed.
+     * @param ProductSearchParams   $productSearchParams Parameters for a product search request. Please note, this
+     *                              value will override the {@see Google\Cloud\Vision\V1\ProductSearchParams} in the
+     *                              {@see Google\Cloud\Vision\V1\ImageContext} instance if provided.
+     * @param array $optionalArgs   {
+     *     Configuration Options.
+     *
+     *     @type ImageContext        $imageContext  Additional context that may accompany the image.
+     *     @type RetrySettings|array $retrySettings
+     *          Retry settings to use for this call. Can be a
+     *          {@see Google\ApiCore\RetrySettings} object, or an associative array
+     *          of retry settings parameters. See the documentation on
+     *          {@see Google\ApiCore\RetrySettings} for example usage.
+     * }
+     *
+     * @return AnnotateImageResponse
+     *
+     * @throws ApiException if the remote call fails
+     * @experimental
+     */
+    public function productSearch($image, ProductSearchParams $productSearchParams, $optionalArgs = [])
+    {
+        if (isset($optionalArgs['imageContext']) && $optionalArgs['imageContext'] instanceof ImageContext) {
+            $optionalArgs['imageContext']->setProductSearchParams($productSearchParams);
+        } else {
+            $optionalArgs['imageContext'] = (new ImageContext)
+                ->setProductSearchParams($productSearchParams);
+        }
+
+        return $this->annotateSingleFeature(
+            $image,
+            Type::PRODUCT_SEARCH,
+            $optionalArgs
+        );
+    }
+
+    /**
      * @param Image $image
      * @param Feature|int $featureType
      * @param array $optionalArgs

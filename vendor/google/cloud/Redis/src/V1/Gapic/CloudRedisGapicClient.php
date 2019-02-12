@@ -28,7 +28,6 @@ namespace Google\Cloud\Redis\V1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -36,6 +35,7 @@ use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Redis\V1\CreateInstanceRequest;
 use Google\Cloud\Redis\V1\DeleteInstanceRequest;
 use Google\Cloud\Redis\V1\GetInstanceRequest;
@@ -155,7 +155,7 @@ class CloudRedisGapicClient
 
     private static function getLocationNameTemplate()
     {
-        if (self::$locationNameTemplate == null) {
+        if (null == self::$locationNameTemplate) {
             self::$locationNameTemplate = new PathTemplate('projects/{project}/locations/{location}');
         }
 
@@ -164,7 +164,7 @@ class CloudRedisGapicClient
 
     private static function getInstanceNameTemplate()
     {
-        if (self::$instanceNameTemplate == null) {
+        if (null == self::$instanceNameTemplate) {
             self::$instanceNameTemplate = new PathTemplate('projects/{project}/locations/{location}/instances/{instance}');
         }
 
@@ -173,7 +173,7 @@ class CloudRedisGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'location' => self::getLocationNameTemplate(),
                 'instance' => self::getInstanceNameTemplate(),

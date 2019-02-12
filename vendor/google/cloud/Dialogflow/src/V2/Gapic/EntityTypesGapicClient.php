@@ -28,7 +28,6 @@ namespace Google\Cloud\Dialogflow\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -36,6 +35,7 @@ use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Dialogflow\V2\BatchCreateEntitiesRequest;
 use Google\Cloud\Dialogflow\V2\BatchDeleteEntitiesRequest;
 use Google\Cloud\Dialogflow\V2\BatchDeleteEntityTypesRequest;
@@ -46,7 +46,7 @@ use Google\Cloud\Dialogflow\V2\CreateEntityTypeRequest;
 use Google\Cloud\Dialogflow\V2\DeleteEntityTypeRequest;
 use Google\Cloud\Dialogflow\V2\EntityType;
 use Google\Cloud\Dialogflow\V2\EntityTypeBatch;
-use Google\Cloud\Dialogflow\V2\EntityType_Entity;
+use Google\Cloud\Dialogflow\V2\EntityType\Entity;
 use Google\Cloud\Dialogflow\V2\GetEntityTypeRequest;
 use Google\Cloud\Dialogflow\V2\ListEntityTypesRequest;
 use Google\Cloud\Dialogflow\V2\ListEntityTypesResponse;
@@ -92,18 +92,21 @@ use Google\Protobuf\Struct;
  * $entityTypesClient = new EntityTypesClient();
  * try {
  *     $formattedParent = $entityTypesClient->projectAgentName('[PROJECT]');
- *     // Iterate through all elements
- *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $entityTypesClient->close();
@@ -160,6 +163,7 @@ class EntityTypesGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/entity_types_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/entity_types_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/entity_types_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -173,7 +177,7 @@ class EntityTypesGapicClient
 
     private static function getProjectAgentNameTemplate()
     {
-        if (self::$projectAgentNameTemplate == null) {
+        if (null == self::$projectAgentNameTemplate) {
             self::$projectAgentNameTemplate = new PathTemplate('projects/{project}/agent');
         }
 
@@ -182,7 +186,7 @@ class EntityTypesGapicClient
 
     private static function getEntityTypeNameTemplate()
     {
-        if (self::$entityTypeNameTemplate == null) {
+        if (null == self::$entityTypeNameTemplate) {
             self::$entityTypeNameTemplate = new PathTemplate('projects/{project}/agent/entityTypes/{entity_type}');
         }
 
@@ -191,7 +195,7 @@ class EntityTypesGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'projectAgent' => self::getProjectAgentNameTemplate(),
                 'entityType' => self::getEntityTypeNameTemplate(),
@@ -379,18 +383,21 @@ class EntityTypesGapicClient
      * $entityTypesClient = new EntityTypesClient();
      * try {
      *     $formattedParent = $entityTypesClient->projectAgentName('[PROJECT]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $entityTypesClient->listEntityTypes($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $entityTypesClient->close();
@@ -674,14 +681,17 @@ class EntityTypesGapicClient
      *     $operationResponse = $entityTypesClient->batchUpdateEntityTypes($formattedParent);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       $result = $operationResponse->getResult();
-     *       // doSomethingWith($result)
+     *         $result = $operationResponse->getResult();
+     *         // doSomethingWith($result)
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $entityTypesClient->batchUpdateEntityTypes($formattedParent);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -774,13 +784,16 @@ class EntityTypesGapicClient
      *     $operationResponse = $entityTypesClient->batchDeleteEntityTypes($formattedParent, $entityTypeNames);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $entityTypesClient->batchDeleteEntityTypes($formattedParent, $entityTypeNames);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -848,13 +861,16 @@ class EntityTypesGapicClient
      *     $operationResponse = $entityTypesClient->batchCreateEntities($formattedParent, $entities);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $entityTypesClient->batchCreateEntities($formattedParent, $entities);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -876,7 +892,7 @@ class EntityTypesGapicClient
      *
      * @param string              $parent       Required. The name of the entity type to create entities in. Format:
      *                                          `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
-     * @param EntityType_Entity[] $entities     Required. The collection of entities to create.
+     * @param Entity[] $entities     Required. The collection of entities to create.
      * @param array               $optionalArgs {
      *                                          Optional.
      *
@@ -931,13 +947,16 @@ class EntityTypesGapicClient
      *     $operationResponse = $entityTypesClient->batchUpdateEntities($formattedParent, $entities);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $entityTypesClient->batchUpdateEntities($formattedParent, $entities);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -959,7 +978,7 @@ class EntityTypesGapicClient
      *
      * @param string              $parent       Required. The name of the entity type to update the entities in. Format:
      *                                          `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
-     * @param EntityType_Entity[] $entities     Required. The collection of new entities to replace the existing entities.
+     * @param Entity[] $entities     Required. The collection of new entities to replace the existing entities.
      * @param array               $optionalArgs {
      *                                          Optional.
      *
@@ -1018,13 +1037,16 @@ class EntityTypesGapicClient
      *     $operationResponse = $entityTypesClient->batchDeleteEntities($formattedParent, $entityValues);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $entityTypesClient->batchDeleteEntities($formattedParent, $entityValues);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work

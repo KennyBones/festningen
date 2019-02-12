@@ -28,7 +28,6 @@ namespace Google\Cloud\Dialogflow\V2\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -36,6 +35,7 @@ use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Dialogflow\V2\BatchDeleteIntentsRequest;
 use Google\Cloud\Dialogflow\V2\BatchUpdateIntentsRequest;
 use Google\Cloud\Dialogflow\V2\BatchUpdateIntentsResponse;
@@ -92,18 +92,21 @@ use Google\Protobuf\GPBEmpty;
  * $intentsClient = new IntentsClient();
  * try {
  *     $formattedParent = $intentsClient->projectAgentName('[PROJECT]');
- *     // Iterate through all elements
- *     $pagedResponse = $intentsClient->listIntents($formattedParent);
- *     foreach ($pagedResponse->iterateAllElements() as $element) {
- *         // doSomethingWith($element);
- *     }
- *
- *     // OR iterate over pages of elements
+ *     // Iterate over pages of elements
  *     $pagedResponse = $intentsClient->listIntents($formattedParent);
  *     foreach ($pagedResponse->iteratePages() as $page) {
  *         foreach ($page as $element) {
  *             // doSomethingWith($element);
  *         }
+ *     }
+ *
+ *
+ *     // Alternatively:
+ *
+ *     // Iterate through all elements
+ *     $pagedResponse = $intentsClient->listIntents($formattedParent);
+ *     foreach ($pagedResponse->iterateAllElements() as $element) {
+ *         // doSomethingWith($element);
  *     }
  * } finally {
  *     $intentsClient->close();
@@ -161,6 +164,7 @@ class IntentsGapicClient
             'serviceAddress' => self::SERVICE_ADDRESS.':'.self::DEFAULT_SERVICE_PORT,
             'clientConfig' => __DIR__.'/../resources/intents_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/intents_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/../resources/intents_grpc_config.json',
             'credentialsConfig' => [
                 'scopes' => self::$serviceScopes,
             ],
@@ -174,7 +178,7 @@ class IntentsGapicClient
 
     private static function getProjectAgentNameTemplate()
     {
-        if (self::$projectAgentNameTemplate == null) {
+        if (null == self::$projectAgentNameTemplate) {
             self::$projectAgentNameTemplate = new PathTemplate('projects/{project}/agent');
         }
 
@@ -183,7 +187,7 @@ class IntentsGapicClient
 
     private static function getIntentNameTemplate()
     {
-        if (self::$intentNameTemplate == null) {
+        if (null == self::$intentNameTemplate) {
             self::$intentNameTemplate = new PathTemplate('projects/{project}/agent/intents/{intent}');
         }
 
@@ -192,7 +196,7 @@ class IntentsGapicClient
 
     private static function getAgentNameTemplate()
     {
-        if (self::$agentNameTemplate == null) {
+        if (null == self::$agentNameTemplate) {
             self::$agentNameTemplate = new PathTemplate('projects/{project}/agents/{agent}');
         }
 
@@ -201,7 +205,7 @@ class IntentsGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'projectAgent' => self::getProjectAgentNameTemplate(),
                 'intent' => self::getIntentNameTemplate(),
@@ -409,18 +413,21 @@ class IntentsGapicClient
      * $intentsClient = new IntentsClient();
      * try {
      *     $formattedParent = $intentsClient->projectAgentName('[PROJECT]');
-     *     // Iterate through all elements
-     *     $pagedResponse = $intentsClient->listIntents($formattedParent);
-     *     foreach ($pagedResponse->iterateAllElements() as $element) {
-     *         // doSomethingWith($element);
-     *     }
-     *
-     *     // OR iterate over pages of elements
+     *     // Iterate over pages of elements
      *     $pagedResponse = $intentsClient->listIntents($formattedParent);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
      *         }
+     *     }
+     *
+     *
+     *     // Alternatively:
+     *
+     *     // Iterate through all elements
+     *     $pagedResponse = $intentsClient->listIntents($formattedParent);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
      *     }
      * } finally {
      *     $intentsClient->close();
@@ -726,14 +733,17 @@ class IntentsGapicClient
      *     $operationResponse = $intentsClient->batchUpdateIntents($formattedParent, $languageCode);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       $result = $operationResponse->getResult();
-     *       // doSomethingWith($result)
+     *         $result = $operationResponse->getResult();
+     *         // doSomethingWith($result)
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $intentsClient->batchUpdateIntents($formattedParent, $languageCode);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work
@@ -827,13 +837,16 @@ class IntentsGapicClient
      *     $operationResponse = $intentsClient->batchDeleteIntents($formattedParent, $intents);
      *     $operationResponse->pollUntilComplete();
      *     if ($operationResponse->operationSucceeded()) {
-     *       // operation succeeded and returns no value
+     *         // operation succeeded and returns no value
      *     } else {
-     *       $error = $operationResponse->getError();
-     *       // handleError($error)
+     *         $error = $operationResponse->getError();
+     *         // handleError($error)
      *     }
      *
-     *     // OR start the operation, keep the operation name, and resume later
+     *
+     *     // Alternatively:
+     *
+     *     // start the operation, keep the operation name, and resume later
      *     $operationResponse = $intentsClient->batchDeleteIntents($formattedParent, $intents);
      *     $operationName = $operationResponse->getName();
      *     // ... do other work

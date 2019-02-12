@@ -1,5 +1,4 @@
 <?php
-
 namespace verbb\fieldmanager\controllers;
 
 use verbb\fieldmanager\FieldManager;
@@ -12,6 +11,7 @@ use craft\helpers\StringHelper;
 use craft\models\FieldGroup;
 use craft\web\Controller;
 
+use yii\web\NotFoundHttpException;
 
 class BaseController extends Controller
 {
@@ -67,12 +67,25 @@ class BaseController extends Controller
         $fieldsService = Craft::$app->getFields();
         $request = Craft::$app->getRequest();
 
-        $fieldId = $request->getBodyParam('fieldId');
-        $groupId = $request->getBodyParam('groupId');
+        $fieldId = (int)$request->getBodyParam('fieldId');
+        $groupId = (int)$request->getBodyParam('groupId');
 
-        if ($fieldId) {
+        // The field
+        // ---------------------------------------------------------------------
+
+        $field = null;
+        $missingFieldPlaceholder = null;
+
+        if ($field === null && $fieldId !== null) {
             $field = $fieldsService->getFieldById($fieldId);
-        } else {
+
+            if ($field instanceof MissingField) {
+                $missingFieldPlaceholder = $field->getPlaceholderHtml();
+                $field = $field->createFallback(PlainText::class);
+            }
+        }
+
+        if ($field === null) {
             $field = $fieldsService->createField(PlainText::class);
         }
 
@@ -84,7 +97,7 @@ class BaseController extends Controller
         $allFieldTypes = $fieldsService->getAllFieldTypes();
 
         foreach ($allFieldTypes as $class) {
-            if ($class === \get_class($field) || $class::isSelectable()) {
+            if ($class === get_class($field) || $class::isSelectable()) {
                 $supportedTranslationMethods[$class] = $class::supportedTranslationMethods();
             }
         }
@@ -93,18 +106,20 @@ class BaseController extends Controller
         // ---------------------------------------------------------------------
 
         if (!$field->id) {
-            $allowedFieldTypes = $allFieldTypes;
+            $compatibleFieldTypes = $allFieldTypes;
         } else {
-            $allowedFieldTypes = $fieldsService->getCompatibleFieldTypes($field, true);
+            $compatibleFieldTypes = $fieldsService->getCompatibleFieldTypes($field, true);
         }
 
+        /** @var string[]|FieldInterface[] $compatibleFieldTypes */
         $fieldTypeOptions = [];
 
-        foreach ($allowedFieldTypes as $class) {
-            if ($class === \get_class($field) || $class::isSelectable()) {
+        foreach ($allFieldTypes as $class) {
+            if ($class === get_class($field) || $class::isSelectable()) {
+                $compatible = in_array($class, $compatibleFieldTypes, true);
                 $fieldTypeOptions[] = [
                     'value' => $class,
-                    'label' => $class::displayName(),
+                    'label' => $class::displayName() . ($compatible ? '' : ' ⚠️'),
                 ];
             }
         }
@@ -117,23 +132,35 @@ class BaseController extends Controller
 
         $allGroups = $fieldsService->getAllGroups();
 
+        if (empty($allGroups)) {
+            throw new ServerErrorHttpException('No field groups exist');
+        }
+
+        if ($groupId === null) {
+            $groupId = ($field !== null && $field->groupId !== null) ? $field->groupId : $allGroups[0]->id;
+        }
+
+        $fieldGroup = $fieldsService->getGroupById($groupId);
+
         $groupOptions = [];
 
         foreach ($allGroups as $group) {
             $groupOptions[] = [
                 'value' => $group->id,
-                'label' => $group->name,
+                'label' => $group->name
             ];
         }
 
         $variables = [
-            'fieldId'                     => $fieldId,
-            'field'                       => $field,
-            'fieldTypeOptions'            => $fieldTypeOptions,
+            'fieldId' => $fieldId,
+            'field' => $field,
+            'allFieldTypes' => $allFieldTypes,
+            'fieldTypeOptions' => $fieldTypeOptions,
+            'missingFieldPlaceholder' => $missingFieldPlaceholder,
             'supportedTranslationMethods' => $supportedTranslationMethods,
-            'allowedFieldTypes'           => $allowedFieldTypes,
-            'groupId'                     => $groupId,
-            'groupOptions'                => $groupOptions,
+            'compatibleFieldTypes' => $compatibleFieldTypes,
+            'groupId' => $groupId,
+            'groupOptions' => $groupOptions,
         ];
 
         $html = $view->renderTemplate('field-manager/_single/field_edit', $variables);

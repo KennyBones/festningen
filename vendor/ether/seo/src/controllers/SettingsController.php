@@ -3,8 +3,8 @@
 namespace ether\seo\controllers;
 
 use craft\web\Controller;
-use ether\seo\resources\SeoFieldSettingsAssets;
 use ether\seo\Seo;
+use ether\seo\web\assets\SeoSettingsAsset;
 use yii\web\HttpException;
 
 class SettingsController extends Controller
@@ -25,9 +25,9 @@ class SettingsController extends Controller
 
 		$namespace = 'settings';
 
-		$this->view->registerAssetBundle(SeoFieldSettingsAssets::class);
+		$this->view->registerAssetBundle(SeoSettingsAsset::class);
 		$this->view->registerJs(
-			"new SeoSettings('{$namespace}', 'settings');"
+			"new SeoSettings('{$namespace}', 'settings');new SeoFieldSettings('{$namespace}')"
 		);
 
 		$fullPageForm = true;

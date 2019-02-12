@@ -21,7 +21,9 @@ use ether\seo\models\Settings;
 use ether\seo\services\RedirectsService;
 use ether\seo\services\SeoService;
 use ether\seo\services\SitemapService;
+use ether\seo\services\UpgradeService;
 use ether\seo\web\twig\Extension;
+use ether\seo\web\twig\Variable;
 use yii\base\Event;
 
 /**
@@ -32,6 +34,7 @@ use yii\base\Event;
  * @property SeoService         $seo
  * @property SitemapService     $sitemap
  * @property RedirectsService   $redirects
+ * @property UpgradeService     $upgrade
  */
 class Seo extends Plugin
 {
@@ -42,7 +45,6 @@ class Seo extends Plugin
 	/** @var Seo */
 	public static $i;
 
-	public $controllerNamespace = 'ether\\seo\\controllers';
 	public $hasCpSection        = true;
 	public $hasCpSettings       = true;
 
@@ -53,7 +55,7 @@ class Seo extends Plugin
 	public $documentationUrl =
 		'https://github.com/ethercreative/seo/blob/v3/README.md';
 
-	public $schemaVersion = '3.0.1';
+	public $schemaVersion = '3.1.0';
 
 	// Craft
 	// =========================================================================
@@ -72,6 +74,7 @@ class Seo extends Plugin
 			'seo' => SeoService::class,
 			'sitemap' => SitemapService::class,
 			'redirects' => RedirectsService::class,
+			'upgrade' => UpgradeService::class,
 		]);
 
 		// Events
@@ -136,11 +139,14 @@ class Seo extends Plugin
 				[$this, 'onAfterRequest']
 			);
 
-			// Twig Extension
-			$craft->view->registerTwigExtension(new Extension());
-
 			// Template Hook
 			$craft->view->hook('seo', [$this, 'onRegisterSeoHook']);
+		}
+
+		if ($craft->request->isSiteRequest || $craft->request->isCpRequest)
+		{
+			// Twig Extension
+			$craft->view->registerTwigExtension(new Extension());
 		}
 
 		// CraftQL Support
@@ -199,24 +205,6 @@ class Seo extends Plugin
 		\Craft::$app->controller->redirect(
 			UrlHelper::cpUrl('seo/settings')
 		);
-	}
-
-	// Components
-	// =========================================================================
-
-	public function getSeo (): SeoService
-	{
-		return $this->seo;
-	}
-
-	public function getRedirects (): RedirectsService
-	{
-		return $this->redirects;
-	}
-
-	public function getSitemap (): SitemapService
-	{
-		return $this->sitemap;
 	}
 
 	// Events
@@ -309,6 +297,7 @@ class Seo extends Plugin
 	public function onAfterRequest ()
 	{
 		$this->seo->injectRobots();
+		$this->seo->injectCanonical();
 	}
 
 	/**

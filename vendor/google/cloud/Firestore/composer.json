@@ -5,8 +5,8 @@
     "minimum-stability": "stable",
     "require": {
         "ext-grpc": "*",
-        "google/cloud-core": "^1.23",
-        "google/gax": "^0.37",
+        "google/cloud-core": "^1.26",
+        "google/gax": "^0.38.0",
         "ramsey/uuid": "~3"
     },
     "require-dev": {
@@ -36,8 +36,8 @@
         "psr-4": {
             "Google\\Cloud\\Firestore\\Tests\\": "tests"
         },
-        "classmap": [
-            "tests/conformance-fixtures"
+        "files": [
+            "tests/Conformance/FirestoreTestGpb.php"
         ]
     }
 }

@@ -28,7 +28,6 @@ namespace Google\Cloud\Spanner\Admin\Instance\V1\Gapic;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\FetchAuthTokenInterface;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -36,6 +35,7 @@ use Google\ApiCore\PathTemplate;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Cloud\Iam\V1\GetIamPolicyRequest;
 use Google\Cloud\Iam\V1\Policy;
 use Google\Cloud\Iam\V1\SetIamPolicyRequest;
@@ -175,7 +175,7 @@ class InstanceAdminGapicClient
 
     private static function getProjectNameTemplate()
     {
-        if (self::$projectNameTemplate == null) {
+        if (null == self::$projectNameTemplate) {
             self::$projectNameTemplate = new PathTemplate('projects/{project}');
         }
 
@@ -184,7 +184,7 @@ class InstanceAdminGapicClient
 
     private static function getInstanceConfigNameTemplate()
     {
-        if (self::$instanceConfigNameTemplate == null) {
+        if (null == self::$instanceConfigNameTemplate) {
             self::$instanceConfigNameTemplate = new PathTemplate('projects/{project}/instanceConfigs/{instance_config}');
         }
 
@@ -193,7 +193,7 @@ class InstanceAdminGapicClient
 
     private static function getInstanceNameTemplate()
     {
-        if (self::$instanceNameTemplate == null) {
+        if (null == self::$instanceNameTemplate) {
             self::$instanceNameTemplate = new PathTemplate('projects/{project}/instances/{instance}');
         }
 
@@ -202,7 +202,7 @@ class InstanceAdminGapicClient
 
     private static function getPathTemplateMap()
     {
-        if (self::$pathTemplateMap == null) {
+        if (null == self::$pathTemplateMap) {
             self::$pathTemplateMap = [
                 'project' => self::getProjectNameTemplate(),
                 'instanceConfig' => self::getInstanceConfigNameTemplate(),
