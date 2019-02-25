@@ -118,7 +118,7 @@
 						</article>
 
 						<article class="designblock bilde">
-							<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+							<a href="{{blokk.billettLenke}}" target="_blank"><img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}"></a>
 						</article>
 
 					</section>
