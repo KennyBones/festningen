@@ -14,7 +14,7 @@
         { width: 1680, height: 530 },
         ], { ratio:"16/9" }) %}
 
-        <img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+        <a href="{{blokk.billettLenke}}" target="_blank"><img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}} 400w, {{bilde[1].url}} 767w, {{bilde[2].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}"></a>
 
         {% if entry.bildetekstChkbox %}
           <aside class="bildetekst designblokk {{entry.bildetekstposisjon}}">
@@ -31,7 +31,7 @@
             <strong>Lokasjon:</strong>
             <p>{{entry.lokasjon}}</p>
             <strong>Billetter:</strong>
-            <p><a href="{{entry.billettLenke}}s">Klikk her</a></p>
+            <p><a href="{{entry.billettLenke}}" target="_blank">Klikk her</a></p>
           </li>
       </ul>
     </aside>
