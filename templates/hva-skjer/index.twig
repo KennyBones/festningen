@@ -3,9 +3,7 @@
 
 {% block content %}
 
-	{# {% cache until midnight %}{% minify %} #}
-
-	{# {% endminify %}{% endcache %} #}
+	{% cache until midnight %}{% endcache %}
 
 	{% set img = entry.bilde.first | default(false) %}
 	{% set bilde = craft.imager.transformImage(img, [
@@ -82,14 +80,14 @@
 									</li>
 									<li>
 				            <strong>Billetter:</strong>
-				            <p><a href="{{blokk.renTekst}}" target="_blank">Klikk her</a></p>
+				            <p><a href="{{blokk.billettLenke}}" target="_blank">Klikk her</a></p>
 				          </li>
 				      </ul>
 						</aside>
 					</article>
 
 					<article class="designblock bilde">
-						<img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}">
+						<a href="{{blokk.billettLenke}}" target="_blank"><img class="lazyload" {{ not LP ? 'data-' }}srcset="{{bilde[0].url}}" src="{{ craft.imager.base64Pixel(16, 9) }}" alt="{{img.title | default("")}}"></a>
 					</article>
 
 				{% endif %}
