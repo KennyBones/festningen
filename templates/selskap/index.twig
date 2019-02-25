@@ -3,9 +3,7 @@
 
 {% block content %}
 
-	{# {% cache until midnight %}{% minify %} #}
-
-	{# {% endminify %}{% endcache %} #}
+	{% cache until midnight %}{% endcache %}
 
 	{% for blokk in entry.blokkSpoon.all() %}
 		<section class="row designblock {% if blokk.mellomrom == 0 %} nospacing {% endif %} block-parent {{loop.index}}{% if loop.index == 1 %} first {% endif %}">
