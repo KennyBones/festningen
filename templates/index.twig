@@ -94,7 +94,7 @@
 				{# Bildeposisjon høyre eller venstre #}
 				<section class="row designblock enkel">
 						<article class="designblock tekst black">
-							<h2>{{blokk.title}}</h2>
+							<a href="/hva-skjer"><h2>{{blokk.title}}</h2></a>
 							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
 							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
 
