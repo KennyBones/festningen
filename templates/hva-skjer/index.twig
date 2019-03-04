@@ -23,7 +23,7 @@
 		</section>
 
 
-	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('postDate desc') if entry.postDate < now %}
+	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('postDate asc') if entry.postDate < now %}
 
 		{% set img = blokk.bilde | length ? blokk.bilde.first %}
 
