@@ -49,7 +49,7 @@
 
 		<article class="fargeblokk">
 			{{craft.inlin.er(entry.vareMenyer.ikon[0].url, true) | raw }}
-			<h3>Våre menyer</h3>
+			{% if locale == "en" %}<h3>Our menus</h3>{% else %}<h3>Våre menyer</h3>{% endif %}
 			<table>
 				<tbody>
 					{% for meny in entry.vareMenyer.menyer.all() %}
@@ -91,14 +91,15 @@
 				], { mode: 'crop', position: img.fokuspunkt | default('50% 50%') }) %}
 
 			<section class="row designblock parent hvaSkjer">
-				{# Bildeposisjon høyre eller venstre #}
+
 				<section class="row designblock enkel">
+						<h2>Hva skjer?</h2>
 						<article class="designblock tekst black">
 							<a href="/hva-skjer"><h2>{{blokk.title}}</h2></a>
 							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
 							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
 
-							{{blokk.rikTekst|striptags|slice(0,100)}}
+							{{blokk.rikTekst|striptags|slice(0,150) ~ '...'}}
 
 							<aside class="hvaskjer-buttons">
 								<ul>
