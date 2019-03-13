@@ -98,7 +98,7 @@
 							{% set hvaSkjerForside = craft.entries.section('hvaSkjerForside').first() %}
 							{{craft.inlin.er(hvaSkjerForside.ikon[0].url, true) | raw }}
 
-							{{blokk.rikTekst|striptags|slice(0,110) ~ '...'}}
+							{{blokk.rikTekst|striptags|slice(0,130) ~ '...'}}
 
 							<aside class="hvaskjer-buttons">
 								<ul>
