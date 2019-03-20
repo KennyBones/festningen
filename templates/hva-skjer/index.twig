@@ -23,7 +23,7 @@
 		</section>
 
 
-	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('expiryDate asc') if entry.expiryDate > now %}
+	{% for blokk in craft.entries.section('hvaSkjer').limit(10).order('expiryDate asc') if entry.expiryDate < now %}
 
 		{% set img = blokk.bilde | length ? blokk.bilde.first %}
 
