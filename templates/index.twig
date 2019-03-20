@@ -83,7 +83,7 @@
 	{% endfor %}
 
 	{% if entry.visHvaSkjer %}
-		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('postDate asc') if entry.postDate < now %}
+		{% for blokk in craft.entries.section('hvaSkjer').limit(1).order('postDate asc') if entry.expiryDate > now %}
 
 			{% set img = blokk.bilde | length ? blokk.bilde.first %}
 			{% set bilde = craft.imager.transformImage(img, [
